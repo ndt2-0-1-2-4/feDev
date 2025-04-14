@@ -1,0 +1,134 @@
+.home {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 8px;
+    width: 80%;
+    height: 67vh;
+    left: 11%;
+    top: 5rem;
+    position: relative;
+}
+
+.home div {
+    border-radius: 8px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+
+/*******************************************/
+
+.football {
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.football::-webkit-scrollbar {
+  width: 0px;
+  position: absolute;
+  right: 0;
+}
+
+.match-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e1e1e;
+    padding: 10px;
+    border-radius: 8px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  
+  .match-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .match-time {
+    text-align: center;
+    font-size: 14px;
+    color: #ccc;
+    flex-direction: column;
+  }
+  
+  .match-time span {
+   display: block;
+  }
+
+  .teams {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .team {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .team-logo {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .match-odds {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .odd-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .odds {
+    display: flex;
+    gap: 5px;
+    font-weight: bold;
+  }
+  
+  .green {
+    color: #4caf50;
+  }
+  
+  .red {
+    color: #ff4d4d;
+  }
+  
+  .yellow {
+    color: #ffcc00;
+  }
+
+/*******************************************/
+
+.lottery {
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    grid-column-start: 4;
+}
+
+.games {
+    grid-column: span 4 / span 4;
+    grid-row: span 3 / span 3;
+    grid-row-start: 4;
+}
+
+.last-played {
+    grid-column: span 4 / span 4;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 7;
+}
+
+.static {
+    grid-column: span 2 / span 2;
+    grid-row: span 5 / span 5;
+    grid-column-start: 5;
+    grid-row-start: 4;
+}

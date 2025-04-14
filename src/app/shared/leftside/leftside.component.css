@@ -1,0 +1,196 @@
+.sidebar.left {
+    position: absolute;
+    top: 50%;
+    left: 1.5%;
+    transform: translateY(-50%);
+    background: #2B0E0E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    height: 90%;
+    border-radius: 30px;
+    width: 5.7%; /* Mặc định sidebar nhỏ */
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    white-space: nowrap;
+    z-index: 999;
+}
+
+.sidebar.left:hover {
+    width: 18%; /* Mở rộng sidebar khi hover */
+    align-items: flex-start;
+    padding-left: 2%;
+}
+
+/* Định dạng logo */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 1ch;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Đảm bảo logo vẫn nằm giữa khi mở rộng
+.sidebar.left:hover .logo {
+    width: 100%;
+    text-align: left;
+} */
+.sidebar.left .logo::before {
+    content: "S";
+}
+
+.sidebar.left:hover .logo::before {
+    content: "SBCB";
+}
+
+/* Tạo hiệu ứng typing */
+.sidebar.left .logo {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1ch;
+}
+
+.sidebar.left:hover .logo {
+    width: 5.5ch; /* Đủ chỗ cho SBCB */
+    animation: typing 1.5s steps(20) infinite alternate;
+}
+
+@keyframes typing {
+    from {
+        width: 1ch;
+    }
+    to {
+        width: 5.5ch;
+    }
+}
+
+/* Định dạng danh sách */
+.sidebar nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Căn trái khi mở rộng */
+    width: 100%;
+}
+
+.sidebar nav ul li {
+    display: flex;
+    align-items: center;
+    padding: 15px ;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    color: white;
+    transition: background 0.3s, padding-left 0.5s ease-in-out;
+}
+
+.sidebar nav ul li:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* Icon */
+.sidebar nav ul li a { 
+    font-size: 20px;
+    width: 50%;
+    text-align: center;
+    flex-shrink: 0;
+    display: flex;
+}
+
+.sidebar.left:hover nav ul li a {
+    width: 15%;/* Giữ nguyên kích thước khi hover */
+} 
+
+
+/* Ẩn chữ khi không hover */
+.sidebar nav ul li span {
+    opacity: 0;
+    width: 0%;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+/* Hiện chữ khi hover vào sidebar */
+.sidebar.left:hover nav ul li span {
+    opacity: 1;
+    visibility: visible;
+}
+
+.exit {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.exit a {
+    display: flex;
+    align-items: center;
+    width: 30px;
+}
+
+.exit span {
+    font-size: 20px;
+    margin-left: 10px; 
+    opacity: 0;
+    width: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+.exit:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.exit:hover span {
+    font-size: 20px;
+    margin-left: 10px; 
+}
+
+.sidebar.left:hover .exit {
+    opacity: 1;
+    visibility: visible;
+    width: auto; 
+    color: white;
+}
+.sidebar.left:hover .exit span {
+    opacity: 1;
+    opacity: 1;
+    visibility: visible;
+    width: auto; 
+    color: white;
+}
+
+@media (min-width: 1400px) {
+    .sidebar.left {
+        width: 4%;
+    }
+    .sidebar.left:hover {
+        width: 12%;
+    }
+}

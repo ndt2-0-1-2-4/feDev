@@ -1,0 +1,189 @@
+.friend-container {
+    display: flex;
+    position: relative;
+    background: white;
+    top: 4.5rem;
+    left: 15%;
+    width: 70%;
+    height: 28rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    gap: 1rem;
+
+}
+
+.left-column {
+    width: 30%;
+    padding: 20px;
+    background-color: #f0f0f0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.right-column {
+    width: 70%;
+    padding: 20px;
+}
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    padding-right: 100px; /* Đảm bảo đủ không gian cho nút bên trong */
+    height: 2.5rem; /* Đặt chiều cao cho thanh tìm kiếm */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước phần tử */
+}
+
+.search-container .btn_searchfr {
+    position: absolute;
+    right: 0;
+    height: 2.5rem; /* Đặt chiều cao cho nút tìm kiếm */
+    border: none;
+    background-color: #007bff;
+    color: white;
+    padding: 0 1rem;
+    cursor: pointer;
+    border-radius: 4px ; /* Bo góc phải */
+    transition: background-color 0.3s;
+    margin-top: -1rem;
+}
+
+.search-container .btn_searchfr:hover {
+    background-color: #0056b3;
+}
+.btn_listfr, .btn_addfr {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa biểu tượng và văn bản */
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s;
+}
+
+.btn_listfr:hover, .btn_addfr:hover {
+    background-color: #0056b3;
+}
+
+.btn_listfr svg, .btn_addfr svg {
+    width: 24px; /* Đặt chiều rộng của biểu tượng */
+    height: 24px; /* Đặt chiều cao của biểu tượng */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+.btn_message, .btn_delete , .btn_acp , .btn_addFriend{
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.btn_message , .btn_acp , .btn_addFriend {
+    background-color:  #217fe4; /* Màu nền cho nút nhắn tin */
+    color: white;
+}
+
+.btn_message:hover {
+    background-color:  #0056b3; /* Màu nền khi hover cho nút nhắn tin */
+}
+.bnt_acp:hover {
+    background-color: #0056b3; /* Màu nền khi hover cho nút chấp nhận bạn */
+}
+.btn_delete {
+    background-color: #ec4253; /* Màu nền cho nút xóa bạn */
+    color: white;
+}
+
+.btn_delete:hover {
+    background-color: #cf061a; /* Màu nền khi hover cho nút xóa bạn */
+}
+
+.btn_listfr:hover, .btn_addfr:hover {
+    background-color: #0056b3;
+}
+
+.right-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: calc(100% - 90px);
+    height: 14rem;
+    overflow-y: auto;
+}
+ul {
+    list-style-type: none; /* Loại bỏ dấu chấm đầu dòng */
+    padding: 0; /* Loại bỏ khoảng cách padding */
+    margin: 0; /* Loại bỏ khoảng cách margin */
+    
+}
+
+li {
+    display: flex; /* Sử dụng Flexbox cho các mục trong danh sách */
+    align-items: center; /* Căn giữa các mục theo chiều dọc */
+    justify-content: space-between; /* Giãn đều các mục */
+    padding: 10px; /* Thêm khoảng cách padding cho mỗi mục */
+    border-bottom: 1px solid #ccc; /* Thêm đường viền dưới cho mỗi mục */
+}
+
+li:last-child {
+    border-bottom: none; /* Loại bỏ đường viền dưới cho mục cuối cùng */
+}
+
+li div {
+    display: flex; /* Sử dụng Flexbox cho các nút */
+    flex-direction: column; /* Căn chỉnh các nút theo chiều dọc */
+    gap: 5px; /* Khoảng cách giữa các nút */
+}
+
+a svg {
+    width: 24px; /* Đặt chiều rộng của ảnh */
+    height: 24px; /* Đặt chiều cao của ảnh */
+    vertical-align: middle; /* Căn giữa theo chiều dọc */
+    margin-right: 5px; /* Khoảng cách bên phải */
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .friend-container {
+        flex-direction: column;
+        left: 5%;
+        width: 90%;
+    }
+
+    .left-column, .right-column {
+        flex: 0 0 100%;
+    }
+
+    .add_friend, .acp_friend, .list_friend, .show_friend {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title_friend {
+        font-size: 1.2rem;
+    }
+
+    .input_search-friend, .btn_search-friend {
+        height: 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .logo-friend svg {
+        width: 20px;
+        height: 20px;
+    }
+}

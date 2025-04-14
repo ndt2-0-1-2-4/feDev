@@ -1,0 +1,375 @@
+p {
+  color: white;
+}
+.profile {
+  display: flex;
+  position: relative;
+  gap: 20px;
+  top: 6rem;
+  left: 15%;
+  width: 70%;
+  height: 36rem;
+  border-radius: 10px;
+}
+
+.left-section {
+  width: 40%;
+  padding: 10px;
+  height: 70%;
+  background: transparent;
+  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
+  border-radius: 20px;
+}
+
+/* Đưa profile và thông tin lên cùng hàng */
+.profile-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Khoảng cách giữa avatar và thông tin */
+}
+
+/* Ảnh đại diện */
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+/* Container chứa username và ID */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Tên người dùng */
+.username p {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* ID */
+.id-user p {
+  display: inline-block;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+/* Nút đổi mật khẩu */
+.change-password {
+  border: 2px solid white;
+  padding: 5px;
+  background: none;
+  margin-top: 10px;
+  cursor: pointer;
+  margin-top: 2rem;
+  border-radius: 20px;
+  color: white;
+}
+
+.change-password:hover {
+  background-color: #ada9a9;
+}
+
+/* Ô nội dung */
+.money {
+  width: 90%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  margin-top: 3rem;
+}
+
+/* Thiết kế thẻ */
+.card {
+  width: 300px;
+  height: 100px;
+  background: linear-gradient(135deg, #1f1f1f, #d1d1d1);
+  border-radius: 20px;
+  padding: 15px;
+  color: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Header chứa logo, số thẻ và hạn */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Logo Mastercard */
+.logo {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 30% 30%, red 40%, transparent 41%),
+    radial-gradient(circle at 70% 70%, orange 40%, transparent 41%);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Balance text */
+.balance-text {
+  font-size: 24px;
+  opacity: 0.7;
+}
+
+/* Số tiền */
+.balance-amount {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Huy hiệu "New" */
+.new-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: purple;
+  color: white;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+/* bên phải */
+.right-section {
+  width: 70%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; /* Đặt các phần tử theo cột */
+  align-items: center;
+  height: 70%;
+}
+
+.achievements {
+  text-align: center;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
+}
+
+/* Căn chỉnh các icon huy chương */
+.achievement-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.achievement-icons ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.achievement-icons ul li {
+  display: flex;
+}
+
+.achievement-icons ul li a svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* Điều chỉnh bảng Biến động số dư */
+.transaction-history {
+  width: 100%;
+  text-align: center;
+  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
+  height: 80%;
+  border-radius: 20px;
+}
+
+.transaction-history h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.history-balance {
+  width: 100%;
+  text-align: center;
+  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
+  height: 80%;
+  border-radius: 20px;
+}
+
+.history-balance h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+@keyframes sparkle {
+  0% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
+  50% { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+  100% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
+}
+
+
+th,
+td {
+  border: 1px solid white;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  animation: sparkle 1.5s infinite alternate;
+  font-weight: bold;
+}
+
+th {
+  background:transparent;
+  color: white;
+}
+
+/* Căn chỉnh phần phân trang */
+.pagination {
+  margin-top: 10px;
+}
+
+.pagination button {
+  background: transparent;
+  border: 1px solid white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 2px;
+  color: white;
+}
+
+.pagination button:hover {
+  background: #727070;
+}
+/* Phần menu-his */
+.menu-his {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Nút trong menu-his */
+.menu-his button {
+  background-color: #f8afbc; /* Màu nền xanh lá */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.menu-his button:hover {
+  background-color: #f8afbc; /* Màu nền khi hover */
+  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+.menu-his button:active {
+  background-color: #f8afbc; /* Màu nền khi nhấn */
+  transform: scale(0.95); /* Hiệu ứng thu nhỏ khi nhấn */
+}
+
+/* Màn hình 24 inch (1920px trở lên) */
+@media (min-width: 1920px) {
+  .profile {
+    width: 60%;
+    left: 20%;
+    gap: 40px;
+  }
+
+  .card {
+    width: 400px;
+    height: 150px;
+  }
+
+  .transaction-history {
+    max-height: 600px;
+  }
+
+  .balance-text {
+    font-size: 28px;
+  }
+
+  .balance-amount {
+    font-size: 36px;
+  }
+}
+
+
+/* Màn hình 15.6 inch (1366px đến 1919px) */
+@media (min-width: 1366px) and (max-width: 1919px) {
+  .profile {
+    width: 70%;
+    left: 15%;
+    gap: 30px;
+  }
+
+  .card {
+    width: 350px;
+    height: 120px;
+  }
+
+  .transaction-history {
+    max-height: 500px;
+  }
+
+  .balance-text {
+    font-size: 24px;
+  }
+
+  .balance-amount {
+    font-size: 32px;
+  }
+}
+
+/* Màn hình 14 inch (dưới 1366px) */
+@media (max-width: 1365px) {
+  .profile {
+    width: 80%;
+    left: 10%;
+    gap: 20px;
+  }
+
+  .card {
+    width: 300px;
+    height: 100px;
+  }
+
+  .transaction-history {
+    max-height: 400px;
+  }
+
+  .balance-text {
+    font-size: 20px;
+  }
+
+  .balance-amount {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,100 @@
+<body>
+  <h2>Đăng nhập/Đăng ký</h2>
+  <div class="container" [class.right-panel-active]="isRightPanelActive">
+    <div class="form-container sign-up-container">
+      <form >
+        <h1>Tạo tài khoản</h1>
+        <div #note class="note">{{ notifical }}</div>
+        <input
+          #user
+          type="text"
+          placeholder="Tài khoản (6-30 kí tự)"
+          [(ngModel)]="signUpUser"
+          name="user"
+          required
+        />
+        <input
+          #email
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="signUpEmail"
+          name="email"
+          required
+        />
+        <input
+          #pass
+          type="password"
+          placeholder="Mật khẩu"
+          [(ngModel)]="signUpPassword"
+          name="pass"
+          required/>
+        <input
+          #pass_check
+          type="password"
+          placeholder="Nhập lại mật khẩu"
+          [(ngModel)]="signUpPasswordConfirm"
+          name="pass_check"
+          required
+        />
+        <div #btnContainer1 class="btn-container1">
+          <button
+            #btn1
+            class="btn1"
+            type="submit"
+            [disabled]="isRegisterDisabled"
+          >
+            Đăng ký
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="form-container sign-in-container">
+      <form (ngSubmit)="ngLogin()">
+        <h1>Đăng nhập</h1>
+        <div #msg class="msg">{{ message }}</div>
+        <input
+          #account
+          type="text"
+          placeholder="Nhập tài khoản"
+          [(ngModel)]="signInAccount"
+          name="account"
+          required
+        />
+        <input
+          #password
+          type="password"
+          placeholder="Mật khẩu"
+          [(ngModel)]="signInPassword"
+          name="password"
+          required
+        />
+        <a href="#">Quên mật khẩu ?</a>
+        <div #btnContainer2 class="btn-container2">
+          <button #btn2 class="btn2" type="submit" [disabled]="isLoginDisabled">
+            Đăng nhập
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Chào mừng bạn!</h1>
+          <p>
+            Để duy trì kết nối với chúng tôi vui lòng đăng nhập bằng thông tin
+            cá nhân của bạn
+          </p>
+          <button class="ghost" (click)="togglePanel(false)">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Xin chào bạn!</h1>
+          <p>
+            Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi
+          </p>
+          <button class="ghost" (click)="togglePanel(true)">Đăng ký</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="notifications"></div>
+</body>

@@ -1,0 +1,449 @@
+main{
+    position: relative;
+    /* background-image: url(https://media.istockphoto.com/id/846134496/vi/anh/m%C6%B0a-r%C3%A0o-v%C3%A0-d%C3%B4ng-tr%C3%AAn-b%E1%BA%A7u-tr%E1%BB%9Di-%E1%BA%A5n-t%C6%B0%E1%BB%A3ng.jpg?b=1&s=612x612&w=0&k=20&c=GmB_01J_uB4OOTTwdqHVfM46G8s2YBPZzBJZwo4C9xk=); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 6%;
+    left: 15%;
+    width: 70%;
+    height: 80%;
+}
+
+.rr-header {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    height: 40px; 
+    padding: 0 20px; 
+    background: rgba(168, 145, 145, 0.55); 
+    border-radius: 30px;
+}
+
+.right-header {
+    display: flex;
+    align-items: center; 
+    gap: 3rem; 
+}
+
+.settings-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.settings-icon:hover {
+    transform: scale(1.1);
+}
+
+.settings-icon svg {
+    width: 25px;
+    height: 25px;
+    fill: #ada9a9;
+}
+
+.history-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    border: 2px solid white;
+    border-radius: 15px;
+    height: 30px;
+    overflow: hidden;
+    direction: rtl;
+    width: 85%;
+    position: relative;
+    margin: 0.5rem auto;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+  }
+
+.history-item {
+    min-width: 80px;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: #333;
+    border: 2px solid #555;
+}
+
+.new-history {
+    background-color: #ffcc00 !important;
+    color: black !important;
+    box-shadow: 0 0 10px #ffcc00;
+}
+
+.arrow {
+    left: 10px;
+    color: white;
+    position: absolute;
+}
+
+
+
+/* ******************* */
+
+.game-over-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    width: 40%;
+    left: 30%;
+    top: 3%;
+}
+
+/* Thanh bên */
+.progress-bar {
+    width: 40px; 
+    height: 220px; 
+    border: 2px solid white;
+    border-radius: 10px;
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+.diamond-bar {
+    left: -1.5rem; 
+}
+
+.bomb-bar {
+    right: -1.5rem; 
+}
+
+.progress-fill {
+    width: 100%;
+    transition: height 0.3s ease-in-out;
+    position: absolute;
+    bottom: 0;
+}
+
+.diamond-bar .progress-fill {
+    background-color: gold;
+}
+
+.bomb-bar .progress-fill {
+    background-color: rgba(238, 54, 54, 0.712);
+}
+
+.progress-text {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    z-index: 2;
+}
+
+/* Bảng chơi */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 40px); 
+    grid-template-rows: repeat(5, 40px); 
+    gap: 5px; 
+    width: calc(40px * 5 + 5px * 4); 
+    height: calc(40px * 5 + 5px * 4); 
+    background-color: transparent;
+    position: relative;
+}
+
+.grid-cell {
+    width: 40px; 
+    height: 40px; 
+    background-color: #61b8c4;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    
+    /*hiệu ứng lật */
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease-in-out;
+    position: relative;
+}
+
+.grid-cell span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Khi lật ô */
+.grid-cell.revealed {
+    transform: rotateY(180deg);
+}
+
+/* Tạo hai mặt của ô */
+.grid-cell .front, 
+.grid-cell .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mặt sau của ô */
+.grid-cell .back {
+    transform: rotateY(180deg);
+}
+
+/* Đổi màu nền theo loại */
+.grid-cell.revealed.diamond .back {
+    background-color: rgba(32, 32, 28, 0.76) !important;
+}
+
+.grid-cell.revealed.bomb .back {
+    background-color: rgba(238, 54, 54, 0.712) !important;
+}
+
+.game-interface {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    width: 68%;
+    margin: 0 auto;
+    margin-top: 3%;
+  }
+  
+  /* Hệ số nhân */
+  .multipliers {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .multipliers button {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  
+  .multipliers button.active {
+    background: gold;
+  }
+
+  /* Làm mờ và khóa thanh hệ số */
+  .multipliers.disabled {
+    opacity: 0.5;
+    pointer-events: none; 
+    cursor: not-allowed;
+  }
+  
+  /* Điều chỉnh tiền cược và số bom */
+  .bet-settings {
+    display: flex;
+    justify-content: center;
+    gap: 4.5rem;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .bet-settings button {
+    background: #61b8c4;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .change-bet {
+    display: flex;
+    gap: 1rem;
+    color: white;
+    align-items: center;
+    background: #354347be;
+    min-width: 15rem;
+    justify-content: center;    
+}
+
+  .change-bet span {
+    flex-grow: 1; 
+    text-align: center; 
+    
+  }
+
+  .change-bombs{
+    display: flex;
+    gap: 1rem;
+    color: white;
+    align-items: center;
+    background: #354347be;
+    
+  }
+
+  .change-bombs span {
+    white-space: nowrap;
+  }
+
+  /* Nút chọn tự động và nhận tiền */
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #61b8c4;
+    color: white;
+  }
+  
+  .actions button.cashout {
+    background: #61b8c4;
+    color: white;
+  }
+
+  button.action-btn:disabled {
+    opacity: 0.5; /* Làm tối nút */
+    cursor: not-allowed; 
+  }
+  
+  @media (min-width: 1300px) {
+    main {
+        height: 35rem; 
+    }
+    .history-container {
+        width: 60%; 
+        margin: 1.2rem auto;
+        position: relative;
+    }
+    .diamond-bar {
+        left: 1rem; 
+    }
+
+    .bomb-bar {
+        right: 1rem; 
+    }
+    .game-interface{
+        margin-top: 3rem;
+    }
+}
+
+    @media (max-width: 1300px) and (max-height: 600px) {
+        main {
+            width: 80%;
+            height: 80vh;
+            left: 10%;
+            margin-top: 7%;
+        }
+        .rr-header {
+            height: 30px;
+            padding: 0 10px;
+        }
+        .game-container {
+            width: 50%;
+            height: auto;
+            flex-direction: column;
+            left: 50%;
+            transform: translateX(-50%);
+            /* top: 5%; */
+            gap: 10px;
+        }
+    
+        .progress-bar {
+            width: 30px;
+            height: 150px;
+        }
+    
+        .game-grid {
+            grid-template-columns: repeat(5, 30px);
+            grid-template-rows: repeat(5, 30px);
+            gap: 3px;
+            width: calc(30px * 5 + 3px * 4);
+            height: calc(30px * 5 + 3px * 4);
+        }
+    
+        .grid-cell {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+        }
+    
+        .progress-text {
+            font-size: 16px;
+        }
+    
+        .diamond-bar {
+            left: 1rem; 
+        }
+    
+        .bomb-bar {
+            right: 1rem; 
+        }
+        .game-interface {
+            width: 75%;
+            padding: 10px;
+            margin-top: 2%;
+            font-size: 14px;
+        }
+    
+        .bet-settings {
+            gap: 2rem;
+        }
+    
+        .actions button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+    
+        .multipliers button {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+    
+        .change-bet{
+            min-width: 50%;
+        }
+        .change-bombs{
+            min-width: 20%;
+        }
+    }

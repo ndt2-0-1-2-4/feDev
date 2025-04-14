@@ -1,0 +1,233 @@
+.sidebar_right_container {
+    position: absolute;
+    top: 50%;
+    right: 1.5%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 90%;
+    width: 6%;
+    justify-content: space-between;
+}
+
+/* Thanh bạn bè (Trên) */
+.sidebar-right {
+    background: #2B0E0E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    height: 50%;
+    width: 80%;
+    border-radius: 30px;
+    overflow : hidden;
+}
+
+/* Logo bạn bè */
+.logo-friend {
+    margin-bottom: 10px;
+}
+
+/* Danh sách bạn bè */
+.friends-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 80%;
+    padding-left: 10%;
+}
+
+.friends-list li {
+    margin-bottom: 20%;
+}
+
+/* Thanh nhóm (Dưới) */
+.bottom-bar {
+    background: #2B0E0E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    height: 35%;
+    width: 80%;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+/* Logo nhóm */
+.logo-group {
+    margin-bottom: 10px;
+}
+
+/* Danh sách nhóm */
+.group-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 80%;
+    padding-left: 10%;
+}
+
+.group-list li{
+    margin-bottom: 20%;
+}
+
+.friends-list li, .group-list li {
+    list-style: none;
+    margin: 7px 0;
+  }
+  
+  .friend-item, .group-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .icon-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .status {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0; /* Đặt trạng thái ở dưới */
+    right: 0; /* Đặt trạng thái ở bên phải */
+    border: 1px solid white; 
+  }
+  
+  .online {
+    background-color: green;
+  }
+  
+  .offline {
+    background-color: gray;
+  }
+
+  /* Tooltip (sẽ được đặt ngoài sidebar) */
+/* .friend-info {
+    position: fixed; 
+    background: rgba(61, 25, 4, 0.9);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.friend-info.ng-star-inserted {
+  opacity: 1;
+} */
+
+.friend-info{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -160px; 
+  background: rgba(61, 25, 4, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  z-index: 1000; 
+}
+
+.friend-item:hover .friend-info {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+  /* .tooltip {
+    position: fixed;
+    top: 40%;
+    right: 110%; 
+    transform: translateY(-50%); 
+    background: rgba(61, 25, 4, 0.9); 
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    max-width: 150px; 
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+  }
+
+  .icon-wrapper:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+} */ 
+
+  
+  /* Hover vào icon thì hiện tooltip*/
+  .friend-item:hover .tooltip,
+  .group-item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltip-name {
+    font-weight: bold;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.tooltip-status {
+    font-size: 12px;
+    opacity: 0.8;
+    display: block;
+}
+
+/* Icon trong sidebar */
+.sidebar-right svg, .bottom-bar svg {
+    width: 30px;
+    height: 30px;
+    fill: #ada9a9;
+}
+
+/* Thanh cuộn */
+.friends-list::-webkit-scrollbar,
+.group-list::-webkit-scrollbar {
+    width: 5px;
+    position: absolute;
+    right: 0; /* Đặt thanh cuộn sát cạnh phải */
+}
+
+/* Style thanh cuộn */
+.friends-list::-webkit-scrollbar-thumb,
+.group-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+@media (min-width: 1400px) {
+    .sidebar_right_container {
+        width: 4.5%;
+    }
+}

@@ -1,0 +1,126 @@
+<div class="recharge">
+    <div class="left-button">
+        <button class="recharge-money" (click)="showContent('content')" [ngClass]="{'active': activeTab === 'content'}">Nạp tiền</button>
+        <button class="level-recharge" (click)="showContent('level')"  [ngClass]="{'active': activeTab === 'level'}">Mốc nạp</button>
+    </div>
+    <div class="recharge-content" *ngIf="activeTab === 'content'"> 
+        <div class="header-content">
+            <button class="bank" (click)="showChoice('bank')"  [ngClass]="{'active': activeChoice === 'bank'}">Ngân hàng</button>
+            <button class="wallet" (click)="showChoice('wallet')"  [ngClass]="{'active': activeChoice === 'wallet'}">Ví điện tử</button>
+        </div>
+        <div class="bank-content" *ngIf="activeChoice === 'bank'">
+            <div class="bank-left">
+                <div class="bank-info">
+                    <h3>CHUYỂN TIỀN LIÊN NGÂN HÀNG </h3>
+                    <h3>MBBANK </h3>
+                </div>
+        
+                <div class="input-group">
+                    <label>Số Tiền</label>
+                    <input type="text" [value]="amount" readonly>
+                </div>
+        
+                <div class="input-group">
+                    <label>Số TK</label>
+                    <input type="text" [value]="bankInfo.accountNumber" readonly>
+                    <button class="copy-btn" (click)="copyToClipboard(bankInfo.accountNumber)">COPY</button>
+                </div>
+        
+                <div class="input-group">
+                    <label>Chủ TK</label>
+                    <input type="text" [value]="bankInfo.accountHolder" readonly>
+                </div>
+        
+                <div class="input-group">
+                    <label>Nội Dung</label>
+                    <input type="text" [value]="bankInfo.transactionCode" readonly class="highlight">
+                    <button class="copy-btn" (click)="copyToClipboard(bankInfo.transactionCode)">COPY</button>
+                </div>
+        
+                <button class="new-btn" (click)="generateNewTransactionCode()">TẠO MỚI</button>
+            </div>
+        
+            <div class="bank-right">
+                <p>Mở ứng dụng Ngân Hàng quét QR Code</p>
+                <div class="qr-code">
+                    <img src="dia.png" alt="QR Code">
+                </div>
+                <p>Code hết hạn sau: <span class="countdown">{{countdown}}</span></p>
+                <p>Kiểm tra thông tin trước khi chuyển.</p>
+                <p>Mỗi mã nội dung dùng cho 1 giao dịch.</p>
+            </div>
+        </div>
+        <div class="wallet-content" *ngIf="activeChoice === 'wallet'">
+            <!-- <div class="wallet-choice">
+                <button class="momo-btn" (click)="selectWallet('momo')"  [ngClass]="{'active': activeWallet === 'momo'}">Momo</button>
+                <button class="vnpay-btn" (click)="selectWallet('vnpay')" [ngClass]="{'active': activeWallet === 'vnpay'}">VNPay</button>
+                <button class="zalopay-btn" (click)="selectWallet('zalopay')"  [ngClass]="{'active': activeWallet === 'zalopay'}">ZaloPay</button>
+            </div> -->
+            
+            <div class="main-wallet">
+                <div class="input-group">
+                    <label>Số ĐT</label>
+                    <input type="text" [value]="selectedWallet.phoneNumber" readonly>
+                    <button class="copy-btn" (click)="copyToClipboard(selectedWallet.phoneNumber)">COPY</button>
+                </div>
+                <div class="input-group">
+                    <label>Tên TK</label>
+                    <input type="text" [value]="selectedWallet.accountName" readonly>
+                </div>
+                <div class="input-group">
+                    <label>Nội Dung</label>
+                    <input type="text" [value]="selectedWallet.transactionCode" readonly class="highlight">
+                    <button class="copy-btn" (click)="copyToClipboard(selectedWallet.transactionCode)">COPY</button>
+                </div>
+            </div>
+            
+            <div class="wallet-right">
+                <div class="qr-code">
+                    <img [src]="selectedWallet.qrCode" alt="QR Code">
+                </div>
+                <p>Kiểm tra thông tin trước khi chuyển.</p>
+                <p>Nạp trên 500k vui lòng chuyển qua Ngân hàng.</p>
+            </div>
+        </div>
+    </div>
+    <div class="level-content" *ngIf="activeTab === 'level'">
+        <div class="level-banner">
+            <div class="banner-left">
+                <h2>NẠP CƯỢC MỖI NGÀY - LÌ XÌ TẶNG BẠN</h2>
+                <div class="dem-nguoc">
+                    Kì trả thưởng tiếp theo:
+                    <div class="timer">
+                      <span class="time">{{ hours }}</span> giờ
+                      <span class="time">{{ minutes }}</span> phút
+                      <span class="time">{{ seconds }}</span> giây
+                    </div>
+                </div>
+            </div>
+            <div class="banner-right">
+                <div class="box1">
+                    <h3>Nạp hợp lệ hiện tại:</h3>
+                    <p class="amounts">0 VNĐ</p>
+                </div>
+                <div class="box2">
+                    <h3>Tổng thưởng:</h3>
+                    <p class="amounts">0 VNĐ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="level-main">
+            <p class="recharge-title">
+                Nhận thưởng dựa trên số tiền nạp, tương ứng với mốc nạp cao nhất bên dưới.
+            </p>
+              <div class="bonus-list">
+                <div class="bonus-item" *ngFor="let bonus of bonuses">
+                  <p class="bonus-amount">+{{ bonus.reward }} VNĐ</p>
+                  <img src="gift.png" alt="gift" class="bonus-icon">
+                  <p class="deposit-amount">Nạp {{ bonus.deposit }} VNĐ</p>
+                  <input type="radio" name="bonus" class="radio">
+                </div>
+              </div>
+              <button class="recharge-button">NẠP TIỀN NGAY</button>
+        </div>
+    </div>
+</div>

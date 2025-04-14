@@ -1,0 +1,110 @@
+<main>
+    <div class="rr-header">
+        <h1>MINES</h1>
+        <div class="right-header">
+            <i class="settings-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 512 512">
+                    <path fill="#ada9a9" d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3z"/>
+                </svg>
+            </i>
+        </div>
+    </div>
+
+    <div class="history-container">
+      <div class="history-list">
+        <div *ngFor="let record of history" 
+              class="history-item"
+              [ngClass]="{ 'new-history': record.isNew }"
+              >
+          {{ record.winnings === 0 ? 0 : (record.winnings | number) }}
+        </div>
+      </div>
+      <span class="arrow">►</span>
+    </div>
+
+    <div class="game-container">
+        <!-- Thanh kim cương -->
+        <div class="progress-bar diamond-bar">
+          <div class="progress-fill" [style.height.%]="diamondProgress"></div>
+          <span class="progress-text">{{totalDiamonds}} 💎 </span>
+        </div>
+
+        <!-- Bảng chơi -->
+        <div class="game-grid">
+          <div *ngFor="let cell of flatGrid; let index = index" 
+               class="grid-cell" 
+               [ngClass]="{
+                 'revealed': cell.revealed,
+                 'diamond': cell.revealed && cell.type === 'diamond',
+                 'bomb': cell.revealed && cell.type === 'bomb'
+               }"
+               (click)="revealCell(index)">
+            
+            <!-- Mặt trước (Ẩn) -->
+            <div class="front">
+              <span>?</span>
+            </div>
+        
+            <!-- Mặt sau (Hiển thị khi lật) -->
+            <div class="back">
+              <span *ngIf="cell.revealed && cell.type === 'diamond'">💎</span>
+              <span *ngIf="cell.revealed && cell.type === 'bomb'">💣</span>
+            </div>
+        
+          </div>
+        </div>
+      
+        <!-- Thanh bom -->
+        <div class="progress-bar bomb-bar">
+          <div class="progress-fill" [style.height.%]="bombProgress"></div>
+          <span class="progress-text">{{totalBombs}} 💣</span>
+        </div>
+    </div>
+
+    <div class="game-interface">
+      <!-- Hệ số nhân -->
+      <div class="multipliers">
+        <button (click)="prevMultipliers()" [disabled]="currentMultiplierIndex === 0"><</button>
+        <div class="multiplier-list" [@slideAnimation]>
+          <button *ngFor="let multiplier of getVisibleMultipliers(); let i = index" 
+            [class.active]="multiplierIndex === i + currentMultiplierIndex">
+            {{ multiplier }}x
+          </button>
+        </div>
+      
+        <button (click)="nextMultipliers()" [disabled]="currentMultiplierIndex >= multipliers.length - 5">></button>
+      </div>
+    
+      <!-- Điều chỉnh tiền cược và số bom -->
+      <div class="bet-settings">
+        <div class="change-bet">
+          <button (click)="adjustBet('half')">1/2</button>
+          <span>Tổng số: {{ betAmount | number }} VND</span>
+          <button (click)="adjustBet('double')">X2</button>
+        </div>
+        
+        <div class="change-bombs">
+          <button (click)="changeBombs(-1)">-</button>
+          <span>Bom: {{ totalBombs }}</span>
+          <button (click)="changeBombs(1)">+</button>
+        </div>   
+      </div>
+    
+      <!-- Nút đặt cược -->
+      <div class="actions">
+        <button (click)="placeBet()">CƯỢC</button>
+
+        <button (click)="autoPick()"
+                [disabled]="!gameStarted" 
+                class="action-btn"
+        >CHỌN TỰ ĐỘNG</button>
+
+        <button class="cashout" (click)="cashOut()"
+                [disabled]="!gameStarted || lastWinning === 0" 
+                class="action-btn cashout">
+          Nhận Tiền <span>{{ lastWinning | number }}</span>
+        </button>
+      </div>
+    </div>
+
+  </main>

@@ -1,0 +1,8 @@
+.lottery{
+    height: 65vh;
+    width: 80%;
+    left: 10%;
+    top: 5rem;
+    position: relative;
+    border-radius: 15px;
+}

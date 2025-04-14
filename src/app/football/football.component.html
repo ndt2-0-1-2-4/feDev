@@ -1,0 +1,88 @@
+<div class="fb" *ngIf="activeTab === 'matches'">
+  <div class="football">
+    <div class="match-card" *ngFor="let match of matches">
+        <div class="match-info">
+          <div class="match-time">
+            <p>Thời gian</p>
+            <span>{{ match.utcDate | date: 'HH:mm' }}</span>
+            <span>{{ match.utcDate | date: 'dd/MM' }}</span>
+          </div>
+          <div class="teams">
+            <div class="team">
+              <img [src]="match.homeTeam.crest" class="team-logo" />
+              <span>{{ match.homeTeam.name }}</span>
+            </div>
+            <div class="team">
+              <img [src]="match.awayTeam.crest" class="team-logo" />
+              <span>{{ match.awayTeam.name }}</span>
+            </div>
+          </div>
+        </div>
+      
+        <div class="match-bet">
+          <div class="score">
+              <p>Tỉ số</p>
+              <div class="score-display">
+                  <div class="score-team">
+                      <span *ngIf="match.status === 'FINISHED'; else homePrediction">{{ match.score.fullTime.home }}</span>
+                      <ng-template #homePrediction>
+                          <input type="number" [(ngModel)]="match.prediction.home" placeholder="0" min="0" [disabled]="match.status === 'FINISHED'" />
+                      </ng-template>
+                  </div>
+                  <div class="score-team">
+                      <span *ngIf="match.status === 'FINISHED'; else awayPrediction">{{ match.score.fullTime.away }}</span>
+                      <ng-template #awayPrediction>
+                          <input type="number" [(ngModel)]="match.prediction.away" placeholder="0" min="0" [disabled]="match.status === 'FINISHED'" />
+                      </ng-template>
+                  </div>
+              </div>
+          </div>
+      
+          <div class="bet-amount">
+              <p>Tiền cược</p>
+              <input type="number" [(ngModel)]="match.betAmount" placeholder=""min = "1000" [disabled]="match.status === 'FINISHED'" />
+          </div>
+      
+          <div class="bet-button">
+            <button (click)="placeBet(match)" [disabled]="match.status === 'FINISHED' || (match.prediction.home === undefined && match.prediction.away === undefined) || !match.betAmount">Đặt cược</button>
+          </div>
+      </div>
+
+    </div>
+</div>
+
+<div style="text-align: center" >
+  <button (click)="showBetHistory()" class="btn-history">Lịch sử cược</button>
+</div>
+
+</div>
+
+<div class="his-bet" *ngIf="activeTab === 'history'">
+  <table class="bet-history-table">
+    <thead>
+      <tr>
+        <th>Trận</th>
+        <th>Tỉ số</th>
+        <th>Tiền cược</th>
+        <th>Giờ cược</th>
+        <th>Kết quả</th>
+        <th>status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bet of betHistory">
+        <td>{{ bet.matchName }}</td>
+        <td>{{ bet.prediction }}</td>
+        <td>{{ bet.betAmount | number }}</td>
+        <td>{{ bet.betTime | date:'HH:mm dd/MM/yyyy' }}</td>
+        <td>{{ bet.resultText }}</td>
+        <td>{{ bet.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button (click)="showMatches()" class="btn-history">Lịch thi đấu</button>
+  </div>
+</div>

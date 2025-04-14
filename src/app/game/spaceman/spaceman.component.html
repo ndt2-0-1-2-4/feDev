@@ -1,0 +1,72 @@
+<div class="spaceman-container" [class.move]="isMoving">
+    <div class="header">
+      <div class="title">
+        <p style="margin-left: 1%;">Spaceman 5.000đ - 2.500.000đ</p>
+      </div>
+      <div class="balance">
+        <p>Số dư : </p><span class="value">{{ value }}đ</span>
+      </div>
+      <div class="sumbet">
+        <p>Tổng số tiền cược : </p><span class="value">{{ sumbet }}đ</span>
+      </div>
+      <div class="exit">
+        <button class="btn-exit" (click)="exit()">
+          <li>
+            <a href=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></a>
+          </li>
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="spaceship" [class.moon]="isMoon"></div>
+      <div class="spaceman" [class.fly]="isFlying"></div>
+      <div class="footer-top">
+        <div class="footer-left">
+          <div class="option1">
+            <div class="toggle" [class.active]="isActive" (click)="toggleSwitch()">
+              <div class="circle"></div>
+            </div>
+            <div class="text">{{ label1 }}</div>
+            <div class="controls">
+              <button class="arrow" (click)="changeValue(-0.1)">&#9664;</button>
+              <span class="value">{{ value1 }}x</span>
+              <button class="arrow" (click)="changeValue(0.1)">&#9654;</button>
+            </div>
+          </div>
+          <div class="option2">
+            <div class="toggle" [class.active]="isActive1" (click)="toggleSwitch1()">
+              <div class="circle"></div>
+            </div>
+            <div class="text">{{ label2 }}</div>
+            <div class="controls">
+              <button class="arrow" (click)="changeValue1(-0.1)">&#9664;</button>
+              <span class="value">{{ value2 }}x</span>
+              <button class="arrow" (click)="changeValue1(0.1)">&#9654;</button>
+            </div>
+          </div>
+        </div>
+        <div class="withdraw-buttons" *ngIf="showWithdrawButtons">
+          <button class="btn-withdraw" (click)="withdraw()">Rút tiền</button>
+          <button class="btn-withdraw-50" (click)="withdraw50()">Rút tiền 50%</button>
+        </div>
+        <div class="footer-center">
+          <div class="bet-container">
+            <button class="arrow" (click)="moveLeft()">&#9664;</button>
+            <div class="bet">
+              <div class="bet-options">
+                <button *ngFor="let amount of visibleBets" class="bet-btn" [class.active]="isActive2" (click)="selectBet(amount)">
+                  {{ (amount / 1000) + 'K' }}
+                </button>
+              </div>
+              <button class="btn-choice" (click)="betchoice()">{{ betButton }}</button>
+              <div *ngIf="countdown > 0" class="countdown">{{ countdown }}s</div>
+              <div *ngIf="multiplier > 1.0" class="multiplier">{{ multiplier }}x</div>
+            </div>
+            <button class="arrow" (click)="moveRight()">&#9654;</button>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+      </div>
+    </div>
+  </div>

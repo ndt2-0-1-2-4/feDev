@@ -1,0 +1,99 @@
+<div class="profile">
+  <!-- Left Section -->
+  <div class="left-section">
+    <div class="profile-left">
+      <div class="profile-pic"></div>
+      <div class="user-info">
+        <div class="username">
+          <p>{{fullname}}</p>
+        </div>
+        <div class="id-user">
+          <p>Bạn bè : {{numberFriend}}</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="change-password">change password</button>
+
+    <div class="money">
+      <div class="card">
+        <div class="card-header">
+          <span class="logo"></span>
+          <span class="card-number">{{stk}}</span>
+          <span class="expiry">05/26</span>
+        </div>
+        <div class="balance-text">Balance:</div>
+        <div class="balance-amount">$ {{money}}</div>
+        <span class="new-badge">mâm 1</span>
+      </div>
+    </div>
+  </div>
+  <!-- Right Section -->
+  <div class="right-section">
+    <div class="menu-his">
+      <button class="hisbet" (click)="selectTab('lichSuCuoc')">Lịch sử cược</button>
+      <button class="hisbala" (click)="selectTab('lichSuThayDoi')">Lịch sử thay đổi số dư</button>
+    </div>
+    <div class="transaction-history" *ngIf="selectedTab === 'lichSuCuoc'">
+      <h2>Lịch sử cược</h2>
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Game Cược</th>
+            <th>Kết quả</th>
+            <th>Số tiền cược</th>
+            <th>Phần thưởng</th>
+            <th>Đặt cược</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lichSu of lichSuCuoc; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ lichSu.namegame }}</td>
+            <td>{{ lichSu.ketQua }}</td>
+            <td>{{ lichSu.soTienCuoc }}</td>
+            <td>{{ lichSu.phanThuong }}</td>
+            <td>{{ lichSu.datCuoc }}</td>
+            <td>{{ lichSu.timeoccurs | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+      <!-- <div class="pagination">
+        <button
+          *ngFor="let page of pages"
+          [class.active]="page === currentPage"
+          (click)="gotoPage(page)">
+          {{ page }}
+        </button>
+      </div>       -->
+    </div>
+    <div class="history-balance" *ngIf="selectedTab === 'lichSuThayDoi'">
+      <h2>Lịch sử thay đổi số dư</h2>
+      <table class="hisBalance">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Nội dung</th>
+            <th>Thay đổi số dư</th>
+            <th>Số dư</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lichSu of lichSuThayDoi; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ lichSu.content }}</td>
+            <td>{{ lichSu.trans }}</td>
+            <td>{{ lichSu.balance }}</td>
+            <td>{{ lichSu.timeChangeFormatted }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+   
+  </div>
+</div>
