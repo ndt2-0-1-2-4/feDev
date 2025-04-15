@@ -1,26 +1,125 @@
-<div class="home" >
-    <div class="football" (click)="FootballPage()">
-        <div class="match-card" *ngFor="let match of matches">
-            <div class="match-info">
-              <div class="match-time">
-                <span>{{ match.utcDate | date: 'HH:mm' }}</span>
-                <span>{{ match.utcDate | date: 'dd/MM' }}</span>
-              </div>
-              <div class="teams">
-                <div class="team">
-                  <img [src]="match.homeTeam.crest" class="team-logo" />
-                  <span>{{ match.homeTeam.name }}</span>
-                </div>
-                <div class="team">
-                  <img [src]="match.awayTeam.crest" class="team-logo" />
-                  <span>{{ match.awayTeam.name }}</span>
-                </div>
-              </div>
-            </div>
+<div class="home">
+  <div class="football" (click)="FootballPage()">
+    <div class="match-card" *ngFor="let match of matches">
+      <div class="match-info">
+        <div class="match-time">
+          <span>{{ match.utcDate | date : "HH:mm" }}</span>
+          <span>{{ match.utcDate | date : "dd/MM" }}</span>
         </div>
+        <div class="teams">
+          <div class="team">
+            <img [src]="match.homeTeam.crest" class="team-logo" />
+            <span>{{ match.homeTeam.name }}</span>
+          </div>
+          <div class="team">
+            <img [src]="match.awayTeam.crest" class="team-logo" />
+            <span>{{ match.awayTeam.name }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="lottery">xo so</div>
-    <div class="games">gamee</div>
-    <div class="last-played">lich su choi</div>
-    <div class="static">thong ke</div>
+  </div>
+  <div class="lottery" (click)="LotteryPage()">
+    <h2 style="color: white">XSMB - Kết quả xổ số miền Bắc - SXMB</h2>
+    <h3 style="color: white">
+      Kết quả xổ số ngày {{ selectedDate | date : "dd/MM/yyyy" }}
+    </h3>
+    <table class="lottery-table">
+      <tr>
+        <td>ĐB</td>
+        <td class="gdb">{{ lotteryData.gdb }}</td>
+      </tr>
+      <tr>
+        <td>G1</td>
+        <td>{{ lotteryData.g1 }}</td>
+      </tr>
+      <tr>
+        <td>G2</td>
+        <td>
+          <span *ngFor="let num of lotteryData.g2" class="number-block">
+            {{ num }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>G3</td>
+        <td>
+          <span *ngFor="let num of lotteryData.g3" class="number-block">
+            {{ num }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>G4</td>
+        <td>
+          <span *ngFor="let num of lotteryData.g4" class="number-block">
+            {{ num }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>G5</td>
+        <td>
+          <span *ngFor="let num of lotteryData.g5" class="number-block">
+            {{ num }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>G6</td>
+        <td>
+          <span *ngFor="let num of lotteryData.g6" class="number-block">
+            {{ num }}
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>G7</td>
+        <td>
+          <span *ngFor="let num of lotteryData.g7" class="number-block">
+            {{ num }}
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="games">
+    <div class="game-item">
+      <img
+        src="http://localhost:4200/icon-rr.jpg"
+        alt="Avatar game Reng Reng"
+        class="game-img"
+      />
+      <div class="game-title">Reng Reng</div>
+    </div>
+    <div class="game-item">
+      <img
+        src="http://localhost:4200/icon-chanle.png"
+        alt="Avatar game Chãn Lẻ"
+        class="game-img"
+      />
+      <div class="game-title">Chẵn Lẻ</div>
+    </div>
+    <div class="game-item">
+      <img
+        src="http://localhost:4200/icon-spaceman.jpg"
+        alt=""
+        class="game-img"
+      />
+      <div class="game-title">Spaceman</div>
+    </div>
+    <div class="game-item">
+      <img src="http://localhost:4200/icon-777.png" alt="" class="game-img" />
+      <div class="game-title">777</div>
+    </div>
+    <div class="game-item">
+      <img src="http://localhost:4200/icon-sport.png" alt="" class="game-img" />
+      <div class="game-title">Sport</div>
+    </div>
+    <div class="game-item">
+      <img src="http://localhost:4200/icon-xxmb.webp" alt="" class="game-img" />
+      <div class="game-title">Xổ Số</div>
+    </div>
+  </div>
+  <div class="static">thong ke</div>
 </div>
