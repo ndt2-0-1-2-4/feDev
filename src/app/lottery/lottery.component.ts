@@ -26,10 +26,15 @@ export class LotteryComponent {
   ) { }
 
   apiLottery = environment.apiLottery;
+  apiPlaceBet=environment.apiPlaceBet
+  apigetBethis=environment.apigetbetHisfbxs
 
   ngOnInit() {
     this.loadLotteryData();
   }
+
+  lotteryData: any = {};
+  selectedDate = new Date();
 
   loadLotteryData() {
     const dayStart = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd'); 
@@ -38,7 +43,21 @@ export class LotteryComponent {
     console.log("ok");
 
     this.http.get(apiUrl).subscribe({
-      next: (res) => {
+      next: (res: any) => {
+        const detailRaw = res?.t?.issueList?.[0]?.detail;
+      if (detailRaw) {
+        const parsed = JSON.parse(detailRaw);
+        this.lotteryData = {
+          gdb: parsed[0],
+          g1: parsed[1],
+          g2: parsed[2].split(','),
+          g3: parsed[3].split(','),
+          g4: parsed[4].split(','),
+          g5: parsed[5].split(','),
+          g6: parsed[6].split(','),
+          g7: parsed[7].split(',')
+        };
+      }
         console.log('Dữ liệu nhận về từ API:', res);
       },
       error: (err) => {
@@ -46,5 +65,5 @@ export class LotteryComponent {
       }
     });
   }
-
 }
+

@@ -19,7 +19,56 @@
             </div>
         </div>
     </div>
-    <div class="lottery">xo so</div>
+    <div class="lottery" (click)="LotteryPage()">
+      <h2 style="color: white;">XSMB - Kết quả xổ số miền Bắc - SXMB</h2>
+  <h3 style="color: white;">Kết quả xổ số ngày {{ selectedDate | date: 'dd/MM/yyyy' }}</h3>
+  <table class="lottery-table">
+    <tr>
+      <td>ĐB</td>
+      <td class="gdb">{{ lotteryData.gdb }}</td>
+    </tr>
+    <tr>
+      <td>G1</td>
+      <td>{{ lotteryData.g1 }}</td>
+    </tr>
+    <tr>
+      <td>G2</td>
+      <td><span *ngFor="let num of lotteryData.g2" class="number-block">
+        {{ num }}
+      </span></td>
+    </tr>
+    <tr>
+      <td>G3</td>
+      <td><span *ngFor="let num of lotteryData.g3" class="number-block">
+        {{ num }}
+      </span></td>
+    </tr>
+    <tr>
+      <td>G4</td>
+      <td><span *ngFor="let num of lotteryData.g4" class="number-block">
+        {{ num }}
+      </span></td>
+    </tr>
+    <tr>
+      <td>G5</td>
+      <td><span *ngFor="let num of lotteryData.g5" class="number-block">
+        {{ num }}
+      </span></td>
+    </tr>
+    <tr>
+      <td>G6</td>
+      <td><span *ngFor="let num of lotteryData.g6" class="number-block">
+        {{ num }}
+      </span></td>
+    </tr>
+    <tr>
+      <td>G7</td>
+      <td><span *ngFor="let num of lotteryData.g7" class="number-block">
+        {{ num }}
+      </span></td>
+    </tr>
+  </table>
+    </div>
     <div class="games">gamee</div>
     <div class="last-played">lich su choi</div>
     <div class="static">thong ke</div>

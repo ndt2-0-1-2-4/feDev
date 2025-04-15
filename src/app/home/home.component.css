@@ -111,8 +111,49 @@
     grid-column: span 3 / span 3;
     grid-row: span 3 / span 3;
     grid-column-start: 4;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.lottery::-webkit-scrollbar {
+  width: 0px;
+  position: absolute;
+  right: 0;
+}
+.lottery-wrapper {
+  /* max-width: 500px; */
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
 }
 
+.lottery-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent ;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.lottery-table td {
+  border: 1px solid white;
+  padding: 10px;
+  text-align: center;
+}
+
+.number-block {
+  margin-right: 15px;
+  display: inline-block;
+  font-weight: bold;
+  color: white;
+}
+.gdb {
+  font-size: 24px;
+  color: red;
+}
+
+
+
+/*******************************************/
 .games {
     grid-column: span 4 / span 4;
     grid-row: span 3 / span 3;
