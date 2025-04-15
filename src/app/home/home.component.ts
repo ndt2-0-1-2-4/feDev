@@ -86,4 +86,16 @@ export class HomeComponent implements OnInit {
   LotteryPage() {
     this.router.navigate(['/lottery']);
   }
+  Game777() {
+    this.router.navigate(['/game/slot777']);
+  }
+  GameMines() {
+    this.router.navigate(['/game/rr']);
+  }
+  GameSpaceman() {
+    this.router.navigate(['/game/spaceman']);
+  }
+  GameChanLe() {
+    this.router.navigate(['/game/cl']);
+  }
 }
