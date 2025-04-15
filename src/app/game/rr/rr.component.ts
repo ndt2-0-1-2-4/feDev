@@ -240,27 +240,27 @@ export class RrComponent implements OnInit {
   placeBet() {
     if (this.gameStarted) return; // Không cho phép cược lại khi chưa kết thúc ván trước
     if (parseInt(this.userService.getBalanceCookies()) >= this.betAmount) {
-      // let amount = 0 ;
-      // amount = - this.betAmount;
+      let amount = 0 ;
+      amount = - this.betAmount;
       this.money -= this.betAmount;
       this.userService.setBalanceCookies(this.money.toString());
       const goldElement = document.querySelector('.gold');
       if (goldElement) {
         goldElement.innerHTML = this.money.toString();
       }
-      // this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(response => {
-      //   console.log('Đã trừ tiền cược', response);
-      // }, error => {
-      //   console.error('Lỗi cập nhật số dư:', error);
-      // });
-      // const idPlayer = this.userService.getCookies();
-      // this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amount, this.money).subscribe(
-      //   response => {
-      //     console.log('Đã lưu lịch sử cược', response);
-      //   }, error => {
-      //     console.error('Lỗi lưu lịch sử cược:', error);
-      //   }
-      // );
+      this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(response => {
+        console.log('Đã trừ tiền cược', response);
+      }, error => {
+        console.error('Lỗi cập nhật số dư:', error);
+      });
+      const idPlayer = this.userService.getCookies();
+      this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amount, this.money).subscribe(
+        response => {
+          console.log('Đã lưu lịch sử cược', response);
+        }, error => {
+          console.error('Lỗi lưu lịch sử cược:', error);
+        }
+      );
 
       this.gameStarted = true;
       console.log(this.gameStarted)

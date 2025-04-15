@@ -4,9 +4,10 @@ import { FriendService } from '../service/friend.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { error } from 'node:console';
+import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-user',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule ,NgxPaginationModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -21,6 +22,8 @@ export class UserComponent {
   numberFriend: any = 0;
   friends: any[] = [];
   stk: any;
+  pages: number = 1;
+  itemsPerPage: number = 4; // Số mục trên mỗi trang
 
   lichSuCuoc: {
     namegame: string,
@@ -38,8 +41,6 @@ export class UserComponent {
     balance: number,
     timeChangeFormatted: string
   }[] = [];
-  pages: number[] = [];
-  currentPage: number = 1;
   selectedTab: 'lichSuCuoc' | 'lichSuThayDoi' = 'lichSuCuoc'; // Tab mặc định là 'lichSuCuoc'
 
 
@@ -72,9 +73,6 @@ export class UserComponent {
     );
 
   }
-  gotoPage(page: number) {
-    this.currentPage = page;
-  }
   selectTab(tab: 'lichSuCuoc' | 'lichSuThayDoi') {
     this.selectedTab = tab;
     if (tab === 'lichSuThayDoi') {
@@ -102,15 +100,17 @@ export class UserComponent {
       
             console.log("Chuỗi ban đầu:", item.timeoccurs);
             console.log("Date object đã chuyển:", parsedDate);
+            console.log("Lịch sử cược:", this.lichSuCuoc);
       
             return {
               namegame: item.nameGame,
               ketQua: item.result,
               soTienCuoc: item.bet,
               phanThuong: item.reward,
-              datCuoc: item.datCuoc,
+              datCuoc: item.choice,
               timeoccurs: parsedDate, // 👈 Date object
             };
+            
           });
         },
         (err: any) => {
