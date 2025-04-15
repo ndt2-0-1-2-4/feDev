@@ -100,15 +100,17 @@ export class UserComponent {
       
             console.log("Chuỗi ban đầu:", item.timeoccurs);
             console.log("Date object đã chuyển:", parsedDate);
+            console.log("Lịch sử cược:", this.lichSuCuoc);
       
             return {
               namegame: item.nameGame,
               ketQua: item.result,
               soTienCuoc: item.bet,
               phanThuong: item.reward,
-              datCuoc: item.datCuoc,
+              datCuoc: item.choice,
               timeoccurs: parsedDate, // 👈 Date object
             };
+            
           });
         },
         (err: any) => {

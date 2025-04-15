@@ -99,6 +99,21 @@ export class ClComponent implements OnInit {
               const rs = parsedMessage.result; // Kết quả: 0 => chẵn, 1 => lẻ
               const moneyBet = parsedMessage.bet; // Tiền cược
               const choiceBet = parsedMessage.choice; // Lựa chọn người chơi: 'chan' hoặc 'le'
+              this.userService.saveBetHis(
+                'Chẵn lẻ',
+                playerId,
+                rs,
+                moneyBet,
+                reward,
+                choiceBet
+              ).subscribe(
+                (response) => {
+                  console.log('Lưu lịch sử cược thành công:', response);
+                },
+                (error) => {
+                  console.error('Lỗi khi lưu lịch sử cược:', error);
+                }
+              );
               const goldElement = document.querySelector('.gold');
               const gold = goldElement?.textContent
               if(goldElement && gold && reward>0){
