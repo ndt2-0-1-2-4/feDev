@@ -145,12 +145,13 @@ p {
 
 /* bên phải */
 .right-section {
-  width: 70%;
+  width: 80%;
   padding: 10px;
   display: flex;
   flex-direction: column; /* Đặt các phần tử theo cột */
   align-items: center;
   height: 70%;
+  margin-top: 2vh;
 }
 
 .achievements {
@@ -209,6 +210,7 @@ p {
   box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
   height: 80%;
   border-radius: 20px;
+  /* margin-top: 2vh; */
 }
 
 .history-balance h2 {
@@ -240,31 +242,49 @@ td {
   color: white;
   animation: sparkle 1.5s infinite alternate;
   font-weight: bold;
+  font-size: 2vh;
 }
 
 th {
   background:transparent;
   color: white;
+  font-size: 2vh;
 }
 
 /* Căn chỉnh phần phân trang */
-.pagination {
-  margin-top: 10px;
+.pagination-container .ngx-pagination {
+  background-color: white;       /* Nền trắng */
+  padding: 10px;
+  border-radius: 8px;            /* Bo góc nếu muốn */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
+  color:white; /* Màu chữ trắng */
 }
 
-.pagination button {
-  background: transparent;
-  border: 1px solid white;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin: 2px;
+.pagination-container .ngx-pagination li {
+  margin: 0 4px;
+}
+
+.pagination-container .ngx-pagination li a,
+.pagination-container .ngx-pagination li span {
+  color: #fff;
+  background-color: #222;
+  border: 1px solid #555;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-container .ngx-pagination li a:hover {
+  background-color: #444;
+}
+
+.pagination-container .ngx-pagination li.current span {
+  background-color: #007bff;
   color: white;
+  border-color: #007bff;
 }
 
-.pagination button:hover {
-  background: #727070;
-}
+
 /* Phần menu-his */
 .menu-his {
   display: flex;
