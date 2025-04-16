@@ -1,11 +1,21 @@
-.lottery{
+.lottery-container {
     height: 65vh;
     width: 80%;
     left: 10%;
     top: 5rem;
     position: relative;
     border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
 }
+
+.lottery{
+    width: 65%;
+    height: 65vh;
+
+}
+
 
 .lottery-wrapper {
     /* max-width: 500px; */
@@ -14,7 +24,7 @@
   }
   
   .lottery-table {
-    width: 70%;
+    width: 100%;
     border-collapse: collapse;
     background-color: transparent ;
     color: white;
@@ -44,7 +54,7 @@
     padding: 20px;
     border-radius: 10px;
     color: white;
-    max-width: 400px;
+    width: 30%;
     margin: auto;
   }
   
@@ -64,7 +74,7 @@
   }
   
   .form-group input {
-    width: 100%;
+    width: 90%;
     padding: 8px;
     font-size: 16px;
     border-radius: 4px;
@@ -72,7 +82,7 @@
   }
   
   button[type="submit"] {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     background-color: red;
     color: white;

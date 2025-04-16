@@ -1,50 +1,69 @@
-<div class="lottery">
-  <h2 style="color: white;">XSMB - Kết quả xổ số miền Bắc - SXMB</h2>
-  <h3 style="color: white;">Kết quả xổ số ngày {{ selectedDate | date: 'dd/MM/yyyy' }}</h3>
-  <table class="lottery-table">
-    <tr>
-      <td>ĐB</td>
-      <td class="gdb">{{ lotteryData.gdb }}</td>
-    </tr>
-    <tr>
-      <td>G1</td>
-      <td>{{ lotteryData.g1 }}</td>
-    </tr>
-    <tr>
-      <td>G2</td>
-      <td><span *ngFor="let num of lotteryData.g2" class="number-block">
-        {{ num }}
-      </span></td>
-    </tr>
-    <tr>
-      <td>G3</td>
-      <td><span *ngFor="let num of lotteryData.g3" class="number-block">
-        {{ num }}
-      </span></td>
-    </tr>
-    <tr>
-      <td>G4</td>
-      <td><span *ngFor="let num of lotteryData.g4" class="number-block">
-        {{ num }}
-      </span></td>
-    </tr>
-    <tr>
-      <td>G5</td>
-      <td><span *ngFor="let num of lotteryData.g5" class="number-block">
-        {{ num }}
-      </span></td>
-    </tr>
-    <tr>
-      <td>G6</td>
-      <td><span *ngFor="let num of lotteryData.g6" class="number-block">
-        {{ num }}
-      </span></td>
-    </tr>
-    <tr>
-      <td>G7</td>
-      <td><span *ngFor="let num of lotteryData.g7" class="number-block">
-        {{ num }}
-      </span></td>
-    </tr>
-  </table>
+<div class="lottery-container">
+  <div class="lottery">
+    <h2 style="color: white;">XSMB - Kết quả xổ số miền Bắc - SXMB</h2>
+    <h3 style="color: white;">Kết quả xổ số ngày {{ selectedDate | date: 'dd/MM/yyyy' }}</h3>
+    <table class="lottery-table">
+      <tr>
+        <td>ĐB</td>
+        <td class="gdb">{{ lotteryData.gdb }}</td>
+      </tr>
+      <tr>
+        <td>G1</td>
+        <td>{{ lotteryData.g1 }}</td>
+      </tr>
+      <tr>
+        <td>G2</td>
+        <td><span *ngFor="let num of lotteryData.g2" class="number-block">
+          {{ num }}
+        </span></td>
+      </tr>
+      <tr>
+        <td>G3</td>
+        <td><span *ngFor="let num of lotteryData.g3" class="number-block">
+          {{ num }}
+        </span></td>
+      </tr>
+      <tr>
+        <td>G4</td>
+        <td><span *ngFor="let num of lotteryData.g4" class="number-block">
+          {{ num }}
+        </span></td>
+      </tr>
+      <tr>
+        <td>G5</td>
+        <td><span *ngFor="let num of lotteryData.g5" class="number-block">
+          {{ num }}
+        </span></td>
+      </tr>
+      <tr>
+        <td>G6</td>
+        <td><span *ngFor="let num of lotteryData.g6" class="number-block">
+          {{ num }}
+        </span></td>
+      </tr>
+      <tr>
+        <td>G7</td>
+        <td><span *ngFor="let num of lotteryData.g7" class="number-block">
+          {{ num }}
+        </span></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div class="lottery-bet">
+    <h4>Đặt cược xổ số</h4>
+    <form (ngSubmit)="submitBet()" #betForm="ngForm">
+      <div class="form-group">
+        <label for="number">Cược số:</label>
+        <input type="text" id="number" name="number" [(ngModel)]="betNumber" maxlength="2" pattern="[0-9]{2}" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="amount">Số tiền cược:</label>
+        <input type="number" id="amount" name="amount" [(ngModel)]="betAmount" min="1000" required />
+      </div>
+  
+      <button type="submit" [disabled]="!betForm.valid">Đặt cược</button>
+    </form>
+</div>
 </div>

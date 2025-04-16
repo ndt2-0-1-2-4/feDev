@@ -65,5 +65,31 @@ export class LotteryComponent {
       }
     });
   }
+  betNumber: string = '';
+  betAmount: number = 1000;
+
+  submitBet() {
+    // Kiểm tra định dạng cược số (2 chữ số)
+    const validNumber = /^\d{2}$/.test(this.betNumber);
+    const validAmount = this.betAmount >= 1000;
+
+    if (!validNumber) {
+      alert('Vui lòng nhập đúng 2 chữ số!');
+      return;
+    }
+
+    if (!validAmount) {
+      alert('Số tiền tối thiểu là 1000!');
+      return;
+    }
+
+    // Nếu hợp lệ
+    alert(`Bạn đã đặt cược số ${this.betNumber} với số tiền ${this.betAmount.toLocaleString()}đ`);
+
+    // Reset form sau khi cược
+    this.betNumber = '';
+    this.betAmount = 1000;
+  }
 }
+
 
