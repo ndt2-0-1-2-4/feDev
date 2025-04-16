@@ -1,196 +1,356 @@
+/* Sidebar Left */
 .sidebar.left {
-    position: absolute;
-    top: 50%;
-    left: 1.5%;
-    transform: translateY(-50%);
-    background: #2B0E0E;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    height: 90%;
-    border-radius: 30px;
-    width: 5.7%; /* Mặc định sidebar nhỏ */
-    transition: width 0.3s ease-in-out;
-    overflow: hidden;
-    white-space: nowrap;
-    z-index: 999;
+  position: fixed;
+  top: 50%;
+  left: 1.5%;
+  transform: translateY(-50%);
+  background: #2B0E0E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  height: 90%;
+  border-radius: 30px;
+  width: 60px; /* Fixed width to ensure icons are visible */
+  transition: width 0.3s ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 999;
 }
 
 .sidebar.left:hover {
-    width: 18%; /* Mở rộng sidebar khi hover */
-    align-items: flex-start;
-    padding-left: 2%;
+  width: 200px; /* Expand sidebar on hover */
+  align-items: flex-start;
+  padding-left: 15px;
 }
 
-/* Định dạng logo */
+/* Logo */
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 20px;
-    text-align: center;
-    width: 1ch;
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
-    transition: width 0.3s ease-in-out;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+  display: inline-block;
+  transition: width 0.3s ease-in-out;
 }
 
-/* Đảm bảo logo vẫn nằm giữa khi mở rộng
-.sidebar.left:hover .logo {
-    width: 100%;
-    text-align: left;
-} */
 .sidebar.left .logo::before {
-    content: "S";
+  content: "S";
 }
 
 .sidebar.left:hover .logo::before {
-    content: "SBCB";
+  content: "SBCB";
 }
 
-/* Tạo hiệu ứng typing */
 .sidebar.left .logo {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 1ch;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 1ch;
 }
 
 .sidebar.left:hover .logo {
-    width: 5.5ch; /* Đủ chỗ cho SBCB */
-    animation: typing 1.5s steps(20) infinite alternate;
+  width: 5.5ch; /* Enough space for SBCB */
+  animation: typing 1.5s steps(20) infinite alternate;
 }
 
 @keyframes typing {
-    from {
-        width: 1ch;
-    }
-    to {
-        width: 5.5ch;
-    }
+  from {
+    width: 1ch;
+  }
+  to {
+    width: 5.5ch;
+  }
 }
 
-/* Định dạng danh sách */
+/* Navigation */
 .sidebar nav {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .sidebar nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Căn trái khi mở rộng */
-    width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items in collapsed state */
+  width: 100%;
+}
+
+.sidebar.left:hover nav ul {
+  align-items: flex-start; /* Align to left when expanded */
 }
 
 .sidebar nav ul li {
-    display: flex;
-    align-items: center;
-    padding: 15px ;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-    color: white;
-    transition: background 0.3s, padding-left 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center content in collapsed state */
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  color: white;
+  transition: background 0.3s, padding-left 0.5s ease-in-out;
+}
+
+.sidebar.left:hover nav ul li {
+  justify-content: flex-start; /* Align content to left when expanded */
 }
 
 .sidebar nav ul li:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
 
 /* Icon */
-.sidebar nav ul li a { 
-    font-size: 20px;
-    width: 50%;
-    text-align: center;
-    flex-shrink: 0;
-    display: flex;
+.sidebar nav ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Fixed width for icons in collapsed state */
+  height: 40px;
+  flex-shrink: 0;
 }
 
 .sidebar.left:hover nav ul li a {
-    width: 15%;/* Giữ nguyên kích thước khi hover */
-} 
+  width: 40px; /* Keep icon size consistent when expanded */
+}
 
+/* Font Awesome Icons */
+.sidebar i {
+  font-size: 24px; /* Size of Font Awesome icons */
+  color: #ada9a9; /* Match the previous SVG fill color */
+  flex-shrink: 0;
+  display: block; /* Ensure icons are visible */
+}
 
-/* Ẩn chữ khi không hover */
+/* Text Labels */
 .sidebar nav ul li span {
-    opacity: 0;
-    width: 0%;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  white-space: nowrap;
+  margin-left: 10px; /* Add spacing between icon and text */
 }
 
-/* Hiện chữ khi hover vào sidebar */
 .sidebar.left:hover nav ul li span {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
+/* Exit Button */
 .exit {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    justify-content: center;
-}
-
-.exit a {
-    display: flex;
-    align-items: center;
-    width: 30px;
-}
-
-.exit span {
-    font-size: 20px;
-    margin-left: 10px; 
-    opacity: 0;
-    width: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    white-space: nowrap;
-}
-
-.exit:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-}
-
-.exit:hover span {
-    font-size: 20px;
-    margin-left: 10px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .sidebar.left:hover .exit {
-    opacity: 1;
-    visibility: visible;
-    width: auto; 
-    color: white;
-}
-.sidebar.left:hover .exit span {
-    opacity: 1;
-    opacity: 1;
-    visibility: visible;
-    width: auto; 
-    color: white;
+  justify-content: flex-start; /* Align to left when expanded */
 }
 
+.exit a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.exit span {
+  font-size: 20px;
+  margin-left: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  white-space: nowrap;
+}
+
+.exit:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.sidebar.left:hover .exit span {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive Adjustments */
+
+/* Large Screens (1400px and above) */
 @media (min-width: 1400px) {
-    .sidebar.left {
-        width: 4%;
-    }
-    .sidebar.left:hover {
-        width: 12%;
-    }
+  .sidebar.left {
+    width: 60px;
+  }
+  .sidebar.left:hover {
+    width: 200px;
+  }
+}
+
+/* Tablets (1024px and below) */
+@media (max-width: 1024px) {
+  .sidebar.left {
+    width: 50px;
+    height: 80%;
+    left: 1%;
+  }
+  .sidebar.left:hover {
+    width: 180px;
+  }
+  .sidebar nav ul li {
+    padding: 12px;
+  }
+  .exit {
+    padding: 12px;
+  }
+  .logo {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  .sidebar i {
+    font-size: 20px;
+  }
+  .sidebar nav ul li a,
+  .exit a {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Mobile Devices (768px and below) */
+@media (max-width: 768px) {
+  .sidebar.left {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    border-radius: 0;
+    background: #2B0E0E;
+  }
+
+  /* Remove hover effect on mobile */
+  .sidebar.left:hover {
+    width: 100%;
+    align-items: center;
+    padding-left: 0;
+  }
+
+  /* Logo Adjustments */
+  .logo {
+    display: none; /* Hide logo on mobile */
+  }
+
+  /* Navigation Adjustments */
+  .sidebar nav {
+    flex: none;
+    width: auto;
+  }
+
+  .sidebar nav ul {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+  }
+
+  .sidebar.left:hover nav ul {
+    align-items: center; /* Keep centered on mobile */
+  }
+
+  .sidebar nav ul li {
+    padding: 10px;
+    font-size: 14px;
+    width: auto;
+    justify-content: center;
+  }
+
+  .sidebar.left:hover nav ul li {
+    justify-content: center; /* Keep centered on mobile */
+  }
+
+  .sidebar nav ul li a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar.left:hover nav ul li a {
+    width: 40px;
+  }
+
+  /* Hide text labels on mobile */
+  .sidebar nav ul li span {
+    display: none;
+  }
+
+  .sidebar.left:hover nav ul li span {
+    display: none;
+  }
+
+  /* Exit Button Adjustments */
+  .exit {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .exit a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar.left:hover .exit {
+    justify-content: center;
+  }
+
+  .exit span {
+    display: none;
+  }
+
+  .sidebar.left:hover .exit span {
+    display: none;
+  }
+
+  .sidebar i {
+    font-size: 20px;
+  }
+}
+
+/* Small Mobile Devices (480px and below) */
+@media (max-width: 480px) {
+  .sidebar.left {
+    height: 50px;
+  }
+
+  .sidebar nav ul li {
+    padding: 8px;
+  }
+
+  .exit {
+    padding: 8px;
+  }
+
+  .sidebar i {
+    font-size: 18px;
+  }
+
+  .sidebar nav ul li a,
+  .exit a {
+    width: 36px;
+    height: 36px;
+  }
 }
