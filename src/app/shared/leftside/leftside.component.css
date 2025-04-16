@@ -70,7 +70,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
 }
 
 .sidebar nav ul {
@@ -116,14 +117,17 @@
   width: 40px; /* Fixed width for icons in collapsed state */
   height: 40px;
   flex-shrink: 0;
+  text-align: center;
 }
 
 .sidebar.left:hover nav ul li a {
   width: 40px; /* Keep icon size consistent when expanded */
+  
 }
 
 /* Font Awesome Icons */
 .sidebar i {
+  margin-left: 55px;
   font-size: 24px; /* Size of Font Awesome icons */
   color: #ada9a9; /* Match the previous SVG fill color */
   flex-shrink: 0;
@@ -209,10 +213,7 @@
     width: 180px;
   }
   .sidebar nav ul li {
-    padding: 12px;
-  }
-  .exit {
-    padding: 12px;
+    padding: 0;
   }
   .logo {
     font-size: 20px;

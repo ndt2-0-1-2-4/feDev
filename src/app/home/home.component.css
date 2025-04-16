@@ -234,7 +234,7 @@
 /* Games Section */
 .games {
   grid-column: span 3;
-  grid-row: 6 / span 3; /* Adjusted to match the layout */
+  grid-row: span 2; /* Adjusted to match the layout */
   display: flex;
   flex-direction: row;
   overflow-x: auto;
