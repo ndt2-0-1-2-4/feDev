@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
             g4: parsed[4].split(','),
             g5: parsed[5].split(','),
             g6: parsed[6].split(','),
-            g7: parsed[7].split(',')
+            g7: parsed[7].split(','),
           };
         }
   

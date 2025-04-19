@@ -1,90 +1,287 @@
+/* Container */
 .trans-money {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 30%;
+  background: linear-gradient(135deg, #ffffff, #f0f4f8);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  width: 400px;
+  max-width: 90%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 2%;
+  margin-top: 2rem;
+  transition: all 0.3s ease;
 }
+
+/* Heading */
 .trans-money h2 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+  letter-spacing: 0.5px;
 }
-.note {
-  font-size: 1rem;
-  color: #ff0000;
-  text-align: center;
-}
+
+/* Notification Messages */
+.note,
+.note3,
 .msg {
-  font-size: 1rem;
-  color: #ff0000;
+  font-size: 0.9rem;
+  color: #e53e3e;
+  text-align: center;
+  margin-top: 0.5rem;
+  display: block;
 }
-.note3 {
-  font-size: 1rem;
-  color: #ff0000;
-}
-.username {
-  background-color: #d1d1d1;
-}
+
+/* Form Group */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
+
 .form-group label {
   display: block;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 0.5rem;
   color: #4a5568;
+  font-size: 1rem;
 }
+
+/* Input, Textarea, and Username Div */
 .form-group input,
 .form-group textarea,
-.form-group div {
+.form-group .username {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 0.375rem;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
   font-size: 1rem;
-  color: #4a5568;
+  color: #2d3748;
   box-sizing: border-box;
-  min-height: 2rem;
+  background-color: #f7fafc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.form-group .username {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+/* Remove number input arrows */
 #amount::-webkit-inner-spin-button,
 #amount::-webkit-outer-spin-button {
   -webkit-appearance: none;
+  margin: 0;
 }
+
+
+/* Focus States */
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #3182ce;
-  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.6);
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
 }
+
+/* Textarea */
 .form-group textarea {
   resize: none;
+  min-height: 80px;
 }
+
+/* Submit Button */
 .submit-btn {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #3182ce;
+  padding: 0.85rem;
+  background: linear-gradient(90deg, #4299e1, #3182ce);
   color: #ffffff;
   border: none;
-  border-radius: 0.375rem;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
 }
+
 .submit-btn:hover {
-  background-color: #1f7046;
+  background: linear-gradient(90deg, #3182ce, #2b6cb0);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
 }
+
 .submit-btn:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.6);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.4);
 }
+
 .submit-btn:disabled {
-  background-color: #d1d1d1;
+  background: #e2e8f0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive Design */
+
+/* Tablets (1024px and below) */
+@media (max-width: 1024px) {
+  .trans-money {
+    width: 350px;
+    padding: 1.5rem;
+  }
+
+  .trans-money h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group .username {
+    padding: 0.65rem;
+    font-size: 0.95rem;
+  }
+
+  .submit-btn {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile Devices (768px and below) */
+@media (max-width: 768px) {
+  .trans-money {
+    width: 90%;
+    max-width: 400px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .trans-money h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group label {
+    font-size: 0.95rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group .username {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .form-group textarea {
+    min-height: 70px;
+  }
+
+  .submit-btn {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .note,
+  .note3,
+  .msg {
+    font-size: 0.85rem;
+  }
+}
+
+/* Small Mobile Devices in Portrait (480px and below) */
+@media (max-width: 480px) {
+  .trans-money {
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .trans-money h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group .username {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .form-group textarea {
+    min-height: 60px;
+  }
+
+  .submit-btn {
+    padding: 0.65rem;
+    font-size: 0.9rem;
+  }
+
+  .note,
+  .note3,
+  .msg {
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile Devices in Landscape (max-height: 500px and orientation: landscape) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .trans-money {
+    width: 90%;
+    max-width: 600px; /* Wider to utilize landscape width */
+    padding: 0.75rem; /* Reduced padding to save vertical space */
+    margin-top: 0; /* Remove margin to fit within viewport */
+    max-height: 51vh; /* Limit height to viewport */
+    overflow-y: auto; /* Allow scrolling if needed */
+  }
+
+  .trans-money h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-group {
+    margin-bottom: 0.75rem; /* Tighter spacing */
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group .username {
+    padding: 0.4rem; /* Reduced padding */
+    font-size: 0.8rem;
+    min-height: 30px; /* Smaller input height */
+  }
+
+  .form-group textarea {
+    min-height: 40px; /* Smaller textarea height */
+  }
+
+  .submit-btn {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .note,
+  .note3,
+  .msg {
+    font-size: 0.75rem;
+    margin-top: 0.3rem;
+  }
 }
