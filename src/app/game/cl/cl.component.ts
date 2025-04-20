@@ -1,12 +1,12 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgZone } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { WebSocketService } from '../../service/socket.service';
 import { userService } from '../../service/users.service';
 import { AtmService } from '../../service/atm.service';
 import { GameService } from '../../service/game.service';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-cl',
   imports: [NgIf,NgFor,CommonModule],
@@ -43,11 +43,11 @@ export class ClComponent implements OnInit {
   messages: any[] = [];
   isLoadHis= true;
   constructor(
-    private  zone : NgZone,
     private socket: WebSocketService,
     private userService: userService,
     private gameService: GameService,
-    private atmService: AtmService
+    private atmService: AtmService,
+    private toastr: ToastrService
   ){}
   ngOnInit(): void {
     let idUser: any = this.userService.getCookies();
@@ -58,9 +58,6 @@ export class ClComponent implements OnInit {
         if(messageData.message ===-1) this.isLoadHis = false
         const parsedMessage = JSON.parse(messageData.message);
         if (messageData.url === this.urlSocketCl) {
-          if (!this.isConnected) {
-            console.log(messageData.message)
-          }
           switch (parsedMessage.type) {
             case 'infobet':
               this.isConnected = true;
@@ -93,21 +90,23 @@ export class ClComponent implements OnInit {
               this.taiAmount = Number(parts[2]);
               break;
             case 'reward':
-              console.log(messageData)
               const reward: number = Number(parsedMessage.reward);
               let playerId = this.userService.getCookies();
-              const rs = parsedMessage.result; // Kết quả: 0 => chẵn, 1 => lẻ
+              const rs :string = parsedMessage.result.join(':'); 
               const moneyBet = parsedMessage.bet; // Tiền cược
-              const choiceBet = parsedMessage.choice; // Lựa chọn người chơi: 'chan' hoặc 'le'
+              const choiceBet = parsedMessage.choice;
               const goldElement = document.querySelector('.gold');
               const gold = goldElement?.textContent
               if(goldElement && gold && reward>0){
                 let tempGold=parseInt(gold,10)+reward*2
-                goldElement.textContent = tempGold.toString();
+                timer(5000).subscribe(() => {
+                  goldElement.textContent = tempGold.toString(); // Cập nhật biến component
+                  this.toastr.success('Chúc mừng thiếu chủ', 'Thông báo');
+                });
                 this.atmService.updateBalan(reward*2,this.userService.getCookies()).subscribe()
                 this.atmService.saveHisBalance(this.userService.getCookies(),"Trả thưởng Tài xỉu",reward*2,tempGold).subscribe()
               }
-
+              this.userService.saveBetHis("Tài xỉu",playerId,rs,moneyBet,reward*2,choiceBet).subscribe()
               break;
               
           }
@@ -137,11 +136,14 @@ export class ClComponent implements OnInit {
       this.history=this.history.slice().reverse()
       }
     )
-    this.isLoadHis=false
+    if(this.countdown>0){
+      this.isLoadHis=false
+    }
   }
   reset(): void {
     this.cancelBet()
-
+    this.xiuBetDisplay=-1
+    this.taiBetDisplay=-1
   }
   toggleBet(type: string): void {
     if ( this.taiBetDisplay !== -1 || this.xiuBetDisplay !== -1 || !this.isCountingDown ) {
@@ -172,7 +174,7 @@ export class ClComponent implements OnInit {
     }
     const gold = parseInt(goldElement.textContent || '0', 10);
     if (this.tempBetAmount + amount > gold) {
-      alert("Số dư không đủ");
+      this.toastr.warning("Số dư không đủ", "Thông báo")
       return;
     }
     this.tempBetAmount += amount;
@@ -185,9 +187,9 @@ export class ClComponent implements OnInit {
   }
 
   placeBet(): void {
-    if(this.selectedBetType='tai'){
+    if(this.selectedBetType==='tai'){
       this.taiAmount += this.tempBetAmount;
-    } else if(this.selectedBetType ='xiu'){
+    } else if(this.selectedBetType ==='xiu'){
       this.xiuAmount += this.tempBetAmount;
     }
     this.showOptionsAndActions = false;
@@ -315,17 +317,6 @@ export class ClComponent implements OnInit {
         [...animation, { transform: finalTransform }],
         timing
       );
-      // Only add finish event listener to the last dice
-      if (dice.element === this.dice3.nativeElement) {
-        diceAnimation.addEventListener('finish', () => {
-          
-          if (this.totalScore > 10) {
-              this.chanElement.nativeElement.classList.add('blink-animation');
-          } else {
-              this.leElement.nativeElement.classList.add('blink-animation');
-          }
-        });
-      }
     });
   }
   addToHistory(betType: string): void {
