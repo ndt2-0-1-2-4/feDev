@@ -160,26 +160,8 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.signInAccount, this.signInPassword).subscribe(
       (data) => {
         this.cookieService.set(
-          'fullname',
-          this.userService.encryptData(data.fullname),
-          {
-            expires: 1,
-            secure: true,
-            sameSite: 'Strict',
-          }
-        );
-        this.cookieService.set(
           'id',
           this.userService.encryptData(data.id.toString()),
-          {
-            expires: 1,
-            secure: true,
-            sameSite: 'Strict',
-          }
-        );
-        this.cookieService.set(
-          'balance',
-          this.userService.encryptData(data.balance.toString()),
           {
             expires: 1,
             secure: true,

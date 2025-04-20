@@ -1,31 +1,898 @@
-* {
+/* Import Montserrat font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+:host {
+  display: block;
+  height: 100vh;
   margin: 0;
   padding: 0;
-}
-body {
-  background-attachment: fixed;
+  background: linear-gradient(135deg, #1a0033, #330066);
   overflow: hidden;
 }
+
+/* Main container */
 main {
-  position: relative;
-  left: 10%;
-  top: 8%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 80%;
   height: 84%;
-  border-radius: 35px;
-  box-shadow: 0px 16px 18px 7px #946869;
+  border-radius: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.2);
   overflow: hidden;
-  background: linear-gradient(45deg, #8d0000, #44006b, #270164, #010433);
-  animation: backgroundAnimation 4s infinite ease;
-  background-size: 500%;
-  overflow-y: scroll;
+  background: linear-gradient(45deg, #2a2a72, #009ffd);
+  background-size: 200%;
+  overflow-y: auto;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
 }
-@keyframes backgroundAnimation {
-  0%,
-  100% {
-    background-position: 0% 50%;
+
+/* Game Header */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.welcome-text {
+  color: #fff;
+  font-size: 1rem;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 500;
+}
+
+.coin-info {
+  color: #ffd700;
+  font-size: 1rem;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.history-btn, .profile-btn {
+  background: linear-gradient(to bottom, #f6ad55, #d69e2e);
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  font-size: 0.9rem;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.history-btn:hover, .profile-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Outer table */
+.cl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  user-select: none;
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+}
+
+/* Background circle with a premium wooden texture */
+.circle-bg {
+  background-image: linear-gradient(135deg, rgba(139, 69, 19, 0.8), rgba(92, 51, 23, 0.8)), 
+                    url("http://localhost:4200/pngtree-brown-wooden-texture-polished-vector-background-image_306870.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 50%;
+  border-radius: 130px;
+  position: relative;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  max-width: 100%;
+}
+
+/* Inner circle with a refined wooden texture */
+.inner-circle {
+  background: radial-gradient(circle, #ffffff, #e0e0e0);
+  width: 30%;
+  height: 60%;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  max-height: 90%;
+}
+
+/* Dice bowl with a glowing effect */
+.black-circle {
+  background: radial-gradient(circle, #ffffff, #d0d0d0);
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Dice cover with a golden texture and glow */
+.yellow-circle {
+  background: radial-gradient(circle, #e6e6fa, #d8bfd8);
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.yellow-circle:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.disabled {
+  cursor: not-allowed !important;
+}
+
+.countdown {
+  color: #4b0082;
+  font-size: 2.5rem;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 700;
+}
+
+button {
+  cursor: pointer;
+}
+
+span {
+  user-select: none;
+}
+
+.bet_chan, .bet_le {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+}
+
+/* Even/Odd circles with a glowing effect */
+.circle {
+  background: radial-gradient(circle, #ffffff, #d0d0d0);
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  width: 15%;
+  height: 30%;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.chan-circle {
+  color: #4b0082;
+  font-size: 2rem;
+  bottom: 50%;
+  left: -7rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+}
+
+.le-circle {
+  color: #4b0082;
+  font-size: 2rem;
+  bottom: 50%;
+  right: -7rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-weight: 700;
+}
+
+@keyframes blink {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 5px #ffd700, 0 0 15px rgba(255, 215, 0, 0.5);
   }
   50% {
-    background-position: 100% 50%;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.8);
+  }
+}
+
+.blink-animation {
+  animation: blink 0.7s infinite;
+}
+
+/* Player count with a sleek design */
+.people {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffd700;
+}
+
+.icon-left {
+  left: 0;
+  margin: 0 0.5rem;
+}
+
+.icon-right {
+  right: 0;
+  margin: 0 0.5rem;
+}
+
+.text {
+  margin: 0 1.1rem;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 500;
+}
+
+/* Bet amount with a luxurious design */
+.number {
+  display: flex;
+  padding: 10px 20px;
+  background: radial-gradient(circle, #ff4040, #8b0000);
+  border-radius: 9999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  position: absolute;
+  font-weight: 600;
+}
+
+#sum_chan {
+  left: -5rem;
+  bottom: -1rem;
+}
+
+#sum_le {
+  right: -5rem;
+  bottom: -1rem;
+}
+
+/* History results with a modern look */
+.his-rs {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.black {
+  background-color: #000;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+.white {
+  background-color: #fff;
+  color: #000;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 5px;
+}
+
+p {
+  color: #fff;
+  font-size: 0.5rem;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+}
+
+/* Bet input with a sleek design */
+.money-input {
+  width: 150px;
+  padding: 8px;
+  border: 2px solid #ffd700;
+  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 500;
+}
+
+.bet_chan .money-input {
+  left: -5rem;
+  bottom: -2.5rem;
+}
+
+.bet_le .money-input {
+  right: -5rem;
+  bottom: -2.5rem;
+}
+
+/* Bet buttons with a luxurious gradient */
+.betValue {
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  border: none;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 600;
+}
+
+.chan-bet {
+  background: linear-gradient(to bottom, #4a4a4a, #2d2d2d);
+  left: -5rem;
+  bottom: -5rem;
+}
+
+.le-bet {
+  background: linear-gradient(to bottom, #4a4a4a, #2d2d2d);
+  right: -5rem;
+  bottom: -5rem;
+}
+
+.betValue:hover {
+  transform: scale(1.05);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Bet options with a modern design */
+.options {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.options button {
+  background: linear-gradient(to bottom, #4a4a4a, #2d2d2d);
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 600;
+}
+
+.options button:hover {
+  transform: scale(1.05);
+}
+
+/* Action buttons with vibrant colors */
+.action {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action button {
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  border: none;
+  transition: transform 0.2s ease;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-weight: 600;
+}
+
+.action button:hover {
+  transform: scale(1.05);
+}
+
+.all-in {
+  background: linear-gradient(to bottom, #9f7aea, #6b46c1);
+}
+
+.dat-cuoc {
+  background: linear-gradient(to bottom, #f6ad55, #d69e2e);
+}
+
+.huy {
+  background: linear-gradient(to bottom, #f56565, #e53e3e);
+}
+
+/* Dice with a realistic design */
+.dice1 {
+  position: relative;
+  width: 25%;
+  height: 50%;
+  transform-style: preserve-3d;
+  transition: 1s ease;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes rolling {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(720deg) rotateY(720deg) rotateZ(720deg);
+  }
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 5px solid #f6f3f0;
+  transform-style: preserve-3d;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.face::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: #f6f3f0;
+  transform: translateZ(-1px);
+}
+
+.face::after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1c2526;
+}
+
+.front {
+  transform: translateZ(50px);
+}
+
+.back {
+  transform: rotateX(180deg) translateZ(50px);
+}
+
+.top {
+  transform: rotateX(90deg) translateZ(50px);
+}
+
+.bot {
+  transform: rotateX(-90deg) translateZ(50px);
+}
+
+.right {
+  transform: rotateY(90deg) translateZ(50px);
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(50px);
+}
+
+.front::after {
+  width: 30px;
+  height: 30px;
+  background: #ff4444;
+  margin: -15px 0 0 -15px;
+}
+
+.back::after {
+  margin: -35px 0 0 -30px;
+  box-shadow: 40px 0, 0 25px, 40px 25px, 0 50px, 40px 50px;
+}
+
+.top::after {
+  margin: -30px 0 0 -30px;
+  box-shadow: 40px 40px;
+}
+
+.bot::after {
+  margin: -36px 0 0 -36px;
+  box-shadow: 26px 26px, 52px 52px, 52px 0, 0 52px;
+}
+
+.right::after {
+  margin: -30px 0 0 -30px;
+  box-shadow: 40px 0, 0px 40px, 40px 40px;
+}
+
+.left::after {
+  margin: -35px 0 0 -35px;
+  box-shadow: 25px 25px, 50px 50px;
+}
+
+/* Responsive Design */
+
+/* Tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  main {
+    width: 90%;
+    height: 80%;
+  }
+
+  .cl {
+    padding: 1.5rem;
+  }
+
+  .circle-bg {
+    height: 40%;
+    border-radius: 100px;
+  }
+
+  .inner-circle {
+    width: 40%;
+    height: 50%;
+  }
+
+  .black-circle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .yellow-circle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .circle {
+    width: 20%;
+    height: 40%;
+  }
+
+  .chan-circle {
+    font-size: 1.5rem;
+    left: -5rem;
+  }
+
+  .le-circle {
+    font-size: 1.5rem;
+    right: -5rem;
+  }
+
+  .countdown {
+    font-size: 2rem;
+  }
+
+  #sum_chan {
+    left: -4rem;
+    bottom: -1rem;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  #sum_le {
+    right: -4rem;
+    bottom: -1rem;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .bet_chan .money-input {
+    left: -4rem;
+    bottom: -2rem;
+  }
+
+  .bet_le .money-input {
+    right: -4rem;
+    bottom: -2rem;
+  }
+
+  .chan-bet {
+    left: -4rem;
+    bottom: -4rem;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .le-bet {
+    right: -4rem;
+    bottom: -4rem;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .people {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .people .text {
+    margin: 0 1rem;
+  }
+
+  .dice1 {
+    width: 20%;
+    height: 40%;
+  }
+}
+
+/* Mobile devices (max-width: 768px) */
+@media (max-width: 768px) {
+  main {
+    width: 95%;
+    height: 80%;
+  }
+
+  .cl {
+    padding: 1rem;
+  }
+
+  .circle-bg {
+    height: 30%;
+    border-radius: 60px;
+  }
+
+  .inner-circle {
+    width: 50%;
+    height: 40%;
+  }
+
+  .black-circle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .yellow-circle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .circle {
+    width: 25%;
+    height: 40%;
+  }
+
+  .chan-circle {
+    font-size: 1.2rem;
+    left: -4rem;
+  }
+
+  .le-circle {
+    font-size: 1.2rem;
+    right: -4rem;
+  }
+
+  .countdown {
+    font-size: 1.5rem;
+  }
+
+  #sum_chan {
+    left: -3rem;
+    bottom: -0.5rem;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  #sum_le {
+    right: -3rem;
+    bottom: -0.5rem;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .bet_chan .money-input {
+    left: -3rem;
+    bottom: -1.5rem;
+  }
+
+  .bet_le .money-input {
+    right: -3rem;
+    bottom: -1.5rem;
+  }
+
+  .chan-bet {
+    left: -3rem;
+    bottom: -3rem;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .le-bet {
+    right: -3rem;
+    bottom: -3rem;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .people {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.3rem;
+  }
+
+  .people .text {
+    margin: 0 0.8rem;
+  }
+
+  .options button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .action button {
+    font-size: 0.9rem;
+    padding: 6px 18px;
+  }
+
+  .dice1 {
+    width: 15%;
+    height: 30%;
+  }
+}
+
+/* Small mobile devices (max-width: 480px) */
+@media (max-width: 480px) {
+  main {
+    width: 98%;
+    height: 80%;
+  }
+
+  .circle-bg {
+    height: 25%;
+    border-radius: 40px;
+  }
+
+  .inner-circle {
+    width: 60%;
+    height: 35%;
+  }
+
+  .black-circle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .yellow-circle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .circle {
+    width: 30%;
+    height: 40%;
+  }
+
+  .chan-circle {
+    font-size: 1rem;
+    left: -3rem;
+  }
+
+  .le-circle {
+    font-size: 1rem;
+    right: -3rem;
+  }
+
+  .countdown {
+    font-size: 1.2rem;
+  }
+
+  #sum_chan {
+    left: -2rem;
+    bottom: 0;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  #sum_le {
+    right: -2rem;
+    bottom: 0;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .bet_chan .money-input {
+    left: -2rem;
+    bottom: -1rem;
+  }
+
+  .bet_le .money-input {
+    right: -2rem;
+    bottom: -1rem;
+  }
+
+  .chan-bet {
+    left: -2rem;
+    bottom: -2rem;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .le-bet {
+    right: -2rem;
+    bottom: -2rem;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  .people {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.2rem;
+  }
+
+  .people .text {
+    margin: 0 0.6rem;
+  }
+
+  .options button {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+
+  .action button {
+    font-size: 0.8rem;
+    padding: 4px 12px;
+  }
+
+  .dice1 {
+    width: 10%;
+    height: 20%;
   }
 }
