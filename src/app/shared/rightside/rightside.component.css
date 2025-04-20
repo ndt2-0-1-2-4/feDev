@@ -1,5 +1,5 @@
 .sidebar_right_container {
-    position: absolute;
+    position: fixed;
     top: 50%;
     right: 1.5%;
     transform: translateY(-50%);
