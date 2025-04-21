@@ -418,22 +418,9 @@ export class RrComponent implements OnInit, AfterViewInit{
 
       // Thêm vào lịch sử chơi
       this.addHistory(this.betAmount, this.lastWinning);
-      this.userService.saveBetHis("Reng Reng", this.money, 'Win', this.betAmount, this.lastWinning, '').subscribe(
-        response => {
-          console.log('Đã lưu lịch sử chơi', response);
-        }, error => {
-          console.error('Lỗi lưu lịch sử chơi:', error);
-        }
-      );
 
       // Ghi lại lịch sử chơi
-      // this.userService.saveBetHis('Reng Reng', this.userService.getCookies(), '', 'Thắng', this.betAmount, this.lastWinning).subscribe(
-      //   response => {
-      //     console.log('Đã lưu lịch sử chơi', response);
-      //   }, error => {
-      //     console.error('Lỗi lưu lịch sử chơi:', error);
-      //   }
-      // );
+      this.userService.saveBetHis('Reng Reng', this.userService.getCookies(), 'Thắng', this.betAmount, this.lastWinning + this.betAmount,"").subscribe();
 
       // Gọi API cập nhật số dư
       const idPlayer = this.userService.getCookies();
