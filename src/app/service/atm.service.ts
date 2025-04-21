@@ -36,6 +36,12 @@ export class AtmService {
     return this.httpClient.post(environment.apiSaveHisBalance, body); 
   }
 
+  CreateAtm(id: any, stk: any) {
+    // tạo tài khoản ATM
+    const body = { idPlayer: id, stk: stk };
+    return this.httpClient.post(environment.apiCreateAtm, body);
+  }
+
 
 
 
