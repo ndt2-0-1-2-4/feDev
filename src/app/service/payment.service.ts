@@ -7,6 +7,8 @@ export interface PaymentRequest {
   amount: number;
   orderInfo: string;
   orderType: string;
+  // idPlayer?: string;   
+  // content?: string; 
 }
 
 export interface PaymentResponse {
