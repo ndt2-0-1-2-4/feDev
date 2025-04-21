@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -6,7 +6,7 @@ import { userService } from '../../service/users.service';
 import { AtmService } from '../../service/atm.service';
 import { error } from 'node:console';
 import { GameService } from '../../service/game.service';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-rr',
   imports: [CommonModule, FormsModule],
@@ -24,11 +24,12 @@ import { GameService } from '../../service/game.service';
     ])
   ]
 })
-export class RrComponent implements OnInit {
+export class RrComponent implements OnInit, AfterViewInit{
   constructor(
     private userService: userService,
     private atmService: AtmService,
-    private gameService: GameService
+    private gameService: GameService,
+    private toast: ToastrService
   ) {
     this.initializeGrid()
   }
@@ -75,13 +76,30 @@ export class RrComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.money = parseInt(this.userService.getBalanceCookies());
-    this.setForcedBomb(3);
+
+    this.setForcedBomb(6);
     this.handleReload();
-
-
   }
 
+  ngAfterViewInit(): void {
+    const goldElement = document.querySelector('.gold');
+    const gold = goldElement?.textContent
+    if(gold){
+      this.money = parseInt(gold);
+    }
+    const observer = new MutationObserver(() => {
+      if (goldElement?.textContent) {
+        this.money = parseInt(goldElement.textContent);
+        console.log(this.money);
+        observer.disconnect(); // Ngừng quan sát khi đã có giá trị
+      }
+    });
+  
+    if (goldElement) {
+      observer.observe(goldElement, { childList: true, characterData: true, subtree: true });
+    }
+    console.log(this.money)
+  }
   handleReload() {
     const daReload = sessionStorage.getItem('forceReload') === 'true';
     const daCuoc = sessionStorage.getItem('gameStarted') === 'true';
@@ -90,7 +108,6 @@ export class RrComponent implements OnInit {
       const conf = confirm('Nếu bạn tải lại sẽ bị mất tiền cược. Bạn có muốn tiếp tục không?');
 
       if (conf) {
-        // ✅ Người dùng chấp nhận mất tiền cược khi reload
         const amount = -this.betAmount;
         this.money = parseInt(this.userService.getBalanceCookies());
         this.money += amount; // giảm tiền
@@ -239,21 +256,20 @@ export class RrComponent implements OnInit {
 
   placeBet() {
     if (this.gameStarted) return; // Không cho phép cược lại khi chưa kết thúc ván trước
-    if (parseInt(this.userService.getBalanceCookies()) >= this.betAmount) {
+    if (this.betAmount <= this.money) {
       let amount = 0 ;
       amount = - this.betAmount;
       this.money -= this.betAmount;
-      this.userService.setBalanceCookies(this.money.toString());
       const goldElement = document.querySelector('.gold');
       if (goldElement) {
         goldElement.innerHTML = this.money.toString();
       }
-      this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(response => {
+      const idPlayer = this.userService.getCookies();
+      this.atmService.updateBalan(amount,idPlayer).subscribe(response => {
         console.log('Đã trừ tiền cược', response);
       }, error => {
         console.error('Lỗi cập nhật số dư:', error);
       });
-      const idPlayer = this.userService.getCookies();
       this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amount, this.money).subscribe(
         response => {
           console.log('Đã lưu lịch sử cược', response);
@@ -266,7 +282,7 @@ export class RrComponent implements OnInit {
       console.log(this.gameStarted)
       this.initializeGrid();
     } else {
-      alert("Không đủ tiền để đặt cược!");
+      this.toast.warning("Không đủ tiền để đặt cược!","Thông báo");
     }
     this.Waring(); // Gọi hàm cảnh báo khi cược
     // Lưu trạng thái cược vào sessionStorage
@@ -369,7 +385,7 @@ export class RrComponent implements OnInit {
         setTimeout(() => {
           this.revealAllCells(); // lật hết các ô còn lại
           setTimeout(() => {
-            alert("Bạn thua! Trò chơi sẽ bắt đầu lại.");
+            this.toast.info("Bạn thua! Trò chơi sẽ bắt đầu lại.", "Hệ thống");
             this.initializeGrid();
           }, 1000);
         }, 500);
@@ -400,12 +416,9 @@ export class RrComponent implements OnInit {
         goldElement.innerHTML = this.money.toString();
       }
 
-      // Cập nhật số dư vào cookies ngay sau khi thay đổi
-      this.userService.setBalanceCookies(this.money.toString());
-
       // Thêm vào lịch sử chơi
       this.addHistory(this.betAmount, this.lastWinning);
-      this.userService.saveBetHis("Reng Reng", this.userService.getCookies(), 'Win', this.betAmount, this.lastWinning, '').subscribe(
+      this.userService.saveBetHis("Reng Reng", this.money, 'Win', this.betAmount, this.lastWinning, '').subscribe(
         response => {
           console.log('Đã lưu lịch sử chơi', response);
         }, error => {
@@ -423,22 +436,10 @@ export class RrComponent implements OnInit {
       // );
 
       // Gọi API cập nhật số dư
-      this.atmService.updateBalan(this.lastWinning, this.userService.getCookies()).subscribe(response => {
-        console.log('Cập nhật số dư thành công:', response);
-        this.userService.setBalanceCookies(this.money.toString());
-      }, error => {
-        console.error('Lỗi cập nhật số dư:', error);
-      });
       const idPlayer = this.userService.getCookies();
-      this.atmService.saveHisBalance(idPlayer, 'Nhận tiền Reng Reng', this.lastWinning, this.money).subscribe(
-        response => {
-          console.log('Đã lưu lịch sử nhận tiền', response);
-        }, error => {
-          console.error('Lỗi lưu lịch sử nhận tiền:', error);
-        }
-
-      )
-
+      this.atmService.updateBalan(this.lastWinning+this.betAmount, idPlayer).subscribe();
+      this.atmService.saveHisBalance(idPlayer, 'Nhận tiền Reng Reng', this.lastWinning, this.money).subscribe()
+      this.toast.success("Chúc mừng thiếu chủ ", "Thông báo")
       this.revealAllCells(); // Mở tất cả các ô khi nhấn nút nhận tiền
       this.gameStarted = false; // Kết thúc ván cược
       setTimeout(() => {
