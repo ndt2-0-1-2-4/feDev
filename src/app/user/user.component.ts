@@ -51,7 +51,6 @@ export class UserComponent {
 
 
   ngOnInit(): void {
-    this.fullname = this.userService.getNameCookies()
     // this.money = this.userService.getBalanceCookies()
 
     this.friendService.getListFriends().subscribe(

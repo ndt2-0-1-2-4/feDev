@@ -201,7 +201,6 @@ export class ClComponent implements OnInit {
     if(goldElement && gold){
       let tempGold=parseInt(gold,10)-this.tempBetAmount
       goldElement.textContent = tempGold.toString();
-      this.userService.setBalanceCookies(tempGold)
       this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
       this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
     }

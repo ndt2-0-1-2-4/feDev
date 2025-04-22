@@ -187,6 +187,7 @@ export class LoginComponent implements OnInit {
         (data:any) => {
           console.log(data)
           this.toastr.success("Đăng ký thành công","Thông báo")
+          location.reload()
         },
         (error) => {
           this.toastr.error("Đăng ký thất bại","Thông báo")

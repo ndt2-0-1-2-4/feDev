@@ -31,7 +31,11 @@ export class LotteryComponent {
 
   ngOnInit() {
     this.loadLotteryData();
-    this.money = parseInt(this.userService.getBalanceCookies());
+    const goldElement = document.querySelector('.gold');
+    const gold = goldElement?.textContent
+    if(gold){
+      this.money = parseInt(gold);
+    }
 
   }
 
@@ -86,16 +90,13 @@ export class LotteryComponent {
 
   
   placeBet() {
-    if (parseInt(this.userService.getBalanceCookies()) >= this.betAmount) {
+    if (this.money >= this.betAmount) {
       let amount = -this.betAmount;
       this.money -= this.betAmount;
   
       // Cập nhật UI số vàng
       const goldElement = document.querySelector('.gold');
       if (goldElement) goldElement.innerHTML = this.money.toString();
-  
-      // Cập nhật cookie số dư
-      this.userService.setBalanceCookies(this.money.toString());
   
       // Gọi API cập nhật số dư (trừ tiền)
       this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(
@@ -173,12 +174,7 @@ export class LotteryComponent {
                       console.log('Đã cộng tiền thưởng', response);
                     }
                   );
-            
-                  const newBalance = parseInt(this.userService.getBalanceCookies()) + bet.reward;
-                  this.userService.setBalanceCookies(newBalance.toString());
-            
-                  const goldElement = document.querySelector('.gold');
-                  if (goldElement) goldElement.innerHTML = newBalance.toString();
+          
             
                   // Đánh dấu đã cộng để không cộng lại khi reload
                   localStorage.setItem(rewardKey, 'true');
