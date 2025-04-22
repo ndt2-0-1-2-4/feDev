@@ -72,6 +72,7 @@ p {
   background-color: #ada9a9;
 }
 
+
 /* Ô nội dung */
 .money {
   width: 90%;
@@ -83,8 +84,6 @@ p {
   background: none;
   margin-top: 3rem;
 }
-
-/* Thiết kế thẻ */
 .card {
   width: 300px;
   height: 100px;
@@ -129,18 +128,90 @@ p {
   font-size: 28px;
   font-weight: bold;
 }
-
-/* Huy hiệu "New" */
 .new-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: purple;
+  top: 12px;
+  right: 16px;
+  background-color: #ff4757;
   color: white;
-  font-size: 12px;
-  padding: 3px 8px;
-  border-radius: 10px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 8px;
+}
+
+/* Giao diện "Thêm thẻ" */
+.add-card {
+  width: 320px;
+  height: 180px;
+  border: 2px dashed #ccc;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-card:hover {
+  background-color: #f9f9f9;
+}
+
+.plus-icon {
+  font-size: 2.5rem;
+  color: #007bff;
   font-weight: bold;
+}
+
+.add-card-text {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Giao diện Form nhập số tài khoản */
+.add-card-form {
+  width: 320px;
+  padding: 20px;
+  border: 2px dashed #aaa;
+  border-radius: 16px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-card-form label {
+  font-weight: 500;
+  color: #444;
+}
+
+.add-card-form input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.add-card-form input:focus {
+  border-color: #007bff;
+}
+
+.add-card-form button {
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-card-form button:hover {
+  background-color: #0056b3;
 }
 
 /* bên phải */

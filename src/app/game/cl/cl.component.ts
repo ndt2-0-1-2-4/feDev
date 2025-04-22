@@ -200,7 +200,7 @@ export class ClComponent implements OnInit {
       goldElement.textContent = tempGold.toString();
       this.userService.setBalanceCookies(tempGold)
       this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
-      this.atmService.saveHisBalance(this.userService.getCookies(),"Cược chẵn lẻ",-this.tempBetAmount,tempGold).subscribe()
+      this.atmService.saveHisBalance(this.userService.getCookies(),"Cược tài xỉu",-this.tempBetAmount,tempGold).subscribe()
     }
     this.sendBet()
   }
