@@ -52,8 +52,8 @@
   <!-- Right Section -->
   <div class="right-section">
     <div class="menu-his">
-      <button class="hisbet" (click)="selectTab('lichSuCuoc')">Lịch sử cược</button>
-      <button class="hisbala" (click)="selectTab('lichSuThayDoi')">Lịch sử thay đổi số dư</button>
+      <button class="hisbet" [class.active]="selectedTab === 'lichSuCuoc'" (click)="selectTab('lichSuCuoc')">Lịch sử cược</button>
+      <button class="hisbala" [class.active]="selectedTab === 'lichSuThayDoi'" (click)="selectTab('lichSuThayDoi')">Lịch sử thay đổi số dư</button>
     </div>
     <div class="transaction-history" *ngIf="selectedTab === 'lichSuCuoc'">
       <h2>Lịch sử cược</h2>

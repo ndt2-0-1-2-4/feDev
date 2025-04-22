@@ -373,7 +373,7 @@ export class RrComponent implements OnInit, AfterViewInit{
             console.error('Lỗi lưu lịch sử chơi:', error);
           }
         );
-        // this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amout, this.money).subscribe(
+        // this.atmService.saveHisBalance(idPlayer, 'Thua cược reng reng', amout, this.money).subscribe(
         //   response => {
         //     console.log('Đã lưu lịch sử cược', response);
         //   }, error => {

@@ -104,9 +104,12 @@ export class ClComponent implements OnInit {
                   this.toastr.success('Chúc mừng thiếu chủ', 'Thông báo');
                 });
                 this.atmService.updateBalan(reward*2,this.userService.getCookies()).subscribe()
+                this.userService.saveBetHis("Tài xỉu",playerId,rs,moneyBet,reward*2,choiceBet).subscribe()
                 this.atmService.saveHisBalance(this.userService.getCookies(),"Trả thưởng Tài xỉu",reward*2,tempGold).subscribe()
               }
-              this.userService.saveBetHis("Tài xỉu",playerId,rs,moneyBet,reward*2,choiceBet).subscribe()
+              else{
+                this.userService.saveBetHis("Tài xỉu",playerId,rs,moneyBet,reward*2,choiceBet).subscribe()
+              }
               break;
               
           }
@@ -200,7 +203,7 @@ export class ClComponent implements OnInit {
       goldElement.textContent = tempGold.toString();
       this.userService.setBalanceCookies(tempGold)
       this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
-      this.atmService.saveHisBalance(this.userService.getCookies(),"Cược tài xỉu",-this.tempBetAmount,tempGold).subscribe()
+      this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
     }
     this.sendBet()
   }
