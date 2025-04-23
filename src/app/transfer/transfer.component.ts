@@ -30,8 +30,6 @@ export class TransferComponent implements OnInit {
   fullname: any = '';
   money: any 
   ngOnInit(): void {
-    this.fullname = this.userService.getNameCookies();
-    this.money = this.userService.getBalanceCookies();
     this.userService.getUser().subscribe(
       (rs: any) => {
         console.log(rs);
@@ -108,11 +106,15 @@ export class TransferComponent implements OnInit {
     }
   }
   banking(){
-    console.log(this.message.nativeElement.value)
+    const goldElement = document.querySelector('.gold');
+    const gold = goldElement?.textContent
+    if(gold){
+      this.money = parseInt(gold);
+    }
     this.atmService.updateBalan(this.value*-1,this.userService.getCookies()).subscribe()
     this.atmService.updateBalan(this.value,this.idPlayer).subscribe()
-    this.atmService.saveHisBalance(this.userService.getCookies(),this.message.nativeElement.value,this.value*-1,parseInt(this.userService.getBalanceCookies())-this.value).subscribe()
+    this.atmService.saveHisBalance(this.userService.getCookies(),this.message.nativeElement.value,this.value*-1,this.money-this.value).subscribe()
     this.atmService.saveHisBalance(this.idPlayer,this.message.nativeElement.value,this.value,this.money+this.value).subscribe()
-    this.userService.setBalanceCookies(parseInt(this.userService.getBalanceCookies())-this.value)
+    location.reload()
   }
 }

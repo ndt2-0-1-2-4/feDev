@@ -16,23 +16,44 @@
     <button class="change-password">change password</button>
 
     <div class="money">
-      <div class="card">
-        <div class="card-header">
-          <span class="logo"></span>
-          <span class="card-number">{{stk}}</span>
-          <span class="expiry">05/26</span>
+      <div *ngIf="stk; else addCardTemplate">
+        <div class="card">
+          <div class="card-header">
+            <span class="logo"></span>
+            <span class="card-number">{{ stk }}</span>
+            <span class="expiry">05/26</span>
+          </div>
+          <div class="balance-text">Balance:</div>
+          <div class="balance-amount">$ {{ money }}</div>
+          <span class="new-badge">mâm 1</span>
         </div>
-        <div class="balance-text">Balance:</div>
-        <div class="balance-amount">$ {{money}}</div>
-        <span class="new-badge">mâm 1</span>
       </div>
-    </div>
+      
+      <ng-template #addCardTemplate>
+        <div *ngIf="!showForm; else formTemplate" class="add-card" (click)="showForm = true">
+          <span class="plus-icon">+</span>
+          <div class="add-card-text">Thêm thẻ</div>
+        </div>
+      </ng-template>
+      
+      <ng-template #formTemplate>
+        <div class="add-card-form">
+          <label for="stkInput">Số tài khoản</label>
+          <input
+            id="stkInput"
+            type="text"
+            [(ngModel)]="newStk"
+            placeholder="Nhập số tài khoản"
+          />
+          <button (click)="addCard()">Thêm</button>
+        </div>
+      </ng-template>
   </div>
   <!-- Right Section -->
   <div class="right-section">
     <div class="menu-his">
-      <button class="hisbet" (click)="selectTab('lichSuCuoc')">Lịch sử cược</button>
-      <button class="hisbala" (click)="selectTab('lichSuThayDoi')">Lịch sử thay đổi số dư</button>
+      <button class="hisbet" [class.active]="selectedTab === 'lichSuCuoc'" (click)="selectTab('lichSuCuoc')">Lịch sử cược</button>
+      <button class="hisbala" [class.active]="selectedTab === 'lichSuThayDoi'" (click)="selectTab('lichSuThayDoi')">Lịch sử thay đổi số dư</button>
     </div>
     <div class="transaction-history" *ngIf="selectedTab === 'lichSuCuoc'">
       <h2>Lịch sử cược</h2>
@@ -68,7 +89,7 @@
           <tr>
             <th>STT</th>
             <th>Nội dung</th>
-            <th>Thay đổi số dư</th>
+            <th>Biến động</th>
             <th>Số dư</th>
             <th>Thời gian</th>
           </tr>

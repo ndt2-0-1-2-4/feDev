@@ -33,7 +33,11 @@ export class FootballComponent {
 
       ngOnInit() {
         this.fetchMatches();
-        this.money = parseInt(this.userService.getBalanceCookies());
+        const goldElement = document.querySelector('.gold');
+        const gold = goldElement?.textContent
+        if(gold){
+          this.money = parseInt(gold);
+        }
         this.fetchBetHistory();
       }
 
@@ -66,7 +70,7 @@ export class FootballComponent {
       }
       
       placeBet(match: any) {
-        if (parseInt(this.userService.getBalanceCookies()) >= this.betAmount) {
+        if (this.money >= this.betAmount) {
           let amount = -this.betAmount;
           this.money -= this.betAmount;
       
@@ -74,8 +78,6 @@ export class FootballComponent {
           const goldElement = document.querySelector('.gold');
           if (goldElement) goldElement.innerHTML = this.money.toString();
 
-          // Cập nhật cookie số dư
-          this.userService.setBalanceCookies(this.money.toString());
       
           // Trừ tiền
           this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(
@@ -151,13 +153,8 @@ export class FootballComponent {
                       console.log('Đã cộng tiền thưởng', response);
                     }
                   );
-                  
-                  // Cập nhật cookie & UI 
-                  const newBalance = parseInt(this.userService.getBalanceCookies()) + reward;
-                  this.userService.setBalanceCookies(newBalance.toString());
-    
+                
                   const goldElement = document.querySelector('.gold');
-                  if (goldElement) goldElement.innerHTML = newBalance.toString();
                 }
               } else {
                 resultText = 'Thua';

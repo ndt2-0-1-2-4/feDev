@@ -8,6 +8,8 @@ import { userService } from './users.service';
   providedIn: 'root',
 })
 export class AtmService {
+  private apiUrl = 'http://localhost:8082/Atm/calculate-reward';
+
   constructor(private httpClient: HttpClient , 
               private userService: userService
   ) {}
@@ -42,5 +44,7 @@ export class AtmService {
     return this.httpClient.post(environment.apiCreateAtm, body);
   }
 
-
+  calculateReward(idPlayer: number): Observable<any> {
+    return this.httpClient.post(this.apiUrl, { idPlayer });
+  }
 }

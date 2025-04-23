@@ -5,17 +5,22 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { error } from 'node:console';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AtmService } from '../service/atm.service';
 @Component({
   selector: 'app-user',
-  imports: [CommonModule, FormsModule ,NgxPaginationModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
 export class UserComponent {
+
   changeDetectorRef: any;
+  showForm: boolean = false;
+  newStk: string = ''; 
   constructor(
     private userService: userService,
     private friendService: FriendService,
+    private atm: AtmService,
   ) { }
   fullname: any;
   money: any;
@@ -46,8 +51,7 @@ export class UserComponent {
 
 
   ngOnInit(): void {
-    this.fullname = this.userService.getNameCookies()
-    this.money = this.userService.getBalanceCookies()
+    // this.money = this.userService.getBalanceCookies()
 
     this.friendService.getListFriends().subscribe(
       (data: any[]) => {
@@ -63,6 +67,7 @@ export class UserComponent {
     this.userService.getAtmUser(this.userService.getCookies()).subscribe(
       (res: any) => {
         this.stk = res.stk;
+        this.money = res.balance; // Lưu số dư vào biến money
         console.log("STK:", this.stk);
       },
       (err: any) => {
@@ -73,6 +78,20 @@ export class UserComponent {
     );
 
   }
+  addCard() {
+    // Tạo tài khoản ATM
+    this.atm.CreateAtm(this.userService.getCookies(), this.newStk).subscribe(
+      (res: any) => {
+        console.log("Tạo tài khoản ATM thành công:", res);
+        this.stk = this.newStk; // Cập nhật stk mới
+        this.showForm = false; // Đóng form sau khi tạo tài khoản thành công
+      },
+      (err: any) => {
+        console.error('Lỗi khi tạo tài khoản ATM:', err);
+      }
+    );
+    }
+
   selectTab(tab: 'lichSuCuoc' | 'lichSuThayDoi') {
     this.selectedTab = tab;
     if (tab === 'lichSuThayDoi') {
@@ -91,17 +110,17 @@ export class UserComponent {
         (res: any) => {
           this.lichSuCuoc = res.map((item: any) => {
             let parsedDate = null;
-      
+
             if (item.timeoccurs) {
               const parts = item.timeoccurs.split(/[- :]/); // ["13", "04", "2025", "14", "39", "29"]
               const isoString = `${parts[2]}-${parts[1]}-${parts[0]}T${parts[3]}:${parts[4]}:${parts[5]}`;
               parsedDate = new Date(isoString);
             }
-      
+
             console.log("Chuỗi ban đầu:", item.timeoccurs);
             console.log("Date object đã chuyển:", parsedDate);
             console.log("Lịch sử cược:", this.lichSuCuoc);
-      
+
             return {
               namegame: item.nameGame,
               ketQua: item.result,
@@ -110,14 +129,14 @@ export class UserComponent {
               datCuoc: item.choice,
               timeoccurs: parsedDate, // 👈 Date object
             };
-            
+
           });
         },
         (err: any) => {
           console.error('Lỗi khi tải lịch sử cược:', err);
         }
       );
-      
+
     }
 
   }

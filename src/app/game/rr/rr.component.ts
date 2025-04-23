@@ -109,9 +109,7 @@ export class RrComponent implements OnInit, AfterViewInit{
 
       if (conf) {
         const amount = -this.betAmount;
-        this.money = parseInt(this.userService.getBalanceCookies());
         this.money += amount; // giảm tiền
-        this.userService.setBalanceCookies(this.money.toString());
 
         const goldElement = document.querySelector('.gold');
         if (goldElement) {
@@ -135,13 +133,8 @@ export class RrComponent implements OnInit, AfterViewInit{
       } else {
         // ❌ Người dùng KHÔNG đồng ý reload → hoàn lại tiền cược
         const amount = this.betAmount;
-        this.money = parseInt(this.userService.getBalanceCookies());
         this.money += amount; // hoàn tiền
         console.log("Tiền hoàn lại: ", this.money);
-
-        this.userService.setBalanceCookies(this.money.toString());
-
-
         const goldElement = document.querySelector('.gold');
         if (goldElement) {
           goldElement.innerHTML = this.money.toString();
@@ -373,7 +366,7 @@ export class RrComponent implements OnInit, AfterViewInit{
             console.error('Lỗi lưu lịch sử chơi:', error);
           }
         );
-        // this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amout, this.money).subscribe(
+        // this.atmService.saveHisBalance(idPlayer, 'Thua cược reng reng', amout, this.money).subscribe(
         //   response => {
         //     console.log('Đã lưu lịch sử cược', response);
         //   }, error => {

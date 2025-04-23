@@ -20,19 +20,19 @@ export class HeaderComponent implements OnInit {
   fullname:any =""
   money:any=""
   ngOnInit(): void {
-    this.userService.getUser().subscribe(
-      (data)=>{
-        console.log(data)
-        this.fullname=data.fullname
-      }
-    )
-    this.userService.getAtmUser(this.userService.getCookies()).subscribe(
-      (data)=>{
-        this.money=data.balance
-      }
-    )
-    this.fullname=this.userService.getNameCookies()
-    this.money=this.userService.getBalanceCookies()
+    if(this.userService.getCookies()!==""){
+      this.userService.getUser().subscribe(
+        (data)=>{
+          console.log(data)
+          this.fullname=data.fullname
+        }
+      )
+      this.userService.getAtmUser(this.userService.getCookies()).subscribe(
+        (data)=>{
+          this.money=data.balance
+        }
+      )
+    }
   }
   Login(){
     this.router.navigate(['/login'])

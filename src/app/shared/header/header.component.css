@@ -5,15 +5,16 @@
     background: transparent;
     padding: 0 40px; 
     height: 60px;
-    width: 80%; 
+    width: 75%; 
     box-sizing: border-box; 
-    position: absolute; /* Để căn giữa */
+    position: fixed; /* Để căn giữa */
     left: 50%;
     transform: translateX(-50%); /* Dịch ngược lại 50% để căn giữa */
     color: white; 
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); 
     border-end-start-radius: 20px;
     border-end-end-radius: 20px;
+   z-index: 10;
 }
 
 /* Nhóm bên trái: Chào + Tìm kiếm */

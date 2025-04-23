@@ -49,20 +49,6 @@ export class userService {
   getCookies() {
     return this.decryptData(this.cookieService.get('id'));
   }
-  getNameCookies() {
-    let tempName = this.cookieService.get('fullname');
-    return this.decryptData(tempName);
-  }
-  getBalanceCookies() {
-    let tempBalance = this.cookieService.get('balance');
-    return this.decryptData(tempBalance);
-  }
-  setBalanceCookies(balance:any){
-    this.cookieService.set("balance",this.encryptData(balance.toString()),1,'/')
-  }
-  setUserName(fullname: any) {
-    this.username = fullname;
-  }
 
   saveBetHis(
     namegame: any,

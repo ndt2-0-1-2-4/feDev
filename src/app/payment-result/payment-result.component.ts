@@ -17,6 +17,7 @@ export class PaymentResultComponent implements OnInit {
   amount = 0;
   countdown: number = 5; 
   interval: any; 
+  money :number=0;
   constructor(
     private route: ActivatedRoute,
     private atmService: AtmService,
@@ -44,8 +45,13 @@ export class PaymentResultComponent implements OnInit {
           this.responseCode = params['vnp_ResponseCode'];
           this.responseMessage = params.message;
           this.amount = params.vnp_Amount ? parseInt(params.vnp_Amount) / 100 : 0; // Chia cho 100 để chuyển đổi từ VND sang VNĐ
-          this.userService.setBalanceCookies(parseInt(this.userService.getBalanceCookies()) + this.amount)
-          this.atmService.saveHisBalance(this.userService.getCookies(),"Nạp tiền "+params.vnp_SecureHash,this.amount,this.userService.getBalanceCookies()).subscribe((response:any) => {
+          const goldElement = document.querySelector('.gold');
+          const gold = goldElement?.textContent
+          if(gold){
+            this.money = parseInt(gold);
+          }
+          this.money +=this.amount
+          this.atmService.saveHisBalance(this.userService.getCookies(),"Nạp tiền "+params.vnp_SecureHash,this.amount,this.money).subscribe((response:any) => {
             console.log('Lưu lịch sử thành công:', response);
           }
           , (error:any) => {
