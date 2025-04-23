@@ -1,86 +1,77 @@
+<div class="game-header">
+  <div class="game-title">
+    <span>TÀI XỈU MD5</span>
+  </div>
+</div>
 <div class="cl">
-  <div class="relative flex items-center justify-center mb-8">
-    <div class="circle-bg">
-      <div class="inner-circle">
-        <div class="black-circle">
-          <!-- Xúc xắc -->
-          <div class="dice1" #dice1>
-            <div class="face front"></div>
-            <div class="face back"></div>
-            <div class="face top"></div>
-            <div class="face bot"></div>
-            <div class="face right"></div>
-            <div class="face left"></div>
-          </div>
-          <!-- Bát xúc xắc -->
-          <div class="yellow-circle" id="draggable" #draggable>
-            <span id="countdown" class="countdown" #countdown>0</span>
-          </div>
-          <!-- Chẵn  -->
-          <div class="bet_chan">
-            <span class="circle" id="chan" #chan>CHẴN</span>
-            <div
-              class="people"
-              style="position: absolute; left: -10rem; bottom: 70%"
-            >
-              <i class="fas fa-users icon icon-right"></i>
-              <span class="text" id="sum_people_chan" #sum_people_chan
-                >29899</span
-              >
-            </div>
-            <span id="sum_chan" class="number" #sum_chan>{{
-              totalMoneyC
-            }}</span>
-            <div
-              class="betValue"
-              id="cuoc_chan"
-              #cuoc_chan
-              (click)="toggleButton(cuoc_chanElement, sumBet_chan)"
-            >
-              Đặt cược
-            </div>
-          </div>
-          <!-- Lẻ -->
-          <div class="bet_le">
-            <span class="circle" id="le" #le>LẺ</span>
-            <div
-              class="people"
-              style="position: absolute; right: -10rem; bottom: 70%"
-            >
-              <span class="text" id="sum_people_le" #sum_people_le>298</span>
-              <i class="fas fa-users icon icon-left"></i>
-            </div>
-            <span id="sum_le" #sum_le class="number">{{ totalMoneyL }}</span>
-            <div
-              class="betValue"
-              id="cuoc_le"
-              #cuoc_le
-              (click)="toggleButton(cuoc_leElement, sumBet_le)"
-            >
-              Đặt cược
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="his-rs">
-      </div>
+  <div class="bet-stats">
+    <div class="bet-tai">
+      <span id="chan" #chanElement>TÀI</span>
+      <span class="amount">{{ taiAmount | number }}</span>
+    </div>
+    <div class="bet-xiu">
+      <span id="le" #leElement>XỈU</span>
+      <span class="amount">{{ xiuAmount | number }}</span>
     </div>
   </div>
-  <div class="bet-button-group" *ngIf="isOptions">
-    <div class="options">
-      <button (click)="updateBetValue(1000)">1K</button>
-      <button (click)="updateBetValue(10000)">10K</button>
-      <button (click)="updateBetValue(50000)">50K</button>
-      <button (click)="updateBetValue(100000)">100K</button>
-      <button (click)="updateBetValue(500000)">500K</button>
-      <button (click)="updateBetValue(5000000)">5M</button>
-      <button (click)="updateBetValue(10000000)">10M</button>
-      <button (click)="updateBetValue(50000000)">50M</button>
+  <div class="dice-area">
+    <div class="bolt" id="draggable" #draggable><div class="countdown">{{ countdown }}</div>  </div>
+    <div class="dice-container">
+      <div class="dice1" #dice1>
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face top"></div>
+        <div class="face bot"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+      </div>
+      <div class="dice1" #dice2>
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face top"></div>
+        <div class="face bot"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+      </div>
+      <div class="dice1" #dice3 id="dice-bottom">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face top"></div>
+        <div class="face bot"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+      </div>
     </div>
-    <div class="action">
-      <button class="all-in">ALL-IN</button>
-      <button class="dat-cuoc" (click)="bet()">ĐẶT CƯỢC</button>
-      <button class="huy" (click)="cancelCuoc()">HỦY</button>
+    
+    <div class="total-score">{{ totalScore }}</div>
+  </div>
+  <div class="bet-actions">
+    <div class="bet-tai-action">
+      <span class="bet-label" (click)="toggleBet('tai')">
+        {{ taiBetDisplay >= 0 ? (taiBetDisplay | number) : 'CƯỢC' }}
+      </span>
+    </div>
+    <div class="bet-xiu-action">
+      <span class="bet-label" (click)="toggleBet('xiu')">
+        {{ xiuBetDisplay >= 0 ? (xiuBetDisplay | number) : 'CƯỢC' }}
+      </span>
     </div>
   </div>
+  <div class="people">
+    <span class="text">{{ players }} người chơi</span>
+  </div>
+  <div class="history">
+    <div *ngFor="let item of history" class="history-item {{ item }}"></div>
+  </div>
+  <div class="options" *ngIf="showOptionsAndActions">
+    <button (click)="selectBetAmount(100)">100</button>
+    <button (click)="selectBetAmount(500)">500</button>
+    <button (click)="selectBetAmount(1000)">1000</button>
+  </div>
+  <div class="action" *ngIf="showOptionsAndActions">
+    <button class="all-in" (click)="allIn()">All In</button>
+    <button class="dat-cuoc" (click)="placeBet()">Đặt Cược</button>
+    <button class="huy" (click)="cancelBet()">Hủy</button>
+  </div>
+
 </div>

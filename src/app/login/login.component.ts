@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   imports: [FormsModule, HttpClientModule],
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private userService: userService,
     private cookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   @ViewChild('btn1') btn1!: ElementRef<HTMLButtonElement>;
   @ViewChild('btnContainer1') btnContainer1!: ElementRef<HTMLDivElement>;
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
   signInPassword = '';
   signUpUser = '';
   signUpEmail = '';
+  signUpName='';
   signUpPassword = '';
   signUpPasswordConfirm = '';
   isLoginDisabled = true;
@@ -160,15 +163,6 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.signInAccount, this.signInPassword).subscribe(
       (data) => {
         this.cookieService.set(
-          'fullname',
-          this.userService.encryptData(data.fullname),
-          {
-            expires: 1,
-            secure: true,
-            sameSite: 'Strict',
-          }
-        );
-        this.cookieService.set(
           'id',
           this.userService.encryptData(data.id.toString()),
           {
@@ -177,22 +171,30 @@ export class LoginComponent implements OnInit {
             sameSite: 'Strict',
           }
         );
-        this.cookieService.set(
-          'balance',
-          this.userService.encryptData(data.balance.toString()),
-          {
-            expires: 1,
-            secure: true,
-            sameSite: 'Strict',
-          }
-        );
-        console.log(data);
+        this.toastr.success("Đăng nhập thành công","Thông báo")
         this.userService.setToken(data.token);
         this.router.navigate(['']);
       },
       (error) => {
+        this.toastr.error("Đăng nhập thất bại","Thông báo")
         console.log(error);
       }
     );
+  }
+  register(){
+    if(this.signUpPassword === this.signUpPasswordConfirm){
+      this.userService.register(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
+        (data:any) => {
+          console.log(data)
+          this.toastr.success("Đăng ký thành công","Thông báo")
+        },
+        (error) => {
+          this.toastr.error("Đăng ký thất bại","Thông báo")
+        }
+      );
+    }
+    else{
+      this.toastr.error("Xác nhận mật khẩu không đúng","Thông báo")
+    }
   }
 }

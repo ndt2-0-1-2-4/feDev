@@ -1,7 +1,7 @@
 // src/app/services/vnpay.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export interface PaymentRequest {
   amount: number;
@@ -50,4 +50,5 @@ export class PaymentService {
   handlePaymentCallback(data: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/payment-callback`, data);
   }
+
 }
