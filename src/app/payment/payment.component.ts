@@ -48,6 +48,7 @@ export class PaymentComponent implements OnInit {
   this.atmService.calculateReward(Number(this.userService.getCookies())).subscribe((response: any) => {
     this.totalDeposit = response.totalDeposit;
     this.reward = response.reward;
+    console.log(response);
   });
 
 }
@@ -56,8 +57,6 @@ export class PaymentComponent implements OnInit {
     this.isProcessing = true;
     this.paymentMessage = 'Đang xử lý yêu cầu thanh toán...';
 
-    // this.paymentRequest.idPlayer = this.userService.getCookies();
-    // this.paymentRequest.content = 'NAP TIEN';
 
     this.paymentService.createPayment(this.paymentRequest).subscribe({
       next: (response) => {
