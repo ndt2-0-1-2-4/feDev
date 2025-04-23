@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { error } from 'node:console';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AtmService } from '../service/atm.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-user',
   imports: [CommonModule, FormsModule, NgxPaginationModule],
@@ -21,6 +22,7 @@ export class UserComponent {
     private userService: userService,
     private friendService: FriendService,
     private atm: AtmService,
+    private toastr: ToastrService
   ) { }
   fullname: any;
   money: any;
@@ -82,14 +84,15 @@ export class UserComponent {
     // Tạo tài khoản ATM
     this.atm.CreateAtm(this.userService.getCookies(), this.newStk).subscribe(
       (res: any) => {
-        console.log("Tạo tài khoản ATM thành công:", res);
+        this.toastr.success('Tạo tài khoản ATM thành công!'); // Hiển thị thông báo thành công
         this.stk = this.newStk; // Cập nhật stk mới
         this.showForm = false; // Đóng form sau khi tạo tài khoản thành công
       },
       (err: any) => {
-        console.error('Lỗi khi tạo tài khoản ATM:', err);
+        this.toastr.error('Tạo tài khoản ATM thất bại!'); // Hiển thị thông báo lỗi
       }
     );
+    location.reload();
     }
 
   selectTab(tab: 'lichSuCuoc' | 'lichSuThayDoi') {
