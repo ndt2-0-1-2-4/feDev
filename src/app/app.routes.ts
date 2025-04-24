@@ -31,6 +31,5 @@ export const routes: Routes = [
   { path: 'payment-result', component: PaymentResultComponent },
   { path: 'football', component: FootballComponent },
   { path: 'menugame', component: MenugameComponent },
-  { path: 'football', component: FootballComponent },
   { path: 'lottery', component: LotteryComponent },
 ];

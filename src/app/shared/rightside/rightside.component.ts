@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Renderer2 } from '@angular/core';
 import { FriendService } from '../../service/friend.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-rightside',
   imports: [CommonModule, FormsModule],
@@ -81,5 +82,9 @@ export class RightsideComponent implements OnInit {
   }
   friend(){
     this.router.navigate(["/friend"])
+  }
+
+  message(){
+    this.router.navigate(["/message"])
   }
 }
