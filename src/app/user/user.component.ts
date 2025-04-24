@@ -70,13 +70,8 @@ export class UserComponent {
       (res: any) => {
         this.stk = res.stk;
         this.money = res.balance; // Lưu số dư vào biến money
-        console.log("STK:", this.stk);
-      },
-      (err: any) => {
-        console.error('Lỗi khi tải danh sách bạn bè:', err);
+
       }
-
-
     );
 
   }

@@ -42,7 +42,7 @@ export class userService {
     return this.http.post(this.apiGetInfo, body );
   }
 
-  getAtmUser(id: any): Observable<any> {
+  getAtmUser(id: any){
     const body = { idPlayer: id };
     return this.http.post(this.apiGetAtm, body);
   }
