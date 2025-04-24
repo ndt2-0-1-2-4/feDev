@@ -350,20 +350,20 @@ export class RrComponent implements OnInit {
 
         const idPlayer = this.userService.getCookies();
 
-        this.userService.saveBetHis("Reng Reng", this.userService.getCookies(), 'Thua',this.betAmount, -this.lastWinning, '').subscribe(
+        this.userService.saveBetHis("Reng Reng", this.userService.getCookies(), 'Thua',this.betAmount, -this.betAmount, '').subscribe(
           response => {
             console.log('Đã lưu lịch sử chơi', response);
           }, error => {
             console.error('Lỗi lưu lịch sử chơi:', error);
           }
         );
-        this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amout, this.money).subscribe(
-          response => {
-            console.log('Đã lưu lịch sử cược', response);
-          }, error => {
-            console.error('Lỗi lưu lịch sử cược:', error);
-          }
-        );
+        // this.atmService.saveHisBalance(idPlayer, 'Cược Reng Reng', amout, this.money).subscribe(
+        //   response => {
+        //     console.log('Đã lưu lịch sử cược', response);
+        //   }, error => {
+        //     console.error('Lỗi lưu lịch sử cược:', error);
+        //   }
+        // );
         this.consecutiveDiamonds = 0; // Reset chuỗi kim cương liên tiếp
 
         setTimeout(() => {

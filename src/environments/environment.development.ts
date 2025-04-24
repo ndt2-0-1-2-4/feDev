@@ -1,5 +1,5 @@
 
-const SERVER_IP = '127.0.0.1'; 
+const SERVER_IP = '127.0.0.2'; 
 
 export const environment = {
     production: true,
@@ -31,6 +31,6 @@ export const environment = {
     apiGetRelative:` http://${SERVER_IP}:8082/friend/getRelative`,
     apiGetHisBalance:`http://${SERVER_IP}:8082/game/getPlayerHis`,
     apiGetPlayerHisAll:`http://${SERVER_IP}:8082/game/getPlayerHisAll`,
-
+    apiRegister:`http${SERVER_IP}/user/regis`,
 
 };

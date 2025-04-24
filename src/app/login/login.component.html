@@ -2,7 +2,7 @@
   <h2>Đăng nhập/Đăng ký</h2>
   <div class="container" [class.right-panel-active]="isRightPanelActive">
     <div class="form-container sign-up-container">
-      <form >
+      <form (ngSubmit)="register()">
         <h1>Tạo tài khoản</h1>
         <div #note class="note">{{ notifical }}</div>
         <input
@@ -19,6 +19,14 @@
           placeholder="Email"
           [(ngModel)]="signUpEmail"
           name="email"
+          required
+        />
+        <input
+          #fullname
+          type="text"
+          placeholder="Nhập tên đầy đủ"
+          [(ngModel)]="signUpName"
+          name="fullname"
           required
         />
         <input

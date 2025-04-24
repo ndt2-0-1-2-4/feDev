@@ -32,6 +32,6 @@ export const environment = {
     apigetHisfbxs:`http://${SERVER_IP}:8082/betHisfbxs/getHisfbXs`,
     apiGetHisBalance:`http://${SERVER_IP}:8082/game/getPlayerHis`,
     apiGetPlayerHisAll:`http://${SERVER_IP}:8082/game/getPlayerHisAll`,
-
+    apiRegister:`http${SERVER_IP}/user/regis`,
 
 };

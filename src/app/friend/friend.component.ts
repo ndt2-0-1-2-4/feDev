@@ -23,7 +23,9 @@ export class FriendComponent {
   searchResults: { id: number; fullname: string,relative:any }[] = []; // Danh sách kết quả tìm kiếm người kết bạn
 
 
-  friends: { idFriend: number; name: string }[] = []; // Danh sách bạn bè
+  friends: {
+      id: number; name: string 
+}[] = []; // Danh sách bạn bè
   friendRequests : { id: number; name: string }[] = []; // Danh sách lời mời kết bạn
   btn_add = 'Thêm bạn bè';
   apiAddFriend = environment.apiaddFriend;
@@ -148,39 +150,23 @@ searchFriends() {
   }
 
 
-  async removeFriend(friend: { id: number; name: string }) {
-    try {
-      // Lấy ID bạn bè từ dịch vụ hoặc từ tham số
-      const friendId = friend.id;
-  
-      // Lấy ID của người dùng hiện tại từ cookie
-      const idMy = Number(this.userService.getCookies());
-    
-      console.log(`🛠 Debug: ID người dùng: ${idMy}, ID bạn bè: ${friendId}`);
-      
-  
-      // Xác nhận trước khi xóa
-      const confirmDelete = confirm(`Bạn có chắc chắn muốn xóa ${friend.name}?`);
-      if (!confirmDelete) return;
-  
-      // Gọi API xóa bạn bè
-      const result = await lastValueFrom(this.friendService.deleteFriend(idMy, friendId));
-  
-      if (result.status === 'success') {
-        // Xóa khỏi danh sách hiển thị
-        this.friends = this.friends.filter(f => f.idFriend !== friendId);
-        alert(`✅ ${result.message}`);
-      } else {
-        alert(`❌ Lỗi: ${result.message}`);
-      }
-    } catch (error) {
-      console.error('Lỗi khi xóa bạn bè:', error);
-      alert('❌ Xóa bạn bè thất bại, vui lòng thử lại');
-    }
+  removeFriend(friend : {id: number; name: string}) {
+    const idMy = Number(this.userService.getCookies()); // Lấy ID người dùng hiện tại
+    const idFriend = friend.id; // ID của bạn bè
+    console.log(`Xóa bạn bè: ID của tôi: ${idMy}, ID của bạn: ${idFriend}`);
+    this.friendService.deleteFriend(idMy, idFriend).subscribe(
+        (res:any) => {
+            console.log("Xóa bạn bè thành công:", res);
+            this.friends = this.friends.filter(f => f.id !== idFriend); // Cập nhật danh sách bạn bè
+            alert(`Đã xóa ${friend.name} khỏi danh sách bạn bè.`);
+        },
+        (error:any) => {
+            console.error("Lỗi khi xóa bạn bè:", error);
+            alert("Có lỗi xảy ra khi xóa bạn bè. Vui lòng thử lại!");
+        }
+    );
   }
   
-  
-
   
   // thêm bạn bè
   addFriend(friendId: number) {

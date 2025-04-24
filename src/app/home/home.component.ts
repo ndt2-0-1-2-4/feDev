@@ -51,16 +51,24 @@ export class HomeComponent implements OnInit {
   }
 
   loadLotteryData() {
-    const dayStart = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd');
-    const dayEnd = format(new Date(Date.now()), 'yyyy-MM-dd');
+    const dayStart = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd'); 
+    const dayEnd = format(new Date(Date.now()), 'yyyy-MM-dd'); 
     const apiUrl = `${this.apiLottery}?dateFrom=${dayStart}&dateTo=${dayEnd}`;
-    console.log('ok');
-
+    console.log("ok");
+  
     this.http.get(apiUrl).subscribe({
       next: (res: any) => {
-        const detailRaw = res?.t?.issueList?.[0]?.detail;
-        if (detailRaw) {
-          const parsed = JSON.parse(detailRaw);
+        const issues = res?.t?.issueList;
+        const now = new Date()
+  
+        const latestValidIssue = issues?.find((issue: any) => {
+          const openTime = new Date(issue.openTime);
+          return openTime < now;
+        });
+
+        if (latestValidIssue && latestValidIssue.detail) {
+          const parsed = JSON.parse(latestValidIssue.detail);
+  
           this.lotteryData = {
             gdb: parsed[0],
             g1: parsed[1],
@@ -72,11 +80,15 @@ export class HomeComponent implements OnInit {
             g7: parsed[7].split(','),
           };
         }
+  
+        //  Lấy ngày từ API để hiển thị đúng
+        this.selectedDate = new Date(latestValidIssue?.openTime || Date.now());
+  
         console.log('Dữ liệu nhận về từ API:', res);
       },
       error: (err) => {
         console.error('Lỗi khi gọi API:', err);
-      },
+      }
     });
   }
 

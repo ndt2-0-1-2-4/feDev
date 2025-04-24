@@ -121,7 +121,11 @@ export class FootballComponent {
     betHistory: any[] = [];
 
     fetchBetHistory() {
-      const requestBody = { idPlayer: parseInt(this.userService.getCookies()) };  // tạo object gửi ID của người chơi lên server thông qua API.
+      // tạo object gửi ID của người chơi lên server thông qua API.
+      const requestBody = {
+        idPlayer: parseInt(this.userService.getCookies()),
+        betType: 'FOOTBALL'  
+      };
       const apiUrl = this.apigetBethis;   // Đường dẫn API lấy lịch sử cược
 
       this.http.post(apiUrl, requestBody).subscribe(
