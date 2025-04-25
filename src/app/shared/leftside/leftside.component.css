@@ -26,6 +26,7 @@
 
 /* Logo */
 .logo {
+  min-height: 24px;
   font-size: 24px;
   font-weight: bold;
   color: white;

@@ -23,6 +23,8 @@ export class FriendService {
   private apiacceptFriend = environment.apiacceptFriend;
   private apigetFriendRequets = environment.apiGetrequets;
   private apideleFriendRequets = environment.apideleFriendRequets;
+  private apiGetRelative = environment.apiGetRelative;
+  private apiGetFriendRelative = environment.apiGetFriendRelative;
 
   getListFriends(): Observable<any> {
     const idMy = this.userService.getCookies();
@@ -92,5 +94,10 @@ export class FriendService {
   getRelativeFr(idMy:any,idFriend:any){
     const body={idMy:idMy,idFriend:idFriend}
     return this.http.post(environment.apiGetRelative,body)
+  }
+
+  getRelativeMy(idMy:any){
+    const body={idMy:idMy}
+    return this.http.post(environment.apiGetFriendRelative,body)
   }
 }
