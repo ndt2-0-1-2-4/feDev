@@ -122,11 +122,11 @@
           <div class="banner-right">
               <div class="box1">
                   <h3>Nạp hợp lệ hiện tại:</h3>
-                  <p class="amounts">0 VNĐ</p>
+                  <p class="amounts">{{ totalDeposit | number }} VNĐ</p>
               </div>
               <div class="box2">
                   <h3>Tổng thưởng:</h3>
-                  <p class="amounts">0 VNĐ</p>
+                  <p class="amounts">{{ reward | number }} VNĐ</p>
               </div>
           </div>
       </div>
@@ -143,7 +143,7 @@
                 <input type="radio" name="bonus" class="radio">
               </div>
             </div>
-            <button class="recharge-button">NẠP TIỀN NGAY</button>
+            <button (click)="goToWallet()" class="recharge-button">NẠP TIỀN NGAY</button>
       </div>
   </div>
 </div>

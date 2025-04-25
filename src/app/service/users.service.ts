@@ -11,6 +11,7 @@ import path from 'path';
   providedIn: 'root',
 })
 export class userService {
+  private apiUrl = 'http://localhost:8082/user/changePassword';
   
   private apiLogin = environment.apiLogin;
   private apiGetInfo = environment.apiGetInfo;
@@ -42,7 +43,7 @@ export class userService {
     return this.http.post(this.apiGetInfo, body );
   }
 
-  getAtmUser(id: any): Observable<any> {
+  getAtmUser(id: any){
     const body = { idPlayer: id };
     return this.http.post(this.apiGetAtm, body);
   }
@@ -164,6 +165,13 @@ export class userService {
     return this.http.post(environment.apiRegister,body)
   }
   
-  
+  changePassword(userId:number, oldPassword:string, newPassword: string){
+    const payload = {
+      id: userId,
+      oldPassword,
+      newPassword
+    };
+    return this.http.post(this.apiUrl, payload);
+  }
   
 }

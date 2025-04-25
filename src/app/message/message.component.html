@@ -11,7 +11,7 @@
         </ul>
     </div>
     <div class="chat-window" *ngIf="selectedUser">
-        <div class="chat-header">{{ selectedUser.name }}</div>
+        <div (click)="user()" class="chat-header">{{ selectedUser.name }}</div>
 
         <div class="chat-messages">
             <div *ngFor="let msg of reversedmessages" [ngClass]="msg.type" class="message">

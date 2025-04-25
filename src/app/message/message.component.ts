@@ -6,6 +6,7 @@ import { userService } from '../service/users.service';
 import { environment } from '../../environments/environment';
 import { FriendService } from '../service/friend.service';
 import { MessageService } from '../service/message.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-message',
   imports: [CommonModule, FormsModule],
@@ -18,6 +19,7 @@ export class MessageComponent implements OnInit {
     private userService: userService,
     private friendService: FriendService,
     private messageService: MessageService,
+    private router: Router,
   ){}
   urlSocketMess=environment.urlSocketMess
   users: any[] = [];
@@ -95,5 +97,9 @@ export class MessageComponent implements OnInit {
       this.displayMsg(message.message,'received')
     }
     );
+  }
+
+  user(){
+    this.router.navigate(["/user"])
   }
 }

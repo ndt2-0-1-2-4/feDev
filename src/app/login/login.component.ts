@@ -198,4 +198,6 @@ export class LoginComponent implements OnInit {
       this.toastr.error("Xác nhận mật khẩu không đúng","Thông báo")
     }
   }
+
+
 }
