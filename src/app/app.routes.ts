@@ -15,21 +15,25 @@ import { PaymentResultComponent } from './payment-result/payment-result.componen
 import { MenugameComponent } from './menugame/menugame.component';
 import { FootballComponent } from './football/football.component';
 import { LotteryComponent } from './lottery/lottery.component';
+import { authGuard } from './auth.guard';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'user', component: UserComponent },
-  { path: 'friend', component: FriendComponent },
-  { path: 'message', component: MessageComponent },
-  { path: 'game/cl', component: ClComponent },
-  { path: 'game/rr', component: RrComponent },
-  { path: 'game/spaceman', component: SpacemanComponent },
-  { path: 'game/slot777', component: Slot777Component },
-  { path: 'recharge', component: RechargeComponent },
-  { path: 'atm/transfer', component: TransferComponent },
-  { path: 'payment', component: PaymentComponent },
-  { path: 'payment-result', component: PaymentResultComponent },
-  { path: 'football', component: FootballComponent },
-  { path: 'menugame', component: MenugameComponent },
-  { path: 'lottery', component: LotteryComponent },
+
+  { path: 'user', component: UserComponent , canActivate: [authGuard]},
+  { path: 'friend', component: FriendComponent , canActivate: [authGuard]},
+  { path: 'message', component: MessageComponent , canActivate: [authGuard]},
+  { path: 'game/cl', component: ClComponent , canActivate: [authGuard]},
+  { path: 'game/rr', component: RrComponent , canActivate: [authGuard]},
+  { path: 'game/spaceman', component: SpacemanComponent , canActivate: [authGuard]},
+  { path: 'game/slot777', component: Slot777Component , canActivate: [authGuard]},
+  { path: 'recharge', component: RechargeComponent , canActivate: [authGuard]},
+  { path: 'atm/transfer', component: TransferComponent , canActivate: [authGuard]},
+  { path: 'payment', component: PaymentComponent , canActivate: [authGuard]},
+  { path: 'payment-result', component: PaymentResultComponent , canActivate: [authGuard]},
+  { path: 'football', component: FootballComponent , canActivate: [authGuard]},
+  { path: 'menugame', component: MenugameComponent , canActivate: [authGuard]},
+  { path: 'lottery', component: LotteryComponent , canActivate: [authGuard]},
+
+  { path: '**', redirectTo: '' }
 ];
