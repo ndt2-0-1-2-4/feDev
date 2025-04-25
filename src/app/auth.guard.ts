@@ -10,7 +10,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (token) {
     return true; 
   } else {
-    // window.alert('Bạn cần đăng nhập để truy cập!');
     toastr.error('Bạn cần đăng nhập để truy cập!');
     return router.parseUrl('');
     
