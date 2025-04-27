@@ -1,19 +1,27 @@
 <div class="home">
   <div class="football" (click)="FootballPage()">
-    <div class="match-card" *ngFor="let match of matches">
-      <div class="match-info">
-        <div class="match-time">
-          <span>{{ match.utcDate | date : "HH:mm" }}</span>
-          <span>{{ match.utcDate | date : "dd/MM" }}</span>
-        </div>
-        <div class="teams">
-          <div class="team">
-            <img [src]="match.homeTeam.crest" class="team-logo" />
-            <span>{{ match.homeTeam.name }}</span>
+    <!-- Hiển thị loading khi đang tải dữ liệu -->
+    <div class="loading" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <span>Đang tải dữ liệu bóng đá...</span>
+    </div>
+    <!-- Hiển thị danh sách trận đấu khi dữ liệu đã tải xong -->
+    <div class="match-list" *ngIf="!isLoading">
+      <div class="match-card" *ngFor="let match of matches">
+        <div class="match-info">
+          <div class="match-time">
+            <span>{{ match.utcDate | date : "HH:mm" }}</span>
+            <span>{{ match.utcDate | date : "dd/MM" }}</span>
           </div>
-          <div class="team">
-            <img [src]="match.awayTeam.crest" class="team-logo" />
-            <span>{{ match.awayTeam.name }}</span>
+          <div class="teams">
+            <div class="team">
+              <img [src]="match.homeTeam.crest" class="team-logo" />
+              <span>{{ match.homeTeam.name }}</span>
+            </div>
+            <div class="team">
+              <img [src]="match.awayTeam.crest" class="team-logo" />
+              <span>{{ match.awayTeam.name }}</span>
+            </div>
           </div>
         </div>
       </div>
