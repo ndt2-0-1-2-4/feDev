@@ -16,7 +16,6 @@ export class userService {
   private apiLogin = environment.apiLogin;
   private apiGetInfo = environment.apiGetInfo;
   private apiGetAtm = environment.apiGetAtm;
-  private apiSearchFullname = environment.apiSearchFullname;
   private apiGetHisBalance = environment.apiGetHisBalance;
   private apiGetPlayerHisAll = environment.apiGetPlayerHisAll;
   private username: any = '';
@@ -27,9 +26,12 @@ export class userService {
     const body = { tk: account, mk: password };
     return this.http.post(this.apiLogin, body);
   }
-  getFullname(fullname: string): Observable<{ id: number; fullname: string }[]> {
-    const body = { fullname };
-    return this.http.post<{ id: number; fullname: string }[]>(this.apiSearch, body);
+  getFullname(fullname: string){
+    const body = { 
+      fullname:fullname,
+      id:this.getCookies()
+     };
+    return this.http.post(this.apiSearch,body)
 }
 
 
