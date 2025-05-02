@@ -1,395 +1,318 @@
-p {
-  color: white;
-}
+/* ---------- MAIN CONTAINER ---------- */
 .profile {
   display: flex;
-  position: relative;
-  gap: 20px;
-  top: 6rem;
-  left: 15%;
-  width: 70%;
-  height: 36rem;
+  max-width: 60%;
+  margin: 20px auto;
+  background: #fff;
   border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+  min-height: 700px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  margin-top: 70px;
+  
 }
 
+/* ---------- LEFT SECTION (PROFILE) ---------- */
 .left-section {
-  width: 40%;
-  padding: 10px;
-  height: 70%;
-  background: transparent;
-  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
-  border-radius: 20px;
+  width: 100%;
+  padding: 30px;
+  background: #f9fafb;
+  border-right: 1px solid #eaecef;
+  display: flex;
+  flex:1;
+  flex-direction: column;
 }
 
-/* Đưa profile và thông tin lên cùng hàng */
+/* Profile Header */
 .profile-left {
   display: flex;
   align-items: center;
-  gap: 15px; /* Khoảng cách giữa avatar và thông tin */
+  margin-bottom: 30px;
 }
 
-/* Ảnh đại diện */
 .profile-pic {
-  width: 100px;
-  height: 100px;
-  border: 3px solid black;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
+  background: #e0e6ed url('https://i.pravatar.cc/150?img=3') center/cover;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Container chứa username và ID */
 .user-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  margin-left: 20px;
 }
 
-/* Tên người dùng */
 .username p {
+  font-size: 1.25rem;
+  font-weight: 600;
   margin: 0;
-  font-weight: bold;
+  color: #1a1a1a;
 }
 
-/* ID */
 .id-user p {
-  display: inline-block;
+  font-size: 0.875rem;
+  color: #64748b;
   margin-top: 5px;
-  font-weight: bold;
 }
 
-/* Nút đổi mật khẩu */
+/* Change Password Button */
 .change-password {
-  border: 2px solid white;
-  padding: 5px;
-  background: none;
-  margin-top: 10px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 0.875rem;
   cursor: pointer;
-  margin-top: 2rem;
-  border-radius: 20px;
-  color: white;
+  margin-bottom: 30px;
+  width: fit-content;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .change-password:hover {
-  background-color: #ada9a9;
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
-/* Ô nội dung */
-.money {
-  width: 90%;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: none;
-  margin-top: 3rem;
-}
-
-/* Thiết kế thẻ */
+/* Bank Card */
 .card {
-  width: 300px;
-  height: 100px;
-  background: linear-gradient(135deg, #1f1f1f, #d1d1d1);
-  border-radius: 20px;
-  padding: 15px;
+  background: linear-gradient(135deg, #3b3b3b, #1a1a1a);
   color: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: auto;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
 }
 
-/* Header chứa logo, số thẻ và hạn */
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 25px;
+}
+
+.logo {
+  width: 40px;
+  height: 25px;
+  background: #fbbf24;
+  border-radius: 4px;
+}
+
+.card-number {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+.add-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #555;
+  background-color: #fafafa;
+}
+
+.add-card:hover {
+  background-color: #f0f0f0;
+}
+
+.plus-icon {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.add-card-text {
+  font-size: 16px;
+}
+
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-card-form label {
+  font-weight: 500;
   font-size: 14px;
+  color: #333;
+}
+
+.add-card-form input {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+
+.add-card-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.add-card-form button {
+  align-self: flex-start;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-card-form button:hover {
+  background-color: #0056b3;
+}
+
+.expiry {
+  font-size: 0.75rem;
   opacity: 0.8;
 }
 
-/* Logo Mastercard */
-.logo {
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle at 30% 30%, red 40%, transparent 41%),
-    radial-gradient(circle at 70% 70%, orange 40%, transparent 41%);
-  border-radius: 50%;
-  display: inline-block;
-}
-
-/* Balance text */
 .balance-text {
-  font-size: 24px;
-  opacity: 0.7;
+  font-size: 0.875rem;
+  opacity: 0.8;
+  margin-bottom: 5px;
 }
 
-/* Số tiền */
 .balance-amount {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-/* Huy hiệu "New" */
 .new-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: purple;
+  top: 15px;
+  right: -25px;
+  background: #ef4444;
   color: white;
-  font-size: 12px;
-  padding: 3px 8px;
-  border-radius: 10px;
-  font-weight: bold;
+  padding: 2px 25px;
+  font-size: 0.65rem;
+  transform: rotate(45deg);
 }
 
-/* bên phải */
+/* ---------- RIGHT SECTION (HISTORY) ---------- */
 .right-section {
-  width: 80%;
-  padding: 10px;
-  display: flex;
-  flex-direction: column; /* Đặt các phần tử theo cột */
-  align-items: center;
-  height: 70%;
-  margin-top: 2vh;
-}
-
-.achievements {
-  text-align: center;
-  border-radius: 20px;
+  flex: 1;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 20px;
-  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
 }
 
-/* Căn chỉnh các icon huy chương */
-.achievement-icons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 10px;
-}
-
-.achievement-icons ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 10px;
-}
-
-.achievement-icons ul li {
-  display: flex;
-}
-
-.achievement-icons ul li a svg {
-  width: 40px;
-  height: 40px;
-}
-
-/* Điều chỉnh bảng Biến động số dư */
-.transaction-history {
-  width: 100%;
-  text-align: center;
-  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
-  height: 80%;
-  border-radius: 20px;
-}
-
-.transaction-history h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.history-balance {
-  width: 100%;
-  text-align: center;
-  box-shadow: 0px 5px 15px rgba(201, 140, 140, 0.5);
-  height: 80%;
-  border-radius: 20px;
-  /* margin-top: 2vh; */
-}
-
-.history-balance h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: white;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: transparent;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-@keyframes sparkle {
-  0% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
-  50% { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
-  100% { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
-}
-
-
-th,
-td {
-  border: 1px solid white;
-  padding: 10px;
-  text-align: center;
-  color: white;
-  animation: sparkle 1.5s infinite alternate;
-  font-weight: bold;
-  font-size: 2vh;
-}
-
-th {
-  background:transparent;
-  color: white;
-  font-size: 2vh;
-}
-
-/* Căn chỉnh phần phân trang */
-.pagination-container .ngx-pagination {
-  background-color: white;       /* Nền trắng */
-  padding: 10px;
-  border-radius: 8px;            /* Bo góc nếu muốn */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
-  color:white; /* Màu chữ trắng */
-}
-
-.pagination-container .ngx-pagination li {
-  margin: 0 4px;
-}
-
-.pagination-container .ngx-pagination li a,
-.pagination-container .ngx-pagination li span {
-  color: #fff;
-  background-color: #222;
-  border: 1px solid #555;
-  padding: 6px 12px;
-  border-radius: 6px;
-  transition: background-color 0.2s ease;
-}
-
-.pagination-container .ngx-pagination li a:hover {
-  background-color: #444;
-}
-
-.pagination-container .ngx-pagination li.current span {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
-}
-
-
-/* Phần menu-his */
+/* History Tabs */
 .menu-his {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 25px;
 }
 
-/* Nút trong menu-his */
 .menu-his button {
-  background-color: #f8afbc; /* Màu nền xanh lá */
-  color: white;
+  background: none;
   border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  padding: 12px 24px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #64748b;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  transition: all 0.2s;
 }
 
 .menu-his button:hover {
-  background-color: #f8afbc; /* Màu nền khi hover */
-  transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+  color: #334155;
 }
 
-.menu-his button:active {
-  background-color: #f8afbc; /* Màu nền khi nhấn */
-  transform: scale(0.95); /* Hiệu ứng thu nhỏ khi nhấn */
+.menu-his button.active {
+  color: #2563eb;
 }
 
-/* Màn hình 24 inch (1920px trở lên) */
-@media (min-width: 1920px) {
+.menu-his button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #2563eb;
+}
+
+/* History Tables */
+.transaction-history,
+.history-balance {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.history-table,
+.hisBalance {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.history-table th,
+.hisBalance th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.history-table td,
+.hisBalance td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-table tr:hover,
+.hisBalance tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Pagination */
+.pagination-container {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 992px) {
   .profile {
-    width: 60%;
-    left: 20%;
-    gap: 40px;
+    flex-direction: column;
   }
-
+  
+  .left-section {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
   .card {
-    width: 400px;
-    height: 150px;
-  }
-
-  .transaction-history {
-    max-height: 600px;
-  }
-
-  .balance-text {
-    font-size: 28px;
-  }
-
-  .balance-amount {
-    font-size: 36px;
-  }
-}
-
-
-/* Màn hình 15.6 inch (1366px đến 1919px) */
-@media (min-width: 1366px) and (max-width: 1919px) {
-  .profile {
-    width: 70%;
-    left: 15%;
-    gap: 30px;
-  }
-
-  .card {
-    width: 350px;
-    height: 120px;
-  }
-
-  .transaction-history {
-    max-height: 500px;
-  }
-
-  .balance-text {
-    font-size: 24px;
-  }
-
-  .balance-amount {
-    font-size: 32px;
-  }
-}
-
-/* Màn hình 14 inch (dưới 1366px) */
-@media (max-width: 1365px) {
-  .profile {
-    width: 80%;
-    left: 10%;
-    gap: 20px;
-  }
-
-  .card {
-    width: 300px;
-    height: 100px;
-  }
-
-  .transaction-history {
-    max-height: 400px;
-  }
-
-  .balance-text {
-    font-size: 20px;
-  }
-
-  .balance-amount {
-    font-size: 28px;
+    margin-top: 30px;
   }
 }

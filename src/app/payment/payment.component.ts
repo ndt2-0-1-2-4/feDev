@@ -5,6 +5,10 @@ import { PaymentService ,PaymentRequest} from '../service/payment.service';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { userService } from '../service/users.service';
+import { AtmService } from '../service/atm.service';
+import { response } from 'express';
+
 @Component({
   selector: 'app-payment',
   imports:[FormsModule,NgIf,CommonModule],
@@ -22,10 +26,15 @@ export class PaymentComponent implements OnInit {
   paymentMessage = '';    
   paymentStatus = '';
 
+  totalDeposit: number = 0;
+  reward: number = 0;
+
   constructor(
     private paymentService: PaymentService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: userService,
+    private atmService: AtmService
   ) { }
 
   ngOnInit(): void {
@@ -36,14 +45,18 @@ export class PaymentComponent implements OnInit {
       }
     });
 
-    this.startCountdown(15 * 60);
-    this.startPrizeCountdown(7 * 3600 + 59 * 60 + 59);
-  }
+  this.atmService.calculateReward(Number(this.userService.getCookies())).subscribe((response: any) => {
+    this.totalDeposit = response.totalDeposit;
+    this.reward = response.reward;
+    console.log(response);
+  });
 
+}
   // Xử lý khi người dùng nhấn nút thanh toán
   processPayment(): void {
     this.isProcessing = true;
     this.paymentMessage = 'Đang xử lý yêu cầu thanh toán...';
+
 
     this.paymentService.createPayment(this.paymentRequest).subscribe({
       next: (response) => {
@@ -104,47 +117,6 @@ export class PaymentComponent implements OnInit {
     }
   }
   
-  copyToClipboard(value: string) {
-    navigator.clipboard.writeText(value).then(() => {
-      alert('Đã sao chép: ' + value);
-    });
-  }
-
-  // bankInfo = {
-  //   accountNumber: '19035983187012',
-  //   accountHolder: 'Chương Nhược Nam',
-  //   transactionCode: 'U1UK5CXJ'
-  // };
-
-  // wallets = {
-  //   momo: {
-  //     phoneNumber: '0901234567',
-  //     accountName: 'Momo User',
-  //     transactionCode: 'MOMO12345',
-  //     qrCode: 'dia.png'
-  //   },
-  //   vnpay: {
-  //     phoneNumber: '0912345678',
-  //     accountName: 'VNPay User',
-  //     transactionCode: 'VNPAY67890',
-  //     qrCode: 'dia.png'
-  //   },
-  //   zalopay: {
-  //     phoneNumber: '0923456789',
-  //     accountName: 'ZaloPay User',
-  //     transactionCode: 'ZALO54321',
-  //     qrCode: 'dia.png'
-  //   }
-  // };
-
-
-  // selectedWallet = this.wallets.momo;
-  // activeWallet = 'momo';
-
-  // selectWallet(walletType: keyof typeof this.wallets) {
-  //   this.selectedWallet = this.wallets[walletType];
-  //   this.activeWallet = walletType;
-  // }
 
   showContent(tab: string) {
     this.activeTab = tab;
@@ -157,10 +129,6 @@ export class PaymentComponent implements OnInit {
     this.activeChoice = choice;
   }
 
-  // generateNewTransactionCode() {
-  //   const newCode = Math.random().toString(36).substring(2, 10).toUpperCase();
-  //   this.bankInfo.transactionCode = newCode;
-  // }
 
   hours: number = 7;
   minutes: number = 59;
@@ -187,10 +155,19 @@ export class PaymentComponent implements OnInit {
   }
 
   bonuses = [
-    { reward: '10.000', deposit: '2.000.000' },
-    { reward: '58.000', deposit: '10.000.000' },
-    { reward: '318.000', deposit: '50.000.000' },
-    { reward: '680.000', deposit: '100.000.000' },
-    { reward: '1.580.000', deposit: '200.000.000' }
+    { reward: '40.000', deposit: '2.000.000' },
+    { reward: '100.000', deposit: '10.000.000' },
+    { reward: '360.000', deposit: '50.000.000' },
+    { reward: '879.000', deposit: '100.000.000' },
+    { reward: '1.579.000', deposit: '200.000.000' }
   ];
+
+  goToWallet() {
+    this.activeTab = 'content';
+    this.activeChoice = 'wallet';
+  }
+
+
+  
+
 }

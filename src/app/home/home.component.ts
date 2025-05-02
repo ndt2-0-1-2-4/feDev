@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HighchartsChartModule } from 'highcharts-angular';
+import * as Highcharts from 'highcharts';
 import { environment } from '../../environments/environment';
 import { format } from 'date-fns';
 import { userService } from '../service/users.service';
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HighchartsChartModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   standalone: true,
@@ -51,16 +53,16 @@ export class HomeComponent implements OnInit {
   }
 
   loadLotteryData() {
-    const dayStart = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd'); 
-    const dayEnd = format(new Date(Date.now()), 'yyyy-MM-dd'); 
+    const dayStart = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd');
+    const dayEnd = format(new Date(Date.now()), 'yyyy-MM-dd');
     const apiUrl = `${this.apiLottery}?dateFrom=${dayStart}&dateTo=${dayEnd}`;
-    console.log("ok");
-  
+    console.log('ok');
+
     this.http.get(apiUrl).subscribe({
       next: (res: any) => {
         const issues = res?.t?.issueList;
-        const now = new Date()
-  
+        const now = new Date();
+
         const latestValidIssue = issues?.find((issue: any) => {
           const openTime = new Date(issue.openTime);
           return openTime < now;
@@ -68,7 +70,7 @@ export class HomeComponent implements OnInit {
 
         if (latestValidIssue && latestValidIssue.detail) {
           const parsed = JSON.parse(latestValidIssue.detail);
-  
+
           this.lotteryData = {
             gdb: parsed[0],
             g1: parsed[1],
@@ -80,15 +82,15 @@ export class HomeComponent implements OnInit {
             g7: parsed[7].split(','),
           };
         }
-  
+
         //  Lấy ngày từ API để hiển thị đúng
         this.selectedDate = new Date(latestValidIssue?.openTime || Date.now());
-  
+
         console.log('Dữ liệu nhận về từ API:', res);
       },
       error: (err) => {
         console.error('Lỗi khi gọi API:', err);
-      }
+      },
     });
   }
 
@@ -110,4 +112,27 @@ export class HomeComponent implements OnInit {
   GameChanLe() {
     this.router.navigate(['/game/cl']);
   }
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOption: Highcharts.Options = {
+    chart: {
+      type: 'line',
+    },
+    title: {
+      text: 'Thống kê số dư',
+    },
+    tooltip: {
+      formatter: function () {
+        return `
+        Ngày: ${this.x}<br/>
+        Số tiền: ${this.y}`;
+      },
+    },
+    series: [
+      {
+        type: 'line',
+        name: 'Số dư',
+        data: [120, 234, 122, 233, 333],
+      },
+    ],
+  };
 }

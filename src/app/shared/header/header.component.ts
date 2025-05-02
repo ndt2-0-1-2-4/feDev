@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AtmService } from '../../service/atm.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-header',
   imports: [NgIf],
@@ -15,24 +16,27 @@ export class HeaderComponent implements OnInit {
     private userService: userService,
     private cookie:CookieService,
     private router: Router,
-    private atmService: AtmService
+    private atmService: AtmService,
+    private toastr: ToastrService
   ) { }
   fullname:any =""
   money:any=""
   ngOnInit(): void {
-    this.userService.getUser().subscribe(
-      (data)=>{
-        console.log(data)
-        this.fullname=data.fullname
-      }
-    )
-    this.userService.getAtmUser(this.userService.getCookies()).subscribe(
-      (data)=>{
-        this.money=data.balance
-      }
-    )
-    this.fullname=this.userService.getNameCookies()
-    this.money=this.userService.getBalanceCookies()
+    if(this.userService.getCookies()!==""){
+      this.userService.getUser().subscribe(
+        (data)=>{
+          this.fullname=data.fullname
+        }
+      )
+      this.userService.getAtmUser(this.userService.getCookies()).subscribe(
+        (data:any)=>{
+          this.money=data.balance
+          if(data.error !==undefined){
+            this.toastr.warning("Hãy bấm vào User để tạo ATM ", "Hệ thống")
+          }
+        }
+      )
+    }
   }
   Login(){
     this.router.navigate(['/login'])

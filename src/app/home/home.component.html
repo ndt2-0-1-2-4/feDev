@@ -112,12 +112,7 @@
       <div class="game-title">Spaceman</div>
     </div>
     <div class="game-item">
-      <img
-        src="icon-777.png"
-        alt=""
-        class="game-img"
-        (click)="Game777()"
-      />
+      <img src="icon-777.png" alt="" class="game-img" (click)="Game777()" />
       <div class="game-title">777</div>
     </div>
     <div class="game-item">
@@ -139,5 +134,8 @@
       <div class="game-title">Xổ Số</div>
     </div>
   </div>
-  <div class="static">thong ke</div>
+  <div class="static">
+    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOption">
+    </highcharts-chart>
+  </div>
 </div>
