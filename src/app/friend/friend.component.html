@@ -12,7 +12,7 @@
     <div class="right-column">
         <h3>Tìm kiếm</h3>
         <div class="search-container">
-            <input type="text" [(ngModel)]="searchQuery" placeholder="Nhập tên bạn bè hoặc ID">
+            <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Nhập tên bạn bè hoặc ID">
             <button class="btn_searchfr" (click)="searchFriends()">Tìm kiếm</button>
         </div>
 
@@ -22,9 +22,14 @@
                 <ul>
                     <li *ngFor="let friend of friends">
                         <a href=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#ada9a9" d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/></svg></a>
-                        {{ friend.name }}
-                        <button class="btn_delete" (click)="removeFriend({ id: friend.id, name: friend.name })">Xóa bạn</button>
-                        <button class="btn_message" (click)="sendMessage(friend.name)">Nhắn tin</button>
+                        {{ friend.fullname }}
+                        <div *ngIf="!friend.relative">
+                            <button class="btn_delete" (click)="removeFriend(friend)">Xóa bạn</button>
+                            <button class="btn_message" (click)="sendMessage(friend.fullname)">Nhắn tin</button>
+                        </div>
+                        <div *ngIf="friend.relative">
+                            {{friend.relative}}
+                        </div>
                     </li>
                 </ul>
                
@@ -35,35 +40,57 @@
                 <ul>
                     <li *ngFor="let request of friendRequests">
                         <a href=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#ada9a9" d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/></svg></a>
-                        {{ request.name }}
-                        <button class="btn_delete" (click)="deleteFR(request)">Xóa lời mời</button>
-                        <button class="btn_acp" (click)="acpRequests(request)">Chấp nhận</button>
+                        {{ request.fullname }}
+                        <div *ngIf="!request.relative">
+                            <button class="btn_delete" (click)="deleteRequest(request)"  >Xóa lời mời</button>
+                            <button class="btn_acp" (click)="acpRequests(request)">Chấp nhận</button>
+                        </div>
+                        <div *ngIf="request.relative">
+                            {{request.relative}}
+                        </div>
                     </li>
                 </ul>
             </div>
             <div *ngIf="showSearchResults">
                 <h3>Kết quả tìm kiếm</h3>
-                <ul *ngIf="searchResults.length > 0; else noResults">
-                    <li *ngFor="let result of searchResults">
-                        <a href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path fill="#ada9a9" d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/>
-                            </svg>
-                        </a>
-                        {{ result.fullname }}  <!-- Chỉ hiển thị tên -->
-                        <button 
-                        (click)="addFriend(result.id)" 
-                        class="btn_addFriend" 
-                        [disabled]="sentRequests.includes(result.id)">
-                            {{ sentRequests.includes(result.id) ? 'Đã gửi' : 'Kết bạn' }}
-                        </button>
-                    </li>
+              
+                <!-- Spinner khi đang loading -->
+                <div *ngIf="isLoading" class="loading-spinner">
+                  <div class="spinner"></div>
+                </div>
+              
+                <!-- Kết quả nếu có -->
+                <ul *ngIf="!isLoading && searchResults.length > 0; else noResults">
+                  <li *ngFor="let result of searchResults">
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM504 312l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                    </a>
+                    {{ result.fullname }}
+                    <div *ngIf="result.relative==='Thêm bạn bè'">
+                        <button (click)="addFriend(result)" class="btn_addFriend" >Thêm bạn bè</button>
+                    </div>
+                    <div *ngIf="result.relative === 'Bạn bè'">
+                            <button class="btn_delete" (click)="removeFriend(result)">Xóa bạn</button>
+                            <button class="btn_message" (click)="sendMessage(result.fullname)">Nhắn tin</button>
+                    </div>
+                    <div *ngIf="result.relative === 'Đã gửi'">
+                        <button class="btn_delete" (click)="deleteRequest(result)"  >Xóa lời mời</button>
+                        <button class="btn_acp" (click)="acpRequests(result)">Chấp nhận</button>
+                    </div>
+                    <div>
+                        {{displayRelative(result)}}
+                    </div>
+                  </li>
                 </ul>
+              
+                <ng-template #noResults>
+                  <p *ngIf="!isLoading">Không tìm thấy người dùng nào.</p>
+                </ng-template>
+              </div>
                 
                 <ng-template #noResults>
                     <p>Không tìm thấy kết quả nào.</p>
-                </ng-template>
-            </div>
+            </ng-template>
         </div>
     </div>
 </div>

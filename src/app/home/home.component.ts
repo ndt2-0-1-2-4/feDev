@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import * as Highcharts from 'highcharts';
 import { environment } from '../../environments/environment';
 import { format } from 'date-fns';
 import { userService } from '../service/users.service';
+import { AtmService } from '../service/atm.service';
 @Component({
   selector: 'app-home',
   imports: [CommonModule, FormsModule, HighchartsChartModule],
@@ -17,18 +18,26 @@ import { userService } from '../service/users.service';
 })
 export class HomeComponent implements OnInit {
   matches: any[] = [];
-
+  listdailyBalances: any[] = [];
+  listdailyRecharge: any[] = [];
+  Highcharts: typeof Highcharts = Highcharts;
+  chartOption: Highcharts.Options = {};
+  chartOption2: Highcharts.Options = {};
   apiFootball = environment.apiFootball;
   apiLottery = environment.apiLottery;
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private userService: userService
+    private userService: userService,
+    private AtmService: AtmService,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit() {
     this.fetchMatches();
     this.loadLotteryData();
+    this.UpChartBalance();
+    this.UpChartRecharge();
   }
 
   lotteryData: any = {};
@@ -112,27 +121,111 @@ export class HomeComponent implements OnInit {
   GameChanLe() {
     this.router.navigate(['/game/cl']);
   }
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOption: Highcharts.Options = {
-    chart: {
-      type: 'line',
-    },
-    title: {
-      text: 'Thống kê số dư',
-    },
-    tooltip: {
-      formatter: function () {
-        return `
-        Ngày: ${this.x}<br/>
-        Số tiền: ${this.y}`;
+  //Thống kê
+  UpChartBalance() {
+    const idMy = Number(this.userService.getCookies());
+    let startDate = format(new Date(), 'yyyy-MM-dd');
+    this.AtmService.getDailyClosingBalance(idMy, startDate).subscribe(
+      (rs: any) => {
+        this.listdailyBalances = rs.dailyBalances;
+        this.chartOption = {
+          chart: {
+            type: 'line',
+          },
+          title: {
+            text: 'Thống kê số dư',
+          },
+          xAxis: {
+            categories: this.listdailyBalances.map((item) => item.date),
+            labels: {
+              style: {
+                fontSize: '0.5rem',
+              },
+            },
+            title: {
+              text: 'Ngày',
+            },
+          },
+          yAxis: {
+            title: {
+              text: 'Số dư',
+            },
+          },
+          tooltip: {
+            formatter: function () {
+              return `
+                <b>Số dư:</b> ${this.y?.toLocaleString() ?? 'N/A'}
+              `;
+            },
+          },
+          series: [
+            {
+              type: 'line',
+              name: 'Số dư',
+              data: this.listdailyBalances.map((item) => ({
+                y: item.hasData ? item.closingBalance : 0,
+              })),
+            },
+          ],
+        };
+        this.cdr.detectChanges();
       },
-    },
-    series: [
-      {
-        type: 'line',
-        name: 'Số dư',
-        data: [120, 234, 122, 233, 333],
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+  UpChartRecharge() {
+    const Idmy = Number(this.userService.getCookies());
+    let endDate = format(new Date(), 'yyyy-MM-dd');
+    this.AtmService.getDailyRecharge(Idmy, endDate).subscribe(
+      (response: any) => {
+        this.listdailyRecharge = response.dailyrecharges;
+        this.chartOption2 = {
+          chart: {
+            type: 'line',
+          },
+          title: {
+            text: 'Thống kê số tiền nạp',
+          },
+          xAxis: {
+            categories: this.listdailyRecharge.map((item) => item.date),
+            labels: {
+              style: {
+                fontSize: '0.5rem',
+              },
+            },
+            title: {
+              text: 'Ngày',
+            },
+          },
+          yAxis: {
+            title: {
+              text: 'Số dư',
+            },
+          },
+          tooltip: {
+            formatter: function () {
+              return `
+                <b>Số dư:</b> ${this.y?.toLocaleString() ?? 'N/A'}
+              `;
+            },
+          },
+          series: [
+            {
+              type: 'line',
+              name: 'Số dư',
+              data: this.listdailyRecharge.map((item) => ({
+                y: item.hasData ? item.totalRecharge : 0,
+              })),
+            },
+          ],
+        };
+        this.cdr.detectChanges();
       },
-    ],
-  };
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
 }

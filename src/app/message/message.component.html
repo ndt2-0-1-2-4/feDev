@@ -6,12 +6,12 @@
             class="chat-item" 
             [ngClass]="{ 'active': user.id === selectedUser?.id }"
             (click)="selectUser(user)">
-                {{ user.name }}
+                {{ user.fullname }}
             </li>
         </ul>
     </div>
     <div class="chat-window" *ngIf="selectedUser">
-        <div class="chat-header">{{ selectedUser.name }}</div>
+        <div (click)="user()" class="chat-header">{{ selectedUser.fullname }}</div>
 
         <div class="chat-messages">
             <div *ngFor="let msg of reversedmessages" [ngClass]="msg.type" class="message">

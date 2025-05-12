@@ -11,11 +11,11 @@ import path from 'path';
   providedIn: 'root',
 })
 export class userService {
+  private apiUrl = 'http://localhost:8082/user/changePassword';
   
   private apiLogin = environment.apiLogin;
   private apiGetInfo = environment.apiGetInfo;
   private apiGetAtm = environment.apiGetAtm;
-  private apiSearchFullname = environment.apiSearchFullname;
   private apiGetHisBalance = environment.apiGetHisBalance;
   private apiGetPlayerHisAll = environment.apiGetPlayerHisAll;
   private username: any = '';
@@ -26,9 +26,12 @@ export class userService {
     const body = { tk: account, mk: password };
     return this.http.post(this.apiLogin, body);
   }
-  getFullname(fullname: string): Observable<{ id: number; fullname: string }[]> {
-    const body = { fullname };
-    return this.http.post<{ id: number; fullname: string }[]>(this.apiSearch, body);
+  getFullname(fullname: string){
+    const body = { 
+      fullname:fullname,
+      id:this.getCookies()
+     };
+    return this.http.post(this.apiSearch,body)
 }
 
 
@@ -164,6 +167,13 @@ export class userService {
     return this.http.post(environment.apiRegister,body)
   }
   
-  
+  changePassword(userId:number, oldPassword:string, newPassword: string){
+    const payload = {
+      id: userId,
+      oldPassword,
+      newPassword
+    };
+    return this.http.post(this.apiUrl, payload);
+  }
   
 }

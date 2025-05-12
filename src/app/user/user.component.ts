@@ -7,6 +7,8 @@ import { error } from 'node:console';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AtmService } from '../service/atm.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { subscribe } from 'node:diagnostics_channel';
 @Component({
   selector: 'app-user',
   imports: [CommonModule, FormsModule, NgxPaginationModule],
@@ -22,7 +24,8 @@ export class UserComponent {
     private userService: userService,
     private friendService: FriendService,
     private atm: AtmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http : HttpClient
   ) { }
   fullname: any;
   money: any;
@@ -137,6 +140,59 @@ export class UserComponent {
 
     }
 
+  }
+
+  isModalOpen = false;
+  oldPassword = '';
+  newPassword = '';
+  confirmPassword = '';
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+  }
+
+  changePassword() {
+    if (this.newPassword !== this.confirmPassword) {
+      alert('Mật khẩu mới không khớp');
+      return;
+    }
+
+    if (this.oldPassword === this.newPassword) {
+      alert('Vui lòng đổi mật khẩu mới không trùng mật khẩu cũ');
+      return;
+    }
+
+    const userId = this.userService.getCookies();
+
+    if (!userId) {
+      alert('Không xác định được người dùng');
+      return;
+    }
+
+    const payload = {
+      id: userId,
+      oldPassword: this.oldPassword,
+      newPassword: this.newPassword
+    };
+    this.userService.changePassword(Number(userId), this.oldPassword, this.newPassword).subscribe({
+      next: (response) => {
+        console.log('đổi mk:', response);
+        alert('Đổi mk thành công');
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error changing password:', err);
+        alert('Lỗi đổi mk');
+      }
+    });
+    
   }
 
 }

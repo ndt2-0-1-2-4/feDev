@@ -5,7 +5,7 @@
         </div>
         <ul class="friends-list">
           <li *ngFor="let friend of friends">
-              <div class="friend-item">
+              <div (click)="message()" class="friend-item">
                   <div class="icon-wrapper">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" fill="#ada9a9">
                           <path [attr.d]="iconPath"></path>
@@ -19,7 +19,7 @@
                     <!-- <span class="status" [ngClass]="friend.status"></span>
                     <span class="friend-info">{{ friend.name }} - {{ friend.status }}</span> -->
                   </div>
-                  <span class="friend-info">{{ friend.name }} - {{ status }}</span>
+                  <span routerLinkActive="router-link-active"  class="friend-info">{{ friend.fullname }} - {{ status }}</span>
               </div>
           </li>
         </ul>

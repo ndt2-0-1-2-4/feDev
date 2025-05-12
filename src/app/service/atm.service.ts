@@ -9,9 +9,13 @@ import { userService } from './users.service';
 })
 export class AtmService {
   private apiUrl = 'http://localhost:8082/Atm/calculate-reward';
+  private apiGetDailyBalance =
+    'http://localhost:8082/Atm/getDailyClosingBalance';
+  private apiGetDailyRecharge = 'http://localhost:8082/Atm/getDailyRecharge';
 
-  constructor(private httpClient: HttpClient , 
-              private userService: userService
+  constructor(
+    private httpClient: HttpClient,
+    private userService: userService
   ) {}
 
   searchAtm(stk: any): Observable<any> {
@@ -19,9 +23,9 @@ export class AtmService {
     const body = { stk: stk };
     return this.httpClient.post(environment.apiSearchAtm, body);
   }
-  updateBalan(number: number,id:any) {
+  updateBalan(number: number, id: any) {
     // cập nhật số dư : Nhập số tiền thay đổi , vd: -1000;
-    const body = { balance: number ,idPlayer:id};
+    const body = { balance: number, idPlayer: id };
     return this.httpClient.post(environment.apiupdateBalan, body);
   }
   saveHisBalance(idPlayer: any, content: any, trans: any, balance: any) {
@@ -35,7 +39,7 @@ export class AtmService {
       trans: trans,
       balance: balance,
     };
-    return this.httpClient.post(environment.apiSaveHisBalance, body); 
+    return this.httpClient.post(environment.apiSaveHisBalance, body);
   }
 
   CreateAtm(id: any, stk: any) {
@@ -46,5 +50,13 @@ export class AtmService {
 
   calculateReward(idPlayer: number): Observable<any> {
     return this.httpClient.post(this.apiUrl, { idPlayer });
+  }
+  getDailyClosingBalance(playerId: number, startDate: string): Observable<any> {
+    const url = `${this.apiGetDailyBalance}?playerId=${playerId}&startDate=${startDate}`;
+    return this.httpClient.get(url);
+  }
+  getDailyRecharge(playerId: number, endDateStr: string): Observable<any> {
+    const url = `${this.apiGetDailyRecharge}?playerId=${playerId}&endDateStr=${endDateStr}`;
+    return this.httpClient.get(url);
   }
 }

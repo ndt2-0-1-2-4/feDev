@@ -13,7 +13,29 @@
       </div>
     </div>
 
-    <button class="change-password">change password</button>
+    <button (click)="openModal()" class="change-password">Change password</button>
+
+
+
+    <div class="modal" [ngClass]="{ 'show': isModalOpen }">
+      <div class="modal-content">
+        <h2>Đổi mật khẩu</h2>
+    
+        <label>Mật khẩu cũ</label>
+        <input type="password" [(ngModel)]="oldPassword" class="form-control" />
+    
+        <label>Mật khẩu mới</label>
+        <input type="password" [(ngModel)]="newPassword" class="form-control" />
+    
+        <label>Xác nhận mật khẩu mới</label>
+        <input type="password" [(ngModel)]="confirmPassword" class="form-control" />
+    
+        <div class="actions">
+          <button (click)="changePassword()">Xác nhận</button>
+          <button (click)="closeModal()">Huỷ</button>
+        </div>
+      </div>
+    </div>
 
     <div class="money">
       <div *ngIf="stk; else addCardTemplate">

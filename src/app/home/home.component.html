@@ -135,7 +135,14 @@
     </div>
   </div>
   <div class="static">
-    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOption">
-    </highcharts-chart>
+    <div id="balances" class="chart" *ngIf="listdailyBalances.length > 0">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOption">
+      </highcharts-chart>
+    </div>
+
+    <div id="recharges" class="chart" *ngIf="listdailyRecharge.length > 0">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOption2">
+      </highcharts-chart>
+    </div>
   </div>
 </div>

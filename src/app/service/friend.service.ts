@@ -23,23 +23,15 @@ export class FriendService {
   private apiacceptFriend = environment.apiacceptFriend;
   private apigetFriendRequets = environment.apiGetrequets;
   private apideleFriendRequets = environment.apideleFriendRequets;
+  private apiGetRelative = environment.apiGetRelative;
+  private apiGetFriendRelative = environment.apiGetFriendRelative;
 
   getListFriends(): Observable<any> {
     const idMy = this.userService.getCookies();
     return this.http.post(this.apigetListFriend, { idMy });
   }
 
-  getIdFriend(): void {
-    this.userService.getUser().subscribe(
-      (user) => {
-        const idFriend = user.id; // Lấy ID từ getUser()
-        console.log('ID của bạn bè:', idFriend);
-      },
-      (error) => {
-        console.error('Lỗi khi lấy ID:', error);
-      }
-    );
-  }
+
 
   getFriendRequets(): Observable<any> {
     const idMy = this.userService.getCookies();
@@ -47,26 +39,22 @@ export class FriendService {
   }
 
   // Gửi lời mời kết bạn
-  addFriend(): Observable<any> {
+  addFriend(idFriend:number): Observable<any> {
     const idMy = this.userService.getCookies();
-    const idFriend = this.getIdFriend();
     return this.http.post<any>(this.apiaddFriend, { idMy, idFriend });
   }
 
   // Xóa bạn bè
   deleteFriend(idMy: number, idFriend: number): Observable<any> {
     const url = `${this.apideleFriend}`;
-    console.log("Gửi request DELETE đến: ", url);
-    console.log("ID của tôi:", idMy);
-    console.log("ID của bạn:", idFriend);
     const body = { idMy, idFriend };
     console.log("Dữ liệu gửi đi:", body);
     // Gửi yêu cầu DELETE với body
-    return this.http.delete<any>(url, {
+    return this.http.delete(url, {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
         body: body // Chỉ hoạt động nếu backend hỗ trợ DELETE có body
     });
-}
+  }
 
 
   //Xóa lời mời kb
@@ -86,11 +74,20 @@ export class FriendService {
 
   // Chấp nhận lời mời kết bạn
   acceptFriend(idMy: number , idFriend: number): Observable<any> {
-    return this.http.post<any>(this.apiacceptFriend, {idMy , idFriend});
+    const body={
+      "idMy":idFriend,
+      "idFriend":idMy
+    }
+    return this.http.post<any>(this.apiacceptFriend, body);
   }
 
   getRelativeFr(idMy:any,idFriend:any){
     const body={idMy:idMy,idFriend:idFriend}
     return this.http.post(environment.apiGetRelative,body)
+  }
+
+  getRelativeMy(idMy:any){
+    const body={idMy:idMy}
+    return this.http.post(environment.apiGetFriendRelative,body)
   }
 }
