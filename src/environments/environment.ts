@@ -34,10 +34,7 @@ export const environment = {
     apiGetPlayerHisAll:`http://${SERVER_IP}:8082/game/getPlayerHisAll`,
     apiRegister:`http://${SERVER_IP}/user/regis`,
     apiCreateAtm:`http://${SERVER_IP}:8082/Atm/createATM`,
-<<<<<<< HEAD
     apiGetFriendRelative:`http://${SERVER_IP}:8082/friend/getRelativeMy`,
-=======
     
->>>>>>> 99fbd9f38ea499c6cf4cd2cea42053ab0b355b72
 
 };
