@@ -21,6 +21,7 @@ export class LeftsideComponent {
     }
     localStorage.clear();
     location.reload();
+    this.route.navigate(['/login']);
   }
   MessagePage() {
     this.route.navigate(['/message']);
