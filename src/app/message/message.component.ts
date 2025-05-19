@@ -23,7 +23,7 @@ export class MessageComponent implements OnInit {
   ){}
   urlSocketMess=environment.urlSocketMess
   users: any[] = [];
-  selectedUser: { id: number; name: string } | null = null;
+  selectedUser: { id: number; fullname: string } | null = null;
   newMessage: string = '';
 
   chatHistory: { [idFriend: number]: { idMy:number;content: string }[] } = {
@@ -31,7 +31,7 @@ export class MessageComponent implements OnInit {
 
   messages: { content: string; type: string }[] = [];
 
-  selectUser(user: { id: number; name: string }) {
+  selectUser(user: { id: number; fullname: string }) {
     this.selectedUser = user;
     // this.messages = this.chatHistory[user.id] || [];
     const idMy = parseInt(this.userService.getCookies());

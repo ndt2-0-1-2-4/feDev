@@ -1,6 +1,6 @@
 /* Import Montserrat font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-.disable{
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+.disable {
   pointer-events: none;
 }
 /* Game Header */
@@ -27,7 +27,7 @@
 .game-title span {
   color: #fff;
   font-size: 1.2rem;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 700;
 }
 /* Outer table */
@@ -44,7 +44,7 @@
   width: 50%;
   padding: 1rem;
   box-sizing: border-box;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
 }
 
 /* Bet Stats */
@@ -55,25 +55,29 @@
   padding: 0.5rem;
 }
 
-.bet-tai, .bet-xiu {
+.bet-tai,
+.bet-xiu {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
 }
 
-.bet-tai span, .bet-xiu span {
+.bet-tai span,
+.bet-xiu span {
   color: #fff;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
 }
 
-.bet-tai span:first-child, .bet-xiu span:first-child {
+.bet-tai span:first-child,
+.bet-xiu span:first-child {
   font-size: 2rem;
   font-weight: 700;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-.bet-tai .amount, .bet-xiu .amount {
+.bet-tai .amount,
+.bet-xiu .amount {
   font-size: 1rem;
   font-weight: 600;
 }
@@ -91,7 +95,7 @@
   border: 5px solid #ffd700;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
 }
-.bolt{
+.bolt {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -116,7 +120,7 @@
 .countdown {
   text-align: center;
   font-size: 2rem;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 700;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
@@ -125,7 +129,7 @@
   position: absolute;
   color: #ffd700;
   font-size: 2rem;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 700;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
 }
@@ -138,7 +142,8 @@
   padding: 0.5rem;
 }
 
-.bet-tai-action, .bet-xiu-action {
+.bet-tai-action,
+.bet-xiu-action {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -146,20 +151,22 @@
   cursor: pointer;
 }
 
-.bet-tai-action .bet-label, .bet-xiu-action .bet-label {
+.bet-tai-action .bet-label,
+.bet-xiu-action .bet-label {
   background: linear-gradient(to bottom, #ffd700, #d4a373);
   border-radius: 20px;
   padding: 0.5rem 1rem;
   color: #1c2526;
   font-size: 1rem;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 600;
 }
 
-.bet-tai-action .bet-amount, .bet-xiu-action .bet-amount {
+.bet-tai-action .bet-amount,
+.bet-xiu-action .bet-amount {
   color: #fff;
   font-size: 1rem;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 600;
 }
 
@@ -183,7 +190,8 @@
   padding: 0.5rem;
 }
 
-.bet-tai-input, .bet-xiu-input {
+.bet-tai-input,
+.bet-xiu-input {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -200,7 +208,7 @@
   font-size: 1rem;
   outline: none;
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 500;
 }
 
@@ -214,7 +222,7 @@
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 600;
 }
 
@@ -241,7 +249,7 @@
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 600;
 }
 
@@ -267,7 +275,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   border: none;
   transition: transform 0.2s ease;
-  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-family: "Montserrat", "Arial", sans-serif;
   font-weight: 600;
 }
 
@@ -319,7 +327,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   margin: 4px;
 }
-#dice-bottom{
+#dice-bottom {
   left: 55%;
 }
 @keyframes rolling {
@@ -423,9 +431,8 @@
 
 /* Tablets (max-width: 1024px) */
 @media (max-width: 1024px) {
-  .game-header{
+  .game-header {
     margin-top: 7%;
-
   }
   .dice-area {
     height: 100px;
@@ -437,15 +444,18 @@
     height: 40px;
   }
 
-  .countdown, .total-score {
+  .countdown,
+  .total-score {
     font-size: 1.5rem;
   }
 
-  .bet-tai span:first-child, .bet-xiu span:first-child {
+  .bet-tai span:first-child,
+  .bet-xiu span:first-child {
     font-size: 1.5rem;
   }
 
-  .bet-tai .amount, .bet-xiu .amount {
+  .bet-tai .amount,
+  .bet-xiu .amount {
     font-size: 0.9rem;
   }
 }
@@ -470,15 +480,18 @@
     height: 30px;
   }
 
-  .countdown, .total-score {
+  .countdown,
+  .total-score {
     font-size: 1.2rem;
   }
 
-  .bet-tai span:first-child, .bet-xiu span:first-child {
+  .bet-tai span:first-child,
+  .bet-xiu span:first-child {
     font-size: 1.2rem;
   }
 
-  .bet-tai .amount, .bet-xiu .amount {
+  .bet-tai .amount,
+  .bet-xiu .amount {
     font-size: 0.8rem;
   }
 
@@ -522,15 +535,18 @@
     height: 25px;
   }
 
-  .countdown, .total-score {
+  .countdown,
+  .total-score {
     font-size: 1rem;
   }
 
-  .bet-tai span:first-child, .bet-xiu span:first-child {
+  .bet-tai span:first-child,
+  .bet-xiu span:first-child {
     font-size: 1rem;
   }
 
-  .bet-tai .amount, .bet-xiu .amount {
+  .bet-tai .amount,
+  .bet-xiu .amount {
     font-size: 0.7rem;
   }
 

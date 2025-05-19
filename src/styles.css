@@ -1,5 +1,5 @@
 body {
     background: linear-gradient(to bottom, #FFDFDF, #FEDEDE);
-    height: 100vh; /* Đặt chiều cao của body để thấy hiệu ứng */
+    height: 100vh !important; /* Đặt chiều cao của body để thấy hiệu ứng */
     margin: 0; /* Xóa margin mặc định */
 }
