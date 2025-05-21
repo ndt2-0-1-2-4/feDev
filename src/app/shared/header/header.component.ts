@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AtmService } from '../../service/atm.service';
 import { ToastrService } from 'ngx-toastr';
+import { formatCurrencyVND } from '../../utils/format.util';
 @Component({
   selector: 'app-header',
   imports: [NgIf],
@@ -21,6 +22,10 @@ export class HeaderComponent implements OnInit {
   ) { }
   fullname:any =""
   money:any=""
+
+  formatCurrency(money: number): string {
+    return formatCurrencyVND(money);
+  }
   ngOnInit(): void {
     if(this.userService.getCookies()!==""){
       this.userService.getUser().subscribe(

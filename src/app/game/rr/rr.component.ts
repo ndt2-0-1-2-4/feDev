@@ -351,11 +351,11 @@ export class RrComponent implements OnInit, AfterViewInit{
         let amout = 0;
         amout = - this.betAmount;
 
-        this.atmService.updateBalan(amout, this.userService.getCookies()).subscribe(response => {
-          console.log('Cập nhật số dư thành công:', response);
-        }, error => {
-          console.error('Lỗi cập nhật số dư:', error);
-        });
+        // this.atmService.updateBalan(amout, this.userService.getCookies()).subscribe(response => {
+        //   console.log('Cập nhật số dư thành công:', response);
+        // }, error => {
+        //   console.error('Lỗi cập nhật số dư:', error);
+        // });
 
         const idPlayer = this.userService.getCookies();
 
@@ -401,7 +401,7 @@ export class RrComponent implements OnInit, AfterViewInit{
 
   cashOut() {
     if (!this.gameOver && this.lastWinning > 0 && this.firstReveal) {
-      this.money += this.lastWinning + this.betAmount; // Cộng tiền thắng vào số dư
+      this.money += this.lastWinning ; // Cộng tiền thắng vào số dư
 
       // Cập nhật số dư trên giao diện
       const goldElement = document.querySelector('.gold');
@@ -413,11 +413,11 @@ export class RrComponent implements OnInit, AfterViewInit{
       this.addHistory(this.betAmount, this.lastWinning);
 
       // Ghi lại lịch sử chơi
-      this.userService.saveBetHis('Reng Reng', this.userService.getCookies(), 'Thắng', this.betAmount, this.lastWinning + this.betAmount,"").subscribe();
+      this.userService.saveBetHis('Reng Reng', this.userService.getCookies(), 'Thắng', this.betAmount, this.lastWinning ,"").subscribe();
 
       // Gọi API cập nhật số dư
       const idPlayer = this.userService.getCookies();
-      this.atmService.updateBalan(this.lastWinning+this.betAmount, idPlayer).subscribe();
+      this.atmService.updateBalan(this.lastWinning, idPlayer).subscribe();
       this.atmService.saveHisBalance(idPlayer, 'Nhận tiền Reng Reng', this.lastWinning, this.money).subscribe()
       this.toast.success("Chúc mừng thiếu chủ ", "Thông báo")
       this.revealAllCells(); // Mở tất cả các ô khi nhấn nút nhận tiền

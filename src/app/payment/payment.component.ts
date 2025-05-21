@@ -8,7 +8,9 @@ import { CommonModule } from '@angular/common';
 import { userService } from '../service/users.service';
 import { AtmService } from '../service/atm.service';
 import { response } from 'express';
-
+// import { isValidAmount } from '../utils/validation.util';
+import { ToastrService } from 'ngx-toastr';
+import { formatCurrencyVND } from '../utils/format.util';
 @Component({
   selector: 'app-payment',
   imports:[FormsModule,NgIf,CommonModule],
@@ -34,8 +36,27 @@ export class PaymentComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: userService,
-    private atmService: AtmService
+    private atmService: AtmService,
+    private toastr: ToastrService
   ) { }
+
+  formattedAmount: string = ''; 
+
+
+onAmountInput(event: any): void {
+  const rawValue = event.target.value.replace(/\D/g, ''); // Bỏ ký tự không phải số
+  const numericValue = Number(rawValue);
+
+  // Cập nhật giá trị thật (dùng để gửi lên VnPay)
+  this.paymentRequest.amount = numericValue;
+
+  // Hiển thị format
+  this.formattedAmount = this.formatCurrency(numericValue);
+}
+
+formatCurrency(value: number): string {
+  return new Intl.NumberFormat('vi-VN').format(value);
+}
 
   ngOnInit(): void {
     // Kiểm tra xem có phải là callback từ VnPay không
@@ -54,6 +75,16 @@ export class PaymentComponent implements OnInit {
 }
   // Xử lý khi người dùng nhấn nút thanh toán
   processPayment(): void {
+    const amount = this.paymentRequest.amount;
+    if (amount == null || isNaN(amount)) {
+    this.toastr.error("Vui lòng nhập số tiền hợp lệ", "Thông báo");
+    return;
+    }
+    if (amount < 10000) {
+      this.toastr.error("Số tiền tối thiểu là 10.000 VNĐ", "Thông báo");
+      return;
+    } 
+
     this.isProcessing = true;
     this.paymentMessage = 'Đang xử lý yêu cầu thanh toán...';
 

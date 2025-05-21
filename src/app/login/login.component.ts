@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { isValidAccountOrPassword, isValidEmail} from '../utils/validation.util';
 @Component({
   selector: 'app-login',
   imports: [FormsModule, HttpClientModule],
@@ -181,22 +182,43 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  register(){
-    if(this.signUpPassword === this.signUpPasswordConfirm){
-      this.userService.register(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
-        (data:any) => {
-          console.log(data)
-          this.toastr.success("Đăng ký thành công","Thông báo")
-          location.reload()
-        },
-        (error) => {
-          this.toastr.error("Đăng ký thất bại","Thông báo")
-        }
-      );
+  register() {
+    if (!isValidAccountOrPassword(this.signUpUser)) {
+      this.toastr.error("Tài khoản không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt", "Thông báo");
+      return;
     }
-    else{
-      this.toastr.error("Xác nhận mật khẩu không đúng","Thông báo")
+
+    if (!isValidAccountOrPassword(this.signUpPassword)) {
+      this.toastr.error("Mật khẩu không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt", "Thông báo");
+      return;
     }
+
+    if (!isValidEmail(this.signUpEmail)) {
+      this.toastr.error("Email không hợp lệ", "Thông báo");
+      return;
+    }
+
+    if (this.signUpPassword !== this.signUpPasswordConfirm) {
+      this.toastr.error("Xác nhận mật khẩu không đúng", "Thông báo");
+      return;
+    }
+
+  // Gửi dữ liệu nếu hợp lệ
+    this.userService.register(
+      this.signUpUser,
+      this.signUpPassword,
+      this.signUpName,
+      this.signUpEmail
+    ).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.toastr.success("Đăng ký thành công", "Thông báo");
+        location.reload();
+      },
+      (error) => {
+        this.toastr.error("Đăng ký thất bại", "Thông báo");
+      }
+    );
   }
 
 
