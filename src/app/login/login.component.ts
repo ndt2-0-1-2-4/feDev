@@ -183,13 +183,14 @@ export class LoginComponent implements OnInit {
   }
   register(){
     if(this.signUpPassword === this.signUpPasswordConfirm){
-      this.userService.register(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
+      this.userService.SignUp(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
         (data:any) => {
           console.log(data)
           this.toastr.success("Đăng ký thành công","Thông báo")
           location.reload()
         },
-        (error) => {
+        (error: any) => {
+          console.log(error);
           this.toastr.error("Đăng ký thất bại","Thông báo")
         }
       );

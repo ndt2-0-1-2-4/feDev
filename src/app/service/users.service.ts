@@ -175,5 +175,19 @@ export class userService {
     };
     return this.http.post(this.apiUrl, payload);
   }
+
+  SignUp(tk:any ,mk:any,fullname:any,email:any){
+    const body={
+      "tk":tk,
+      "mk":mk,
+      "fullname":fullname,
+      "email":email
+    }
+    return this.http.post(environment.apiSignUp,body)
+  }
+  Verify(verifyCode:any){
+   
+    return this.http.get(environment.apiVerify);
+  }
   
 }
