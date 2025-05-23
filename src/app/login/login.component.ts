@@ -7,14 +7,15 @@ import {
 } from '@angular/core';
 import { userService } from '../service/users.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { isValidAccountOrPassword, isValidEmail} from '../utils/validation.util';
+import { isValidAccount, isValidEmail, isValidPassword} from '../utils/validation.util';
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, HttpClientModule],
+  imports: [FormsModule, HttpClientModule, CommonModule],
   templateUrl: './login.component.html',
   standalone: true,
   styleUrl: './login.component.css',
@@ -183,25 +184,25 @@ export class LoginComponent implements OnInit {
     );
   }
   register(){
-    if(this.signUpPassword === this.signUpPasswordConfirm){
-      this.userService.SignUp(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
-        (data:any) => {
-          console.log(data)
-          this.toastr.success("Đăng ký thành công","Thông báo")
-          location.reload()
-        },
-        (error: any) => {
-          console.log(error);
-          this.toastr.error("Đăng ký thất bại","Thông báo")
-        }
-      );
-    }
-    if (!isValidAccountOrPassword(this.signUpUser)) {
-      this.toastr.error("Tài khoản không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt", "Thông báo");
+    // if(this.signUpPassword === this.signUpPasswordConfirm){
+    //   this.userService.SignUp(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
+    //     (data:any) => {
+    //       console.log(data)
+    //       this.toastr.success("Đăng ký thành công","Thông báo")
+    //       location.reload()
+    //     },
+    //     (error: any) => {
+    //       console.log(error);
+    //       this.toastr.error("Đăng ký thất bại","Thông báo")
+    //     }
+    //   );
+    // }
+    if (!isValidAccount(this.signUpUser)) {
+      this.toastr.error("Tài khoản không hợp lệ: chỉ chứa chữ, số ", "Thông báo");
       return;
     }
 
-    if (!isValidAccountOrPassword(this.signUpPassword)) {
+    if (!isValidPassword(this.signUpPassword)) {
       this.toastr.error("Mật khẩu không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt", "Thông báo");
       return;
     }
@@ -232,6 +233,30 @@ export class LoginComponent implements OnInit {
         this.toastr.error("Đăng ký thất bại", "Thông báo");
       }
     );
+  }
+
+  forgetpassemail: string = '';
+  isModalpassOpen = false;
+  openModalpass() {
+    this.isModalpassOpen = true;
+  }
+
+  closeModalpass() {
+    this.isModalpassOpen = false;
+    this.forgetpassemail = '';
+  }
+
+  forgetpassword() {
+    const email = this.email;
+    this.userService.forgetpass(this.forgetpassemail).subscribe(
+      (res: any) => {
+        console.log('Đã gửi email:', res);
+        this.toastr.success('Vui lòng kiểm tra email để lấy lại mật khẩu', 'Thông báo');
+      },
+      (err: any) => {
+        console.error('Lỗi khi gửi email:', err);
+        this.toastr.error('Email không hợp lệ', 'Thông báo');
+      });
   }
 
 

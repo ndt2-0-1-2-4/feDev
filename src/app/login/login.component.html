@@ -76,7 +76,7 @@
           name="password"
           required
         />
-        <a href="#">Quên mật khẩu ?</a>
+        <a (click)="openModalpass()">Quên mật khẩu ?</a>
         <div #btnContainer2 class="btn-container2">
           <button #btn2 class="btn2" type="submit" [disabled]="isLoginDisabled">
             Đăng nhập
@@ -105,4 +105,19 @@
     </div>
   </div>
   <div class="notifications"></div>
+
+  <div class="modal" [ngClass]="{ 'show': isModalpassOpen }">
+
+      <div class="modal-content">
+        <h2>Quên mật khẩu</h2>
+
+        <label>Nhập email</label>
+        <input type="email" [(ngModel)]="forgetpassemail" class="form-control" />
+
+        <div class="actions">
+          <button (click)="forgetpassword()">Gửi</button>
+          <button (click)="closeModalpass()">Huỷ</button>
+        </div>
+      </div>
+    </div>
 </body>

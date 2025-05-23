@@ -9,7 +9,8 @@ import { AtmService } from '../service/atm.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { subscribe } from 'node:diagnostics_channel';
-import { isValidAccountOrPassword } from '../utils/validation.util';
+import { isValidPassword } from '../utils/validation.util';
+import { isValidAccount } from '../utils/validation.util';
 import { formatCurrencyVND } from '../utils/format.util';
 import { Router } from '@angular/router';
 @Component({
@@ -173,7 +174,7 @@ export class UserComponent {
   ];
 
   for (const field of fieldsToCheck) {
-    if (!isValidAccountOrPassword(field.value)) {
+    if (!isValidPassword(field.value)) {
       this.toastr.error(`${field.label} không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt`, "Thông báo");
       return;
     }
