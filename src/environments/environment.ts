@@ -37,4 +37,7 @@ export const environment = {
   apiGetFriendRelative: `http://${SERVER_IP}:8082/friend/getRelativeMy`,
   apiGetDailyClosingBalance: `http://${SERVER_IP}:8082/Atm/getDailyClosingBalance`,
   apiGetDailyRecharge: `http://${SERVER_IP}:8082/Atm/getDailyRecharge`,
+  apiSignUp: `http://${SERVER_IP}:8082/api/v1/auth/signup`,
+  apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
 };
+    
