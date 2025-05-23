@@ -60,13 +60,16 @@
               <div class="form-group">
                 <label for="amount">Số tiền (VND):</label>
                 <input 
-                  type="number" 
+                  type="text" 
                   id="amount" 
                   name="amount" 
-                  [(ngModel)]="paymentRequest.amount" 
+                  [value]="formattedAmount"
+                  (input)="onAmountInput($event)"
+                  
                   required
                   min="10000"
                   class="form-control">
+                  
               </div>
         
               <div class="form-group">

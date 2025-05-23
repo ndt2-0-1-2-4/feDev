@@ -1,12 +1,12 @@
 <div class="home">
   <div class="football" (click)="FootballPage()">
     <!-- Hiển thị loading khi đang tải dữ liệu -->
-    <div class="loading" *ngIf="isLoading">
+    <div class="loading" >
       <div class="spinner"></div>
       <span>Đang tải dữ liệu bóng đá...</span>
     </div>
     <!-- Hiển thị danh sách trận đấu khi dữ liệu đã tải xong -->
-    <div class="match-list" *ngIf="!isLoading">
+    <div class="match-list" >
       <div class="match-card" *ngFor="let match of matches">
         <div class="match-info">
           <div class="match-time">
@@ -120,12 +120,7 @@
       <div class="game-title">Spaceman</div>
     </div>
     <div class="game-item">
-      <img
-        src="icon-777.png"
-        alt=""
-        class="game-img"
-        (click)="Game777()"
-      />
+      <img src="icon-777.png" alt="" class="game-img" (click)="Game777()" />
       <div class="game-title">777</div>
     </div>
     <div class="game-item">
@@ -147,5 +142,15 @@
       <div class="game-title">Xổ Số</div>
     </div>
   </div>
-  <div class="static">thong ke</div>
+  <div class="static">
+    <div id="balances" class="chart" *ngIf="listdailyBalances.length > 0">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOption">
+      </highcharts-chart>
+    </div>
+
+    <div id="recharges" class="chart" *ngIf="listdailyRecharge.length > 0">
+      <highcharts-chart [Highcharts]="Highcharts" [options]="chartOption2">
+      </highcharts-chart>
+    </div>
+  </div>
 </div>
