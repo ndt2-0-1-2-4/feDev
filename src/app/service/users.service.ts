@@ -12,7 +12,8 @@ import path from 'path';
 })
 export class userService {
   private apiUrl = 'http://localhost:8082/user/changePassword';
-  
+  private apiforgetpass = 'http://localhost:8082/api/v1/auth/forget-pass';
+
   private apiLogin = environment.apiLogin;
   private apiGetInfo = environment.apiGetInfo;
   private apiGetAtm = environment.apiGetAtm;
@@ -176,4 +177,13 @@ export class userService {
     return this.http.post(this.apiUrl, payload);
   }
   
+  forgetpass(email: string) {
+    const body = {
+      email: email
+    };
+    return this.http.post(this.apiforgetpass, body, {
+      responseType: 'text'
+    });
+}
+
 }

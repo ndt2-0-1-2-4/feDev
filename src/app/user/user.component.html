@@ -13,9 +13,25 @@
       </div>
     </div>
 
-    <button (click)="openModal()" class="change-password">Change password</button>
+    <div class="btn">
+      <button (click)="openModal()" class="btn-password">Change password</button>
+      <button (click)="openModalpass()" class="btn-password">Forget password</button>
+    </div>
 
+    <div class="modal" [ngClass]="{ 'show': isModalpassOpen }">
 
+      <div class="modal-content">
+        <h2>Quên mật khẩu</h2>
+
+        <label>Nhập email</label>
+        <input type="email" [(ngModel)]="email" class="form-control" />
+
+        <div class="actions">
+          <button (click)="forgetpassword()">Gửi</button>
+          <button (click)="closeModalpass()">Huỷ</button>
+        </div>
+      </div>
+    </div>
 
     <div class="modal" [ngClass]="{ 'show': isModalOpen }">
       <div class="modal-content">
@@ -46,7 +62,7 @@
             <span class="expiry">05/26</span>
           </div>
           <div class="balance-text">Balance:</div>
-          <div class="balance-amount">$ {{ money }}</div>
+          <div class="balance-amount">$ {{ formatCurrency(money) }}</div>
           <span class="new-badge">mâm 1</span>
         </div>
       </div>

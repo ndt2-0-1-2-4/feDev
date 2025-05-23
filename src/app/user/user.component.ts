@@ -9,6 +9,9 @@ import { AtmService } from '../service/atm.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { subscribe } from 'node:diagnostics_channel';
+import { isValidAccountOrPassword } from '../utils/validation.util';
+import { formatCurrencyVND } from '../utils/format.util';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-user',
   imports: [CommonModule, FormsModule, NgxPaginationModule],
@@ -25,7 +28,8 @@ export class UserComponent {
     private friendService: FriendService,
     private atm: AtmService,
     private toastr: ToastrService,
-    private http : HttpClient
+    private http : HttpClient,
+    private router: Router
   ) { }
   fullname: any;
   money: any;
@@ -54,6 +58,9 @@ export class UserComponent {
   selectedTab: 'lichSuCuoc' | 'lichSuThayDoi' = 'lichSuCuoc'; // Tab mặc định là 'lichSuCuoc'
 
 
+  formatCurrency(money: number): string {
+    return formatCurrencyVND(money);
+  }
 
   ngOnInit(): void {
     // this.money = this.userService.getBalanceCookies()
@@ -159,40 +166,74 @@ export class UserComponent {
   }
 
   changePassword() {
-    if (this.newPassword !== this.confirmPassword) {
-      alert('Mật khẩu mới không khớp');
-      return;
-    }
+    const fieldsToCheck = [
+    { label: 'Mật khẩu cũ', value: this.oldPassword },
+    { label: 'Mật khẩu mới', value: this.newPassword },
+    { label: 'Xác nhận mật khẩu', value: this.confirmPassword }
+  ];
 
-    if (this.oldPassword === this.newPassword) {
-      alert('Vui lòng đổi mật khẩu mới không trùng mật khẩu cũ');
+  for (const field of fieldsToCheck) {
+    if (!isValidAccountOrPassword(field.value)) {
+      this.toastr.error(`${field.label} không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt`, "Thông báo");
       return;
     }
+  }
+
+  if (this.newPassword !== this.confirmPassword) {
+    this.toastr.error('Mật khẩu mới không khớp', 'Thông báo');
+    return;
+  }
+
+  if (this.oldPassword === this.newPassword) {
+    this.toastr.error('Vui lòng đổi mật khẩu mới không trùng với mật khẩu cũ', 'Thông báo');
+    return;
+  }
 
     const userId = this.userService.getCookies();
 
     if (!userId) {
-      alert('Không xác định được người dùng');
+      console.error('User ID not found in cookies');
       return;
     }
 
-    const payload = {
-      id: userId,
-      oldPassword: this.oldPassword,
-      newPassword: this.newPassword
-    };
     this.userService.changePassword(Number(userId), this.oldPassword, this.newPassword).subscribe({
       next: (response) => {
-        console.log('đổi mk:', response);
-        alert('Đổi mk thành công');
+        console.log('đổi mật khẩu:', response);
+        this.toastr.success('Đổi mật khẩu thành công', 'Thông báo');
         this.closeModal();
       },
       error: (err) => {
         console.error('Error changing password:', err);
-        alert('Lỗi đổi mk');
+        this.toastr.error('Mật khẩu cũ không khớp', 'Thông báo');
       }
     });
     
   }
+
+  email: string = '';
+  isModalpassOpen = false;
+  openModalpass() {
+    this.isModalpassOpen = true;
+  }
+
+  closeModalpass() {
+    this.isModalpassOpen = false;
+    this.email = '';
+  }
+
+  forgetpassword() {
+    const email = this.email;
+    this.userService.forgetpass(email).subscribe(
+      (res: any) => {
+        console.log('Đã gửi email:', res);
+        this.toastr.success('Vui lòng kiểm tra email để lấy lại mật khẩu', 'Thông báo');
+      },
+      (err: any) => {
+        console.error('Lỗi khi gửi email:', err);
+        this.toastr.error('Email không hợp lệ', 'Thông báo');
+      });
+  }
+
+
 
 }
