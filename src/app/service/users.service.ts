@@ -158,15 +158,15 @@ export class userService {
       })
     );
   }
-  register(tk:any ,mk:any,fullname:any,email:any){
-    const body={
-      "fullname":fullname,
-      "tk":tk,
-      "mk":mk,
-      "email":email
-    }
-    return this.http.post(environment.apiRegister,body)
-  }
+  // register(tk:any ,mk:any,fullname:any,email:any){
+  //   const body={
+  //     "fullname":fullname,
+  //     "tk":tk,
+  //     "mk":mk,
+  //     "email":email
+  //   }
+  //   return this.http.post(environment.apiRegister,body)
+  // }
   
   changePassword(userId:number, oldPassword:string, newPassword: string){
     const payload = {
