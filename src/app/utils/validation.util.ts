@@ -17,6 +17,6 @@ export function isValidAmount(input: string): boolean {
 
 // kiểm tra email
 export function isValidEmail(email: string): boolean {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const regex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
   return regex.test(email);
 }
