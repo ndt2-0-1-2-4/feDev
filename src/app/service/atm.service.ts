@@ -46,7 +46,7 @@ export class AtmService {
     const goldText = goldElement.textContent || '0';
     const cleanedGoldText = goldText.replace(/[\.,]/g, '').replace(/[^\d]/g, ''); // Loại bỏ dấu chấm/phẩy và ký tự không phải số
     const gold = parseInt(cleanedGoldText, 10);
-    const newGold = gold - amount;
+    const newGold = gold + amount;
     goldElement.textContent = newGold.toLocaleString('vi-VN');
   }
   saveHisBalance(idPlayer: any, content: any, trans: any, balance: any) {

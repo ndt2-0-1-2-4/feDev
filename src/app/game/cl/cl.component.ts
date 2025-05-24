@@ -95,12 +95,11 @@ export class ClComponent implements OnInit {
               const rs :string = parsedMessage.result.join(':'); 
               const moneyBet = parsedMessage.bet; // Tiền cược
               const choiceBet = parsedMessage.choice;
-              const goldElement = document.querySelector('.gold');
-              const gold = goldElement?.textContent
-              if(goldElement && gold && reward>0){
-                let tempGold=parseInt(gold,10)+reward*2
+              if(reward>0){
+                let tempGold=this.atmService.getBalance()||0
+                tempGold +=reward*2
                 timer(5000).subscribe(() => {
-                  goldElement.textContent = tempGold.toString(); // Cập nhật biến component
+                  this.atmService.setBalance(reward*2);
                   this.toastr.success('Chúc mừng thiếu chủ', 'Thông báo');
                 });
                 this.atmService.updateBalan(reward*2,this.userService.getCookies()).subscribe()
@@ -195,7 +194,7 @@ export class ClComponent implements OnInit {
     }
     this.showOptionsAndActions = false;
     const gold = this.atmService.getBalance() || 0;
-    this.atmService.setBalance(this.tempBetAmount);
+    this.atmService.setBalance(-this.tempBetAmount);
     let tempGold=gold-this.tempBetAmount
     this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
     this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()

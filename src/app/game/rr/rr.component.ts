@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     ])
   ]
 })
-export class RrComponent implements OnInit, AfterViewInit{
+export class RrComponent implements OnInit{
   constructor(
     private userService: userService,
     private atmService: AtmService,
@@ -79,26 +79,6 @@ export class RrComponent implements OnInit, AfterViewInit{
 
     this.setForcedBomb(6);
     this.handleReload();
-  }
-
-  ngAfterViewInit(): void {
-    const goldElement = document.querySelector('.gold');
-    const gold = goldElement?.textContent
-    if(gold){
-      this.money = parseInt(gold);
-    }
-    const observer = new MutationObserver(() => {
-      if (goldElement?.textContent) {
-        this.money = parseInt(goldElement.textContent);
-        console.log(this.money);
-        observer.disconnect(); // Ngừng quan sát khi đã có giá trị
-      }
-    });
-  
-    if (goldElement) {
-      observer.observe(goldElement, { childList: true, characterData: true, subtree: true });
-    }
-    console.log(this.money)
   }
   handleReload() {
     const daReload = sessionStorage.getItem('forceReload') === 'true';
@@ -217,6 +197,7 @@ export class RrComponent implements OnInit, AfterViewInit{
 
 
   adjustBet(action: string) {
+    this.money=this.atmService.getBalance()||0
     if (!this.gameStarted) {  // Chỉ chỉnh khi chưa cược
       if (action === 'half' && this.betAmount > 50) {
         this.betAmount = Math.floor(this.betAmount / 2);
@@ -248,6 +229,7 @@ export class RrComponent implements OnInit, AfterViewInit{
   }
 
   placeBet() {
+    this.money= this.atmService.getBalance() || 0
     if (this.gameStarted) return; // Không cho phép cược lại khi chưa kết thúc ván trước
     if (this.betAmount <= this.money) {
       let amount = 0 ;
@@ -404,10 +386,7 @@ export class RrComponent implements OnInit, AfterViewInit{
       this.money += this.lastWinning ; // Cộng tiền thắng vào số dư
 
       // Cập nhật số dư trên giao diện
-      const goldElement = document.querySelector('.gold');
-      if (goldElement) {
-        goldElement.innerHTML = this.money.toString();
-      }
+      this.atmService.setBalance(this.money)
 
       // Thêm vào lịch sử chơi
       this.addHistory(this.betAmount, this.lastWinning);
