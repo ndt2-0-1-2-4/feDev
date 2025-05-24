@@ -7,9 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { relative } from 'node:path';
-import { title } from 'node:process';
-import { text } from 'node:stream/consumers';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-friend',

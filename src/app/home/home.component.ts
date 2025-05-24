@@ -33,8 +33,9 @@ export class HomeComponent implements OnInit {
     private AtmService: AtmService,
     private cdr: ChangeDetectorRef
   ) {}
+
   ngOnInit() {
-    this.fetchMatches();
+    // this.fetchMatches();
     this.loadLotteryData();
     this.UpChartBalance();
     this.UpChartRecharge();
@@ -43,23 +44,21 @@ export class HomeComponent implements OnInit {
   lotteryData: any = {};
   selectedDate = new Date();
 
-  fetchMatches() {
-    let dayStart = format(new Date(), 'yyyy-MM-dd');
-    let dayEnd = format(new Date(Date.now() + 86400000 * 4), 'yyyy-MM-dd');
-    this.apiFootball += `?dateFrom=${dayStart}&dateTo=${dayEnd}`;
-    const headers = new HttpHeaders({
-      'X-Auth-Token': environment.keyFootball,
-    });
-    this.http.get(this.apiFootball, { headers }).subscribe(
-      (data: any) => {
-        this.matches = data.matches || [];
-        console.log(data);
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
-  }
+  // fetchMatches() {
+  //   this.isLoading = true; // Bật trạng thái loading trước khi gọi API
+  //   let dayStart = format(new Date(), 'yyyy-MM-dd');
+  //   let dayEnd = format(new Date(Date.now() + 86400000 * 4), 'yyyy-MM-dd');
+  //   this.gameService.getMatches(dayStart, dayEnd).subscribe(
+  //     (response: any) => {
+  //       this.matches = response.matches;
+  //       this.isLoading = false; // Tắt trạng thái loading khi nhận được dữ liệu
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //       this.isLoading = false; // Tắt trạng thái loading nếu có lỗi
+  //     }
+  //   );
+  // }
 
   loadLotteryData() {
     const dayStart = format(new Date(Date.now() - 86400000), 'yyyy-MM-dd');

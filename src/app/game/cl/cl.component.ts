@@ -95,12 +95,11 @@ export class ClComponent implements OnInit {
               const rs :string = parsedMessage.result.join(':'); 
               const moneyBet = parsedMessage.bet; // Tiền cược
               const choiceBet = parsedMessage.choice;
-              const goldElement = document.querySelector('.gold');
-              const gold = goldElement?.textContent
-              if(goldElement && gold && reward>0){
-                let tempGold=parseInt(gold,10)+reward*2
+              if(reward>0){
+                let tempGold=this.atmService.getBalance()||0
+                tempGold +=reward*2
                 timer(5000).subscribe(() => {
-                  goldElement.textContent = tempGold.toString(); // Cập nhật biến component
+                  this.atmService.setBalance(reward*2);
                   this.toastr.success('Chúc mừng thiếu chủ', 'Thông báo');
                 });
                 this.atmService.updateBalan(reward*2,this.userService.getCookies()).subscribe()
@@ -170,12 +169,10 @@ export class ClComponent implements OnInit {
   }
 
   selectBetAmount(amount: number): void {
-    const goldElement = document.querySelector('.gold');
-    if (!goldElement) {
-      alert("Không tìm thấy phần tử gold.");
-      return;
+    const gold = this.atmService.getBalance();
+    if(!gold){
+      return
     }
-    const gold = parseInt(goldElement.textContent || '0', 10);
     if (this.tempBetAmount + amount > gold) {
       this.toastr.warning("Số dư không đủ", "Thông báo")
       return;
@@ -196,14 +193,11 @@ export class ClComponent implements OnInit {
       this.xiuAmount += this.tempBetAmount;
     }
     this.showOptionsAndActions = false;
-    const goldElement = document.querySelector('.gold');
-    const gold = goldElement?.textContent;
-    if(goldElement && gold){
-      let tempGold=parseInt(gold,10)-this.tempBetAmount
-      goldElement.textContent = tempGold.toString();
-      this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
-      this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
-    }
+    const gold = this.atmService.getBalance() || 0;
+    this.atmService.setBalance(-this.tempBetAmount);
+    let tempGold=gold-this.tempBetAmount
+    this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
+    this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
     this.sendBet()
   }
 

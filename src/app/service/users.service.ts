@@ -199,7 +199,7 @@ export class userService {
     return this.http.post(this.apiforgetpass, body, {
       responseType: 'text'
     });
-}
+  }
 
   resetpass(token: string, newPassword: string) {
   const params = new HttpParams().set('token', token);
