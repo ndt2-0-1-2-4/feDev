@@ -6,9 +6,6 @@ import {
   HostListener,
 } from '@angular/core';
 import { userService } from '../service/users.service';
-//import { Router } from '@angular/router';
-// import { environment } from '../../../environments/environment';
-//import { WebSocketService } from '../../service/socket.service';
 import { AtmService } from '../service/atm.service';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -19,8 +16,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class TransferComponent implements OnInit {
   constructor(
-    // private router: Router,
-    //private socket: WebSocketService,
     private userService: userService,
     private atmService: AtmService
   ) {}
@@ -29,16 +24,7 @@ export class TransferComponent implements OnInit {
   moneyplay: any = '';
   fullname: any = '';
   money: any 
-  ngOnInit(): void {
-    this.userService.getUser().subscribe(
-      (rs: any) => {
-        console.log(rs);
-      },
-      (error:any) => {
-        console.log(error);
-      }
-    );
-  }
+  ngOnInit(): void {}
   @ViewChild('note') note!: ElementRef<HTMLDivElement>;
   @ViewChild('msg') msg!: ElementRef<HTMLDivElement>;
   @ViewChild('id') id!: ElementRef<HTMLInputElement>;
@@ -64,6 +50,7 @@ export class TransferComponent implements OnInit {
     }
   }
   onInputChange(event: Event): void {
+    this.money=this.atmService.getBalance()||0
     const target = event.target as HTMLInputElement;
     this.value = Number(target.value);
     if (this.value > Number(this.money)) {
@@ -87,6 +74,9 @@ export class TransferComponent implements OnInit {
           this.notifical3 = 'Số tài khoản không hợp lệ';
           this.submitIsDisabled = true;
         } else {
+          console.log(data)
+          this.notifical3 = '';
+          this.idPlayer=data.idPlayer
           this.userService.getUserById(data.idPlayer).subscribe((rs: any) => {
             this.money = rs.money;
             this.nameplayer = rs.fullname;
@@ -105,12 +95,8 @@ export class TransferComponent implements OnInit {
       this.showNote();
     }
   }
-  banking(){
-    const goldElement = document.querySelector('.gold');
-    const gold = goldElement?.textContent
-    if(gold){
-      this.money = parseInt(gold);
-    }
+  banking(){  
+    this.money=this.atmService.getBalance()
     this.atmService.updateBalan(this.value*-1,this.userService.getCookies()).subscribe()
     this.atmService.updateBalan(this.value,this.idPlayer).subscribe()
     this.atmService.saveHisBalance(this.userService.getCookies(),this.message.nativeElement.value,this.value*-1,this.money-this.value).subscribe()
