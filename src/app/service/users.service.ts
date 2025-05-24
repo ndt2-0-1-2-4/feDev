@@ -198,6 +198,6 @@ export class userService {
     return this.http.post(this.apiforgetpass, body, {
       responseType: 'text'
     });
-}
+  }
 
 }

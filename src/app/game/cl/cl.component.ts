@@ -170,12 +170,10 @@ export class ClComponent implements OnInit {
   }
 
   selectBetAmount(amount: number): void {
-    const goldElement = document.querySelector('.gold');
-    if (!goldElement) {
-      alert("Không tìm thấy phần tử gold.");
-      return;
+    const gold = this.atmService.getBalance();
+    if(!gold){
+      return
     }
-    const gold = parseInt(goldElement.textContent || '0', 10);
     if (this.tempBetAmount + amount > gold) {
       this.toastr.warning("Số dư không đủ", "Thông báo")
       return;
@@ -196,14 +194,11 @@ export class ClComponent implements OnInit {
       this.xiuAmount += this.tempBetAmount;
     }
     this.showOptionsAndActions = false;
-    const goldElement = document.querySelector('.gold');
-    const gold = goldElement?.textContent;
-    if(goldElement && gold){
-      let tempGold=parseInt(gold,10)-this.tempBetAmount
-      goldElement.textContent = tempGold.toString();
-      this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
-      this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
-    }
+    const gold = this.atmService.getBalance() || 0;
+    this.atmService.setBalance(this.tempBetAmount);
+    let tempGold=gold-this.tempBetAmount
+    this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
+    this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
     this.sendBet()
   }
 

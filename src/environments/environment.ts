@@ -1,43 +1,3 @@
-<<<<<<< HEAD
-const SERVER_IP = 'remarkably-arriving-imp.ngrok-free.app'; 
-
-export const environment = {
-    production: true,
-    apiLogin: `https://${SERVER_IP}/user/login`,
-    apiGetInfo: `https://${SERVER_IP}/user/info`,
-    apiGetAtm: `https://${SERVER_IP}/Atm/get`,
-    urlSocketCl: `wss://${SERVER_IP}:8082/game/cl`,
-    apiGetHistoryGame: `https://${SERVER_IP}/game/getHistoryCl`,
-    apiSaveHisPlayer: `https://${SERVER_IP}/game/savePlayerHis`,
-    apiSaveHisBalan:`https://${SERVER_IP}/Atm/saveHis`,
-    apiupdateBalan:`https://${SERVER_IP}/Atm/updateBalance`,
-    apigetListFriend :`https://${SERVER_IP}/friend/getListFriend`,
-    apiaddFriend :`https://${SERVER_IP}/friend/addFriend`,
-    apiacceptFriend :`https://${SERVER_IP}/friend/acceptFriend`,
-    apideleFriend :`https://${SERVER_IP}/friend/deleteFriend`,
-    apideleFriendRequets :`https://${SERVER_IP}/friend/deleteFriendRequest`,
-    apiGetrequets:`https://${SERVER_IP}/friend/getFriendRequests`,
-    keysecret:"anhthanhdz",
-    apiSearchAtm: `https://${SERVER_IP}/Atm/search`,
-    apiSaveHisBalance: `https://${SERVER_IP}/Atm/saveHis`,
-    apiSearchFullname: `https://${SERVER_IP}/user/searchFullname`,
-    urlSocketMess: `wss://${SERVER_IP}:8082/mess`,
-    apiGetChatHis: `https://${SERVER_IP}/mess/getChatHis`,
-    apiFootball:  '/api/competitions/PL/matches',
-    keyFootball:'17ee52ab7c3d494794f524ea8abff2f8',
-    apigetbetHisfbxs:`https://${SERVER_IP}/betHisfbxs/getbetHisfbxs`,
-    apiPlaceBet:`https://${SERVER_IP}/betHisfbxs/placeBet`,
-    apiLottery :`https://xoso188.net/api/front/open/lottery/history/list/5/miba`,
-    apiGetRelative:` https://${SERVER_IP}/friend/getRelative`,
-    apigetHisfbxs:`https://${SERVER_IP}/betHisfbxs/getHisfbXs`,
-    apiGetHisBalance:`https://${SERVER_IP}/game/getPlayerHis`,
-    apiGetPlayerHisAll:`https://${SERVER_IP}/game/getPlayerHisAll`,
-    apiRegister:`https://${SERVER_IP}/regis`,
-    apiCreateAtm:`https://${SERVER_IP}/Atm/createATM`,
-    apiGetFriendRelative:`https://${SERVER_IP}/friend/getRelativeMy`,
-
-};
-=======
 const SERVER_IP = '127.0.0.1';
 
 export const environment = {
@@ -81,4 +41,3 @@ export const environment = {
   apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
 };
     
->>>>>>> d92f113516b4bd53b68a07a61fe24e281ec48b48

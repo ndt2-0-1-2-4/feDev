@@ -28,6 +28,27 @@ export class AtmService {
     const body = { balance: number, idPlayer: id };
     return this.httpClient.post(environment.apiupdateBalan, body);
   }
+  getBalance(){
+    const goldElement = document.querySelector('.gold');
+    if (!goldElement) {
+      return;
+    }
+    const goldText = goldElement.textContent || '0';
+    const cleanedGoldText = goldText.replace(/[\.,]/g, ''); // Loại bỏ dấu chấm hoặc dấu phẩy
+    const gold = parseInt(cleanedGoldText, 10);
+    return gold;
+  }
+  setBalance(amount:number){
+    const goldElement = document.querySelector('.gold');
+    if (!goldElement) {
+      return;
+    }
+    const goldText = goldElement.textContent || '0';
+    const cleanedGoldText = goldText.replace(/[\.,]/g, '').replace(/[^\d]/g, ''); // Loại bỏ dấu chấm/phẩy và ký tự không phải số
+    const gold = parseInt(cleanedGoldText, 10);
+    const newGold = gold - amount;
+    goldElement.textContent = newGold.toLocaleString('vi-VN');
+  }
   saveHisBalance(idPlayer: any, content: any, trans: any, balance: any) {
     // lưu lịch sử
     let time = new Date().getTime();
