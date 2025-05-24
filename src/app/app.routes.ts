@@ -16,6 +16,7 @@ import { MenugameComponent } from './menugame/menugame.component';
 import { FootballComponent } from './football/football.component';
 import { LotteryComponent } from './lottery/lottery.component';
 import { authGuard } from './auth.guard';
+import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
@@ -34,6 +35,7 @@ export const routes: Routes = [
   { path: 'football', component: FootballComponent , canActivate: [authGuard]},
   { path: 'menugame', component: MenugameComponent , canActivate: [authGuard]},
   { path: 'lottery', component: LotteryComponent , canActivate: [authGuard]},
+  { path: 'forgetpassword', component: ForgetpasswordComponent },
 
   { path: '**', redirectTo: '' }
 ];

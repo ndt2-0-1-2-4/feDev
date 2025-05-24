@@ -56,8 +56,14 @@
   margin-top: 5px;
 }
 
+.btn{
+  width: 100%;
+  display: flex;
+  gap: 5%;
+}
+
 /* Change Password Button */
-.change-password {
+.btn-password {
   background: #fff;
   border: 1px solid #e2e8f0;
   color: #334155;
@@ -66,12 +72,12 @@
   font-size: 0.875rem;
   cursor: pointer;
   margin-bottom: 30px;
-  width: fit-content;
+  width: 20%;
   transition: all 0.2s;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-.change-password:hover {
+.btn-password:hover {
   background: #f8fafc;
   border-color: #cbd5e1;
 }
