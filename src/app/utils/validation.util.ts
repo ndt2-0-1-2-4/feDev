@@ -1,8 +1,8 @@
 // kiểm tra mk
 export function isValidPassword(input: string): boolean {
-  // \S nghĩa là "không phải khoảng trắng"
-  const regex = /^[\S!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]+$/;
-  return regex.test(input);
+  const asciiOnly = /^[\x20-\x7E]+$/; // Chỉ các ký tự từ space đến ~
+  const allowed = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]+$/;
+  return asciiOnly.test(input) && allowed.test(input);
 }
 // kiểm tra tài khoản
 export function isValidAccount(username: string): boolean {
