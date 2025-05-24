@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { relative } from 'node:path';
 import { title } from 'node:process';
 import { text } from 'node:stream/consumers';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-friend',
     imports: [CommonModule, FormsModule],
@@ -29,15 +30,16 @@ export class FriendComponent {
 
 
     friends: {
-        id: number; fullname: string,relative:string
+        id: number; fullname: string, relative: string
     }[] = []; // Danh sách bạn bè
-    friendRequests: { id: number; fullname: string , relative:string }[] = []; // Danh sách lời mời kết bạn
+    friendRequests: { id: number; fullname: string, relative: string }[] = []; // Danh sách lời mời kết bạn
     apiAddFriend = environment.apiaddFriend;
 
     constructor(private friendService: FriendService,
         private userService: userService,
         private http: HttpClient,
-        private toastr : ToastrService
+        private toastr: ToastrService,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -48,12 +50,12 @@ export class FriendComponent {
         localStorage.setItem('searchName', this.searchQuery);
     }
     showListFriend() {
-        this.showFriendsList=true;
-        this.showFriendRequest=false
-        this.showSearchResults=false
+        this.showFriendsList = true;
+        this.showFriendRequest = false
+        this.showSearchResults = false
         this.friendService.getListFriends().subscribe(
-            (data:any)=>{
-                this.friends=data
+            (data: any) => {
+                this.friends = data
             }
         )
     }
@@ -64,16 +66,16 @@ export class FriendComponent {
 
         const idMy = this.userService.getCookies(); // Lấy ID người dùng hiện tại
 
-        this.friendService.getFriendRequets().subscribe(      
-            (data:any)=>{
-                if(data.error== null){
-                    this.friendRequests=data
+        this.friendService.getFriendRequets().subscribe(
+            (data: any) => {
+                if (data.error == null) {
+                    this.friendRequests = data
                 }
-                else{
-                    this.toastr.info("Bạn không có lời mời kết bạn nào ","Hệ thống")
+                else {
+                    this.toastr.info("Bạn không có lời mời kết bạn nào ", "Hệ thống")
                 }
             }
-        )      
+        )
     }
     // tìm kiếm 
 
@@ -84,22 +86,30 @@ export class FriendComponent {
         this.searchResults = []
         this.isLoading = true;
         this.userService.getFullname(this.searchQuery).subscribe(
-            (data:any)=>{
+            (data: any) => {
                 console.log(data)
-                this.searchResults=data
-                this.isLoading=false
+                this.searchResults = data
+                this.isLoading = false
             }
         );
         console.log(this.searchQuery)
-        this.searchQuery=''
+        this.searchQuery = ''
     }
 
 
     sendMessage(friend: string) {
-        alert(`Nhắn tin với ${friend}`);
+        const idFriend = friend;
+        const idMy = this.userService.getCookies();
+        if (confirm("Bạn có muốn nhắn tin cho bạn bè này không ?")) {
+            this.router.navigate(['/message', { idFriend: idFriend, idMy: idMy }]);
+        }
+        else {
+            this.toastr.info("Đã hủy nhắn tin", "Hệ thống")
+        }
+
     }
 
-    removeFriend(friend: { id: number; fullname: string,relative:string }) {
+    removeFriend(friend: { id: number; fullname: string, relative: string }) {
         Swal.fire({
             title: 'Xác nhận',
             text: 'Bạn có chắc chắn muốn xóa bạn bè này không?',
@@ -108,43 +118,43 @@ export class FriendComponent {
             confirmButtonText: 'Xóa',
             cancelButtonText: 'Hủy',
             heightAuto: false
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              this.friendService.deleteFriend(friend.id,Number(this.userService.getCookies())).subscribe({
-                  next: (response: any) => {
-                    if (response.status === 'success') {
-                      this.toastr.success('Đã xóa bạn bè');
-                      friend.relative="Đã xoá"
-                    } else {
-                      this.toastr.error('Lỗi khi xóa bạn bè');
-                    }
-                  },
-                  error: () => this.toastr.error('Lỗi khi gọi API')
+                this.friendService.deleteFriend(friend.id, Number(this.userService.getCookies())).subscribe({
+                    next: (response: any) => {
+                        if (response.status === 'success') {
+                            this.toastr.success('Đã xóa bạn bè');
+                            friend.relative = "Đã xoá"
+                        } else {
+                            this.toastr.error('Lỗi khi xóa bạn bè');
+                        }
+                    },
+                    error: () => this.toastr.error('Lỗi khi gọi API')
                 });
             } else {
-              this.toastr.info('Hủy xóa bạn bè');
+                this.toastr.info('Hủy xóa bạn bè');
             }
-          });
+        });
     }
     // thêm bạn bè
-    addFriend(result:{id:number,fullname:string,relative:string}) {
+    addFriend(result: { id: number, fullname: string, relative: string }) {
         Swal.fire({
-            title:"Xác nhận",
-            text:"Bạn có muốn gửi lời mời kết bạn",
-            icon:'question',
-            showCancelButton:true,
-            showConfirmButton:true,
-            cancelButtonText:"Huỷ",
-            confirmButtonText:"Xác nhận",
-            heightAuto:false
-        }).then((rs)=>{
-            if(rs.isConfirmed){
-                
+            title: "Xác nhận",
+            text: "Bạn có muốn gửi lời mời kết bạn",
+            icon: 'question',
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: "Huỷ",
+            confirmButtonText: "Xác nhận",
+            heightAuto: false
+        }).then((rs) => {
+            if (rs.isConfirmed) {
+
                 this.friendService.addFriend(result.id).subscribe(
-                    (data:any)=>{
-                        if(data.status==="success"){
-                            this.toastr.success("Đã gửi lời mời","Hệ thống")
-                            result.relative='Đã gửi Lời mời'
+                    (data: any) => {
+                        if (data.status === "success") {
+                            this.toastr.success("Đã gửi lời mời", "Hệ thống")
+                            result.relative = 'Đã gửi Lời mời'
                         }
                     }
                 )
@@ -152,27 +162,27 @@ export class FriendComponent {
         })
     }
 
-    acpRequests(request: { id: number; fullname: string,relative:string }) {
-        const idMy=Number(this.userService.getCookies());
+    acpRequests(request: { id: number; fullname: string, relative: string }) {
+        const idMy = Number(this.userService.getCookies());
         Swal.fire({
-            title:"Xác nhận",
-            text:"Bạn có muốn chấp nhận lời mời kết bạn này ?",
-            icon:'warning',
-            showCancelButton:true,
-            showConfirmButton:true,
+            title: "Xác nhận",
+            text: "Bạn có muốn chấp nhận lời mời kết bạn này ?",
+            icon: 'warning',
+            showCancelButton: true,
+            showConfirmButton: true,
             cancelButtonText: 'Hủy',
-            confirmButtonText:"Xác nhận",
-            heightAuto:false
-        }).then((result)=>{
-            if(result.isConfirmed){
+            confirmButtonText: "Xác nhận",
+            heightAuto: false
+        }).then((result) => {
+            if (result.isConfirmed) {
                 this.friendService.acceptFriend(idMy, request.id).subscribe(
-                    (data:any)=>{
-                        if(data.status === "success"){
+                    (data: any) => {
+                        if (data.status === "success") {
                             this.toastr.success("Thành công ", "Hệ thống")
-                            request.relative="Đã chấp nhận lời mời kết bạn"
+                            request.relative = "Đã chấp nhận lời mời kết bạn"
                         }
                     },
-                    (e)=>{
+                    (e) => {
                         console.log(e)
                     }
                 )
@@ -181,36 +191,36 @@ export class FriendComponent {
 
     }
 
-    deleteRequest(request: { id: number; fullname: string,relative:string }) {
+    deleteRequest(request: { id: number; fullname: string, relative: string }) {
         const idFriend = Number(this.userService.getCookies());
         Swal.fire({
-            title:"Xác nhận",
-            text:"Bạn có chắc chắn muốn xoá lời mời kết bạn này ?",
-            icon:'warning',
-            showCancelButton:true,
-            showConfirmButton:true,
+            title: "Xác nhận",
+            text: "Bạn có chắc chắn muốn xoá lời mời kết bạn này ?",
+            icon: 'warning',
+            showCancelButton: true,
+            showConfirmButton: true,
             cancelButtonText: 'Hủy',
-            confirmButtonText:"Xác nhận",
-            heightAuto:false
-        }).then((result)=>{
-            if(result.isConfirmed){
-                this.friendService.deleteFriendRequests(request.id,idFriend).subscribe(
-                    (data:any)=>{
-                        if(data.relative === "success"){
+            confirmButtonText: "Xác nhận",
+            heightAuto: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.friendService.deleteFriendRequests(request.id, idFriend).subscribe(
+                    (data: any) => {
+                        if (data.relative === "success") {
                             this.toastr.success("Thành công ", "Hệ thống")
-                            request.relative="Đã Xoá lời mời kết bạn"
+                            request.relative = "Đã Xoá lời mời kết bạn"
                         }
                     }
                 )
             }
         });
     }
-    displayRelative(rs:{id:number, fullname:string,relative:string}){
+    displayRelative(rs: { id: number, fullname: string, relative: string }) {
         const validStates = ['Thêm bạn bè', 'Bạn bè', 'Đã gửi'];
         if (!rs.relative || validStates.includes(rs.relative)) {
-          return '';
+            return '';
         }
-        else{
+        else {
             return rs.relative;
         }
     }

@@ -12,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { isValidAccount, isValidEmail, isValidPassword} from '../utils/validation.util';
+import { isValidAccount, isValidEmail, isValidPassword } from '../utils/validation.util';
 @Component({
   selector: 'app-login',
   imports: [FormsModule, HttpClientModule, CommonModule],
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     private cookieService: CookieService,
     private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) { }
   @ViewChild('btn1') btn1!: ElementRef<HTMLButtonElement>;
   @ViewChild('btnContainer1') btnContainer1!: ElementRef<HTMLDivElement>;
   @ViewChild('btn2') btn2!: ElementRef<HTMLButtonElement>;
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   signInPassword = '';
   signUpUser = '';
   signUpEmail = '';
-  signUpName='';
+  signUpName = '';
   signUpPassword = '';
   signUpPasswordConfirm = '';
   isLoginDisabled = true;
@@ -162,6 +162,15 @@ export class LoginComponent implements OnInit {
     }
   }
   ngLogin() {
+    if (!isValidAccount(this.signInAccount)) {
+      this.toastr.error("Tài khoản không hợp lệ: chỉ chứa chữ, số ", "Thông báo");
+      return;
+    }
+
+    if (!isValidPassword(this.signInPassword)) {
+      this.toastr.error("Mật khẩu không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt", "Thông báo");
+      return;
+    }
     this.userService.login(this.signInAccount, this.signInPassword).subscribe(
       (data) => {
         this.cookieService.set(
@@ -173,17 +182,17 @@ export class LoginComponent implements OnInit {
             sameSite: 'Strict',
           }
         );
-        this.toastr.success("Đăng nhập thành công","Thông báo")
+        this.toastr.success("Đăng nhập thành công", "Thông báo")
         this.userService.setToken(data.token);
         this.router.navigate(['']);
       },
       (error) => {
-        this.toastr.error("Đăng nhập thất bại","Thông báo")
+        this.toastr.error("Đăng nhập thất bại", "Thông báo")
         console.log(error);
       }
     );
   }
-  register(){
+  register() {
     // if(this.signUpPassword === this.signUpPasswordConfirm){
     //   this.userService.SignUp(this.signUpUser,this.signUpPassword,this.signUpName,this.signUpEmail).subscribe(
     //     (data:any) => {
@@ -217,8 +226,8 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-  // Gửi dữ liệu nếu hợp lệ
-    this.userService.register(
+    // Gửi dữ liệu nếu hợp lệ
+    this.userService.SignUp(
       this.signUpUser,
       this.signUpPassword,
       this.signUpName,
