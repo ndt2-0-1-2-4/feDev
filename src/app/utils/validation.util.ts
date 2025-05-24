@@ -17,7 +17,7 @@ export function isValidAmount(input: string): boolean {
 
 // kiểm tra email
 export function isValidEmail(email: string): boolean {
-  // Regex chuẩn hơn, loại bỏ emoji
-  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
   return regex.test(email);
 }
+
