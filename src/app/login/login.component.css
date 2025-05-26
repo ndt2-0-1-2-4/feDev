@@ -404,3 +404,7 @@ footer a {
   display: flex;
   justify-content: space-between;
 }
+.forgetlink:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}

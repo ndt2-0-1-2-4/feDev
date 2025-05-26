@@ -187,7 +187,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['']);
       },
       (error) => {
-        this.toastr.error("Đăng nhập thất bại", "Thông báo")
+        this.toastr.error("Tài khoản chưa xác minh hoặc sai tài khoản mật khẩu", "Thông báo")
         console.log(error);
       }
     );
@@ -235,8 +235,8 @@ export class LoginComponent implements OnInit {
     ).subscribe(
       (data: any) => {
         console.log(data);
-        this.toastr.success("Đăng ký thành công", "Thông báo");
-        location.reload();
+        this.toastr.success("Vui lòng check mail để xác thực", "Thông báo");
+        // location.reload();
       },
       (error) => {
         this.toastr.error("Đăng ký thất bại", "Thông báo");

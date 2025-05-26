@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { endWith, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
@@ -13,6 +13,7 @@ import path from 'path';
 export class userService {
   private apiUrl = 'http://localhost:8082/user/changePassword';
   private apiforgetpass = 'http://localhost:8082/api/v1/auth/forget-pass';
+  private apiresetpass = 'http://localhost:8082/api/v1/auth/reset-password';
 
   private apiLogin = environment.apiLogin;
   private apiGetInfo = environment.apiGetInfo;
@@ -199,5 +200,15 @@ export class userService {
       responseType: 'text'
     });
   }
+
+  resetpass(token: string, newPassword: string) {
+  const params = new HttpParams().set('token', token);
+  const body = { mk: newPassword }; 
+
+  return this.http.post(this.apiresetpass, body, {
+    params,
+    responseType: 'text'
+  });
+}
 
 }
