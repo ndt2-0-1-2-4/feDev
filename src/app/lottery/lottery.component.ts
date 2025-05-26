@@ -31,12 +31,6 @@ export class LotteryComponent {
 
   ngOnInit() {
     this.loadLotteryData();
-    const goldElement = document.querySelector('.gold');
-    const gold = goldElement?.textContent
-    if(gold){
-      this.money = parseInt(gold);
-    }
-
   }
 
   lotteryData: any = {};
@@ -90,13 +84,12 @@ export class LotteryComponent {
 
   
   placeBet() {
+    this.money=this.atmService.getBalance()||0
     if (this.money >= this.betAmount) {
       let amount = -this.betAmount;
       this.money -= this.betAmount;
   
-      // Cập nhật UI số vàng
-      const goldElement = document.querySelector('.gold');
-      if (goldElement) goldElement.innerHTML = this.money.toString();
+      this.atmService.setBalance(this.money);
   
       // Gọi API cập nhật số dư (trừ tiền)
       this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(
