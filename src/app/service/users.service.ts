@@ -127,6 +127,7 @@ export class userService {
       })
     );
   }
+
       
 
   getPlayerHisAll(id: any): Observable<any> {

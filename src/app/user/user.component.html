@@ -108,14 +108,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let lichSu of lichSuCuoc | paginate: { itemsPerPage: 4, currentPage: pages } ; let i = index">
+          <tr *ngFor="let lichSu1 of lichSuCuoc | paginate: { itemsPerPage: 4, currentPage: pages } ; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{ lichSu.namegame }}</td>
-            <td>{{ lichSu.ketQua }}</td>
-            <td>{{ lichSu.soTienCuoc }}</td>
-            <td>{{ lichSu.phanThuong }}</td>
-            <td>{{ lichSu.datCuoc }}</td>
-            <td>{{ lichSu.timeoccurs | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+            <td>{{ lichSu1.namegame }}</td>
+            <td>{{ lichSu1.ketQua }}</td>
+            <td>{{ lichSu1.soTienCuoc }}</td>
+            <td>{{ lichSu1.phanThuong }}</td>
+            <td>{{ lichSu1.datCuoc }}</td>
+            <td>{{ lichSu1.timeoccurs | date:'dd/MM/yyyy HH:mm:ss' }}</td>
           </tr>
         </tbody>
       </table>
