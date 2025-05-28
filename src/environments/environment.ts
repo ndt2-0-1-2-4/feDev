@@ -1,4 +1,4 @@
-const SERVER_IP = '127.0.0.1';
+const SERVER_IP = '172.20.11.2';
 
 export const environment = {
   production: true,
@@ -39,5 +39,6 @@ export const environment = {
   apiGetDailyRecharge: `http://${SERVER_IP}:8082/Atm/getDailyRecharge`,
   apiSignUp: `http://${SERVER_IP}:8082/api/v1/auth/signup`,
   apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
+  apiPayment: `http://${SERVER_IP}:8082/payment`,
 };
     
