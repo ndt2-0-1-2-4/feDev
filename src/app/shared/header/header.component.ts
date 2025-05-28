@@ -42,13 +42,11 @@ export class HeaderComponent implements OnInit {
           localStorage.clear();
         }
       );
-      this.userService
-        .getAtmUser(this.userService.getCookies())
-        .subscribe((data: any) => {
+      this.userService.getAtmUser(this.userService.getCookies()).subscribe((data: any) => {
           this.money = data.balance;
-          if (data.error !== undefined) {
-            this.toastr.warning('Hãy bấm vào User để tạo ATM ', 'Hệ thống');
-          }
+          // if (data.error !== undefined) {
+          //   this.toastr.warning('Hãy bấm vào User để tạo ATM ', 'Hệ thống');
+          // }
         });
     }
   }

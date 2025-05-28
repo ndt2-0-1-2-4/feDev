@@ -103,11 +103,13 @@ export class UserComponent {
         if (res?.existed === false) {
           this.toastr.error(res.message, 'Thông báo'); 
           this.loading = false; 
+          console.log(res.message);
           return;
         }
         if (res?.exist === false) {
           this.toastr.error(res.message, 'Thông báo'); 
           this.loading = false; 
+          console.log(res.message);
           return;
         }
 
@@ -115,14 +117,13 @@ export class UserComponent {
         this.stk = this.newStk; // Cập nhật stk mới
         this.showForm = false; // Đóng form sau khi tạo tài khoản thành công
         this.loading = false; 
-        location.reload();    // Reload sau khi xử lý thành công
+        location.reload(); 
       },
       (err: any) => {
         this.toastr.error('Tạo tài khoản ATM thất bại!'); // Hiển thị thông báo lỗi
         this.loading = false; // Tắt spinner nếu có lỗi
       }
     );
-    location.reload();
   }
 
   selectTab(tab: 'lichSuCuoc' | 'lichSuThayDoi') {

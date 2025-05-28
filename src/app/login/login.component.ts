@@ -183,6 +183,7 @@ export class LoginComponent implements OnInit {
           }
         );
         this.toastr.success("Đăng nhập thành công", "Thông báo")
+         this.toastr.warning('Hãy bấm vào User để tạo ATM ', 'Hệ thống');
         this.userService.setToken(data.token);
         this.router.navigate(['']);
       },
