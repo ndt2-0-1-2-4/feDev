@@ -40,5 +40,7 @@ export const environment = {
   apiSignUp: `http://${SERVER_IP}:8082/api/v1/auth/signup`,
   apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
   apiPayment: `http://${SERVER_IP}:8082/payment`,
+  apiChangePass: `http://${SERVER_IP}:8082/user/changePassword`,
+  apiforgetpass: `http://${SERVER_IP}:8082/api/v1/auth/forget-pass`,
+  apiresetpass: `http://${SERVER_IP}:8082/api/v1/auth/reset-password`,
 };
-    
