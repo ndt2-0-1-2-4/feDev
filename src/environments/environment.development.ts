@@ -1,4 +1,4 @@
-const SERVER_IP = '127.0.0.1';
+const SERVER_IP = '172.20.10.2';
 
 export const environment = {
   production: true,
@@ -36,6 +36,9 @@ export const environment = {
   apiGetFriendRelative: `http://${SERVER_IP}:8082/friend/getRelativeMy`,
   apiGetDailyClosingBalance: `http://${SERVER_IP}:8082/Atm/getDailyClosingBalance`,
   apiGetDailyRecharge: `http://${SERVER_IP}:8082/Atm/getDailyRecharge`,
-  apiSignUp : `http://${SERVER_IP}:8082/api/v1/auth/signup`,
+  apiSignUp: `http://${SERVER_IP}:8082/api/v1/auth/signup`,
   apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
+  apiChangePass: `http://${SERVER_IP}:8082/user/changePassword`,
+  apiforgetpass: `http://${SERVER_IP}:8082/api/v1/auth/forget-pass`,
+  apiresetpass: `http://${SERVER_IP}:8082/api/v1/auth/reset-password`,
 };

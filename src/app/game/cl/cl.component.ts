@@ -1,5 +1,11 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { WebSocketService } from '../../service/socket.service';
 import { userService } from '../../service/users.service';
@@ -9,16 +15,16 @@ import { Subscription, timer } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-cl',
-  imports: [NgIf,NgFor,CommonModule],
+  imports: [NgIf, NgFor, CommonModule],
   templateUrl: './cl.component.html',
   styleUrls: ['./cl.component.css'],
 })
 export class ClComponent implements OnInit {
   @ViewChild('chanElement') chanElement!: ElementRef;
   @ViewChild('leElement') leElement!: ElementRef;
-  @ViewChild('dice1',{ static: true }) dice1!: ElementRef;
-  @ViewChild('dice2',{ static: true }) dice2!: ElementRef;
-  @ViewChild('dice3',{ static: true }) dice3!: ElementRef;
+  @ViewChild('dice1', { static: true }) dice1!: ElementRef;
+  @ViewChild('dice2', { static: true }) dice2!: ElementRef;
+  @ViewChild('dice3', { static: true }) dice3!: ElementRef;
   @ViewChild('draggable', { static: true }) draggableElement!: ElementRef;
   isCountingDown: boolean = false;
   isDragging: boolean = false;
@@ -33,7 +39,7 @@ export class ClComponent implements OnInit {
   countdown: number = 0;
   totalScore: number = 0;
   players: number = 5;
-  history: string[] =[];
+  history: string[] = [];
   selectedBet: number = 100;
   showOptionsAndActions: boolean = false;
   selectedBetType: string | null = null;
@@ -41,119 +47,146 @@ export class ClComponent implements OnInit {
   private messageSubscription!: Subscription;
   isConnected = false;
   messages: any[] = [];
-  isLoadHis= true;
+  isLoadHis = true;
   constructor(
     private socket: WebSocketService,
     private userService: userService,
     private gameService: GameService,
     private atmService: AtmService,
     private toastr: ToastrService
-  ){}
+  ) {}
   ngOnInit(): void {
     let idUser: any = this.userService.getCookies();
     this.urlSocketCl += '?id=' + idUser;
     this.socket.connect(this.urlSocketCl);
-    this.messageSubscription=this.socket.getMessages().subscribe(
-      (messageData: any) => {
-        if(messageData.message ===-1) this.isLoadHis = false
+    this.messageSubscription = this.socket
+      .getMessages()
+      .subscribe((messageData: any) => {
+        if (messageData.message === -1) this.isLoadHis = false;
         const parsedMessage = JSON.parse(messageData.message);
         if (messageData.url === this.urlSocketCl) {
           switch (parsedMessage.type) {
             case 'infobet':
               this.isConnected = true;
-              this.selectedBetType= parsedMessage.guess;
+              this.selectedBetType = parsedMessage.guess;
               if (this.selectedBetType === 'tai') {
-                this.taiBetDisplay =parsedMessage.money;
+                this.taiBetDisplay = parsedMessage.money;
               } else if (this.selectedBetType === 'xiu') {
-                this.xiuBetDisplay =parsedMessage.money;
+                this.xiuBetDisplay = parsedMessage.money;
               }
               break;
             case 'start':
-              this.isCountingDown=true;
-              this.reset()
-              if(this.isLoadHis) this.addToHistory(this.totalScore > 10 ? 'tai' : 'xiu');
-              this.isLoadHis= true
-              this.countdown= parsedMessage.message
+              this.isCountingDown = true;
+              this.reset();
+              if (this.isLoadHis)
+                this.addToHistory(this.totalScore > 10 ? 'tai' : 'xiu');
+              this.isLoadHis = true;
+              this.countdown = parsedMessage.message;
               break;
             case 'end':
-              this.reset()
-              this.isCountingDown=false
+              this.reset();
+              this.isCountingDown = false;
               const numbers = parsedMessage.message.split(',').map(Number);
-              this.rollDice(numbers)
+              this.rollDice(numbers);
               break;
             case 'money':
-              this.isCountingDown=true
+              this.isCountingDown = true;
               const input: string = parsedMessage.message;
               const parts: string[] = input.split(':');
-              this.countdown=Number(parts[0])
+              this.countdown = Number(parts[0]);
               this.xiuAmount = Number(parts[1]);
               this.taiAmount = Number(parts[2]);
               break;
             case 'reward':
               const reward: number = Number(parsedMessage.reward);
               let playerId = this.userService.getCookies();
-              const rs :string = parsedMessage.result.join(':'); 
+              const rs: string = parsedMessage.result.join(':');
               const moneyBet = parsedMessage.bet; // Tiền cược
               const choiceBet = parsedMessage.choice;
-              if(reward>0){
-                let tempGold=this.atmService.getBalance()||0
-                tempGold +=reward*2
+              if (reward > 0) {
+                let tempGold = this.atmService.getBalance() || 0;
+                tempGold += reward * 2;
                 timer(5000).subscribe(() => {
-                  this.atmService.setBalance(reward*2);
+                  this.atmService.setBalance(reward * 2);
                   this.toastr.success('Chúc mừng thiếu chủ', 'Thông báo');
                 });
-                this.atmService.updateBalan(reward*2,this.userService.getCookies()).subscribe()
-                this.userService.saveBetHis("Tài xỉu",playerId,rs,moneyBet,reward*2,choiceBet).subscribe()
-                this.atmService.saveHisBalance(this.userService.getCookies(),"Trả thưởng Tài xỉu",reward*2,tempGold).subscribe()
-              }
-              else{
-                this.userService.saveBetHis("Tài xỉu",playerId,rs,moneyBet,reward*2,choiceBet).subscribe()
+                this.atmService
+                  .updateBalan(reward * 2, this.userService.getCookies())
+                  .subscribe();
+                this.userService
+                  .saveBetHis(
+                    'Tài xỉu',
+                    playerId,
+                    rs,
+                    moneyBet,
+                    reward * 2,
+                    choiceBet
+                  )
+                  .subscribe();
+                this.atmService
+                  .saveHisBalance(
+                    this.userService.getCookies(),
+                    'Trả thưởng Tài xỉu',
+                    reward * 2,
+                    tempGold
+                  )
+                  .subscribe();
+              } else {
+                this.userService
+                  .saveBetHis(
+                    'Tài xỉu',
+                    playerId,
+                    rs,
+                    moneyBet,
+                    reward * 2,
+                    choiceBet
+                  )
+                  .subscribe();
               }
               break;
-              
           }
           this.messages.push(messageData.message);
         }
-      }
-    )
-    if(this.isLoadHis) this.getHistory();
-    
+      });
+    if (this.isLoadHis) this.getHistory();
   }
-  getHistory(){
-    this.gameService.getHistory("Tài xỉu").subscribe(
-      (data: any) => {
-        let isFirst = true;
-        data.forEach((element:any) => {
-          let numbers = element.result.split(',').map(Number);
-          let sum=0
-            numbers.forEach((e:any) => {
-            sum+=e
-          });
-          if (isFirst) {
-            this.totalScore = sum; 
-            isFirst = false;
-          }
-          this.addToHistory(sum>10 ? "tai" : "xiu")
+  getHistory() {
+    this.gameService.getHistory('Tài xỉu').subscribe((data: any) => {
+      let isFirst = true;
+      data.forEach((element: any) => {
+        let numbers = element.result.split(',').map(Number);
+        let sum = 0;
+        numbers.forEach((e: any) => {
+          sum += e;
         });
-      this.history=this.history.slice().reverse()
-      }
-    )
-    if(this.countdown>0){
-      this.isLoadHis=false
+        if (isFirst) {
+          this.totalScore = sum;
+          isFirst = false;
+        }
+        this.addToHistory(sum > 10 ? 'tai' : 'xiu');
+      });
+      this.history = this.history.slice().reverse();
+    });
+    if (this.countdown > 0) {
+      this.isLoadHis = false;
     }
   }
   reset(): void {
-    this.cancelBet()
-    this.xiuBetDisplay=-1
-    this.taiBetDisplay=-1
+    this.cancelBet();
+    this.xiuBetDisplay = -1;
+    this.taiBetDisplay = -1;
   }
   toggleBet(type: string): void {
-    if ( this.taiBetDisplay !== -1 || this.xiuBetDisplay !== -1 || !this.isCountingDown ) {
-      return
+    if (
+      this.taiBetDisplay !== -1 ||
+      this.xiuBetDisplay !== -1 ||
+      !this.isCountingDown
+    ) {
+      return;
     }
-    if(this.selectedBetType !== type){
-      this.taiBetDisplay=-1
-      this.xiuBetDisplay=-1
+    if (this.selectedBetType !== type) {
+      this.taiBetDisplay = -1;
+      this.xiuBetDisplay = -1;
     }
 
     this.selectedBetType = type;
@@ -165,16 +198,15 @@ export class ClComponent implements OnInit {
     } else if (type === 'xiu') {
       this.xiuBetDisplay = 0;
     }
-
   }
 
   selectBetAmount(amount: number): void {
     const gold = this.atmService.getBalance();
-    if(!gold){
-      return
+    if (!gold) {
+      return;
     }
     if (this.tempBetAmount + amount > gold) {
-      this.toastr.warning("Số dư không đủ", "Thông báo")
+      this.toastr.warning('Số dư không đủ', 'Thông báo');
       return;
     }
     this.tempBetAmount += amount;
@@ -187,18 +219,27 @@ export class ClComponent implements OnInit {
   }
 
   placeBet(): void {
-    if(this.selectedBetType==='tai'){
+    if (this.selectedBetType === 'tai') {
       this.taiAmount += this.tempBetAmount;
-    } else if(this.selectedBetType ==='xiu'){
+    } else if (this.selectedBetType === 'xiu') {
       this.xiuAmount += this.tempBetAmount;
     }
     this.showOptionsAndActions = false;
     const gold = this.atmService.getBalance() || 0;
     this.atmService.setBalance(-this.tempBetAmount);
-    let tempGold=gold-this.tempBetAmount
-    this.atmService.updateBalan(-this.tempBetAmount,this.userService.getCookies()).subscribe()
-    this.atmService.saveHisBalance(this.userService.getCookies(),"Cược Tài xỉu",-this.tempBetAmount,tempGold).subscribe()
-    this.sendBet()
+    let tempGold = gold - this.tempBetAmount;
+    this.atmService
+      .updateBalan(-this.tempBetAmount, this.userService.getCookies())
+      .subscribe();
+    this.atmService
+      .saveHisBalance(
+        this.userService.getCookies(),
+        'Cược Tài xỉu',
+        -this.tempBetAmount,
+        tempGold
+      )
+      .subscribe();
+    this.sendBet();
   }
 
   cancelBet(): void {
