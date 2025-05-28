@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface PaymentRequest {
   amount: number;
@@ -28,7 +29,7 @@ export interface PaymentCallback {
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = 'http://localhost:8082/payment';
+  private apiUrl = environment.apiPayment;
 
   constructor(private http: HttpClient) { }
 
