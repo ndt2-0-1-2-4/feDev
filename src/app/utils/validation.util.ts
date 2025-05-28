@@ -21,3 +21,7 @@ export function isValidEmail(email: string): boolean {
   return regex.test(email);
 }
 
+export function isValidBankAccountNumber(account: string): boolean {
+  const regex = /^\d{6,12}$/;
+  return regex.test(account);
+}

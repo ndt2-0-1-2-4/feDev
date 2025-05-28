@@ -1,4 +1,4 @@
-const SERVER_IP = '172.20.10.2';
+const SERVER_IP = '192.168.1.173';
 
 export const environment = {
   production: true,
@@ -32,17 +32,15 @@ export const environment = {
   apigetHisfbxs: `http://${SERVER_IP}:8082/betHisfbxs/getHisfbXs`,
   apiGetHisBalance: `http://${SERVER_IP}:8082/game/getPlayerHis`,
   apiGetPlayerHisAll: `http://${SERVER_IP}:8082/game/getPlayerHisAll`,
-  apiRegister: `http://${SERVER_IP}/user/regis`,
+  // apiRegister: `http://${SERVER_IP}/user/regis`,
   apiCreateAtm: `http://${SERVER_IP}:8082/Atm/createATM`,
   apiGetFriendRelative: `http://${SERVER_IP}:8082/friend/getRelativeMy`,
   apiGetDailyClosingBalance: `http://${SERVER_IP}:8082/Atm/getDailyClosingBalance`,
   apiGetDailyRecharge: `http://${SERVER_IP}:8082/Atm/getDailyRecharge`,
   apiSignUp: `http://${SERVER_IP}:8082/api/v1/auth/signup`,
   apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
-  apiPayment: `http://${SERVER_IP}:8082/payment`,
   apiChangePass: `http://${SERVER_IP}:8082/user/changePassword`,
   apiforgetpass: `http://${SERVER_IP}:8082/api/v1/auth/forget-pass`,
   apiresetpass: `http://${SERVER_IP}:8082/api/v1/auth/reset-password`,
   apiCalculateReward: `http://${SERVER_IP}:8082/Atm/calculate-reward`,
-  apiGetDailyBalance: `http://${SERVER_IP}:8082/Atm/getDailyClosingBalance`,
 };

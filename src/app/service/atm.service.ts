@@ -9,7 +9,7 @@ import { userService } from './users.service';
 })
 export class AtmService {
   private apiUrl = environment.apiCalculateReward;
-  private apiGetDailyBalance = environment.apiGetDailyBalance;
+  private apiGetDailyBalance = environment.apiGetHisBalance;
   private apiGetDailyRecharge = environment.apiGetDailyRecharge;
 
   constructor(

@@ -386,7 +386,7 @@ export class RrComponent implements OnInit{
       this.money += this.lastWinning ; // Cộng tiền thắng vào số dư
 
       // Cập nhật số dư trên giao diện
-      this.atmService.setBalance(this.lastWinning );
+      this.atmService.setBalance(this.lastWinning );  
       const goldElement = document.querySelector('.gold');  
 
       // Thêm vào lịch sử chơi

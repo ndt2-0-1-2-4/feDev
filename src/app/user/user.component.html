@@ -75,17 +75,23 @@
       </ng-template>
       
       <ng-template #formTemplate>
-        <div class="add-card-form">
-          <label for="stkInput">Số tài khoản</label>
-          <input
-            id="stkInput"
-            type="text"
-            [(ngModel)]="newStk"
-            placeholder="Nhập số tài khoản"
-          />
-          <button (click)="addCard()">Thêm</button>
-        </div>
-      </ng-template>
+  <div class="add-card-form">
+    <label for="stkInput">Số tài khoản</label>
+    <input
+      id="stkInput"
+      type="text"
+      [(ngModel)]="newStk"
+      placeholder="Nhập số tài khoản"
+    />
+
+    <button [disabled]="loading" (click)="addCard()">
+      <span *ngIf="!loading">Thêm</span>
+      <span *ngIf="loading">
+        <i class="fa fa-spinner fa-spin"></i> Đang xử lý...
+      </span>
+    </button>
+  </div>
+</ng-template>
   </div>
   <!-- Right Section -->
   <div class="right-section">
