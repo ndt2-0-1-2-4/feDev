@@ -23,13 +23,13 @@ export class UserComponent {
 
   changeDetectorRef: any;
   showForm: boolean = false;
-  newStk: string = ''; 
+  newStk: string = '';
   constructor(
     private userService: userService,
     private friendService: FriendService,
     private atm: AtmService,
     private toastr: ToastrService,
-    private http : HttpClient,
+    private http: HttpClient,
     private router: Router
   ) { }
   fullname: any;
@@ -99,21 +99,10 @@ export class UserComponent {
       }
     );
     location.reload();
-    }
+  }
 
   selectTab(tab: 'lichSuCuoc' | 'lichSuThayDoi') {
     this.selectedTab = tab;
-    if (tab === 'lichSuThayDoi') {
-      this.userService.getHisBalance(this.userService.getCookies()).subscribe(
-        (res: any) => {
-          this.lichSuThayDoi = res;
-          console.log("Lịch sử thay đổi số dư:", this.lichSuThayDoi);
-        },
-        (err: any) => {
-          console.error('Lỗi khi tải lịch sử thay đổi số dư :', err);
-        }
-      );
-    }
     if (tab === 'lichSuCuoc') {
       this.userService.getPlayerHisAll(this.userService.getCookies()).subscribe(
         (res: any) => {
@@ -136,7 +125,7 @@ export class UserComponent {
               soTienCuoc: item.bet,
               phanThuong: item.reward,
               datCuoc: item.choice,
-              timeoccurs: parsedDate, // 👈 Date object
+              timeoccurs: parsedDate,
             };
 
           });
@@ -147,7 +136,17 @@ export class UserComponent {
       );
 
     }
-
+    else if (tab === 'lichSuThayDoi') {
+      this.userService.getHisBalance(this.userService.getCookies()).subscribe(
+        (res: any) => {
+          this.lichSuThayDoi = res;
+          console.log("Lịch sử thay đổi số dư:", this.lichSuThayDoi);
+        },
+        (err: any) => {
+          console.error('Lỗi khi tải lịch sử thay đổi số dư :', err);
+        }
+      );
+    }
   }
 
   isModalOpen = false;
@@ -168,27 +167,27 @@ export class UserComponent {
 
   changePassword() {
     const fieldsToCheck = [
-    { label: 'Mật khẩu cũ', value: this.oldPassword },
-    { label: 'Mật khẩu mới', value: this.newPassword },
-    { label: 'Xác nhận mật khẩu', value: this.confirmPassword }
-  ];
+      { label: 'Mật khẩu cũ', value: this.oldPassword },
+      { label: 'Mật khẩu mới', value: this.newPassword },
+      { label: 'Xác nhận mật khẩu', value: this.confirmPassword }
+    ];
 
-  for (const field of fieldsToCheck) {
-    if (!isValidPassword(field.value)) {
-      this.toastr.error(`${field.label} không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt`, "Thông báo");
+    for (const field of fieldsToCheck) {
+      if (!isValidPassword(field.value)) {
+        this.toastr.error(`${field.label} không hợp lệ: chỉ chứa chữ, số và ký tự đặc biệt`, "Thông báo");
+        return;
+      }
+    }
+
+    if (this.newPassword !== this.confirmPassword) {
+      this.toastr.error('Mật khẩu mới không khớp', 'Thông báo');
       return;
     }
-  }
 
-  if (this.newPassword !== this.confirmPassword) {
-    this.toastr.error('Mật khẩu mới không khớp', 'Thông báo');
-    return;
-  }
-
-  if (this.oldPassword === this.newPassword) {
-    this.toastr.error('Vui lòng đổi mật khẩu mới không trùng với mật khẩu cũ', 'Thông báo');
-    return;
-  }
+    if (this.oldPassword === this.newPassword) {
+      this.toastr.error('Vui lòng đổi mật khẩu mới không trùng với mật khẩu cũ', 'Thông báo');
+      return;
+    }
 
     const userId = this.userService.getCookies();
 
@@ -208,7 +207,7 @@ export class UserComponent {
         this.toastr.error('Mật khẩu cũ không khớp', 'Thông báo');
       }
     });
-    
+
   }
 
   email: string = '';
