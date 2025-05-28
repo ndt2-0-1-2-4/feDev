@@ -11,9 +11,9 @@ import path from 'path';
   providedIn: 'root',
 })
 export class userService {
-  private apiUrl = 'http://localhost:8082/user/changePassword';
-  private apiforgetpass = 'http://localhost:8082/api/v1/auth/forget-pass';
-  private apiresetpass = 'http://localhost:8082/api/v1/auth/reset-password';
+  private apiUrl = environment.apiChangePass;
+  private apiforgetpass = environment.apiforgetpass;
+  private apiresetpass = environment.apiresetpass;
 
   private apiLogin = environment.apiLogin;
   private apiGetInfo = environment.apiGetInfo;
@@ -28,26 +28,25 @@ export class userService {
     const body = { tk: account, mk: password };
     return this.http.post(this.apiLogin, body);
   }
-  getFullname(fullname: string){
-    const body = { 
-      fullname:fullname,
-      id:this.getCookies()
-     };
-    return this.http.post(this.apiSearch,body)
-}
-
-
-  getUser():Observable<any>{
-    const id =this.getCookies()
-    const body={id:id}
-    return this.http.post(this.apiGetInfo, body );
-  }
-  getUserById(id:any){
-    const body={id:id}
-    return this.http.post(this.apiGetInfo, body );
+  getFullname(fullname: string) {
+    const body = {
+      fullname: fullname,
+      id: this.getCookies(),
+    };
+    return this.http.post(this.apiSearch, body);
   }
 
-  getAtmUser(id: any){
+  getUser(): Observable<any> {
+    const id = this.getCookies();
+    const body = { id: id };
+    return this.http.post(this.apiGetInfo, body);
+  }
+  getUserById(id: any) {
+    const body = { id: id };
+    return this.http.post(this.apiGetInfo, body);
+  }
+
+  getAtmUser(id: any) {
     const body = { idPlayer: id };
     return this.http.post(this.apiGetAtm, body);
   }
@@ -98,20 +97,20 @@ export class userService {
     return this.http.post<any[]>(this.apiGetHisBalance, body).pipe(
       map((response: any[]) => {
         return response.map((item: any) => {
-          let formattedTime = 'Không xác định';  // Mặc định là Không xác định nếu không có thời gian
-  
+          let formattedTime = 'Không xác định'; // Mặc định là Không xác định nếu không có thời gian
+
           // Kiểm tra trường hợp item.timeChange có giá trị hợp lệ không
           if (item.timeChange) {
             const parsedDate = new Date(item.timeChange.replace(' ', 'T')); // Thử chuyển đổi
-  
+
             // Nếu parsedDate hợp lệ thì định dạng lại
             if (!isNaN(parsedDate.getTime())) {
               formattedTime = format(parsedDate, 'dd-MM-yyyy HH:mm:ss');
             } else {
-              console.log("Chuỗi thời gian không hợp lệ:", item.timeChange); // Log trường hợp không hợp lệ
+              console.log('Chuỗi thời gian không hợp lệ:', item.timeChange); // Log trường hợp không hợp lệ
             }
           }
-  
+
           return {
             idPlayer: item.idPlayer,
             content: item.content,
@@ -128,8 +127,6 @@ export class userService {
     );
   }
 
-      
-
   getPlayerHisAll(id: any): Observable<any> {
     const body = { playerId: id };
     return this.http.post<any[]>(this.apiGetPlayerHisAll, body).pipe(
@@ -142,7 +139,7 @@ export class userService {
               formattedTime = format(parsedDate, 'dd-MM-yyyy HH:mm:ss');
             }
           }
-    
+
           return {
             nameGame: item.nameGame,
             playerId: item.playerId,
@@ -150,7 +147,7 @@ export class userService {
             result: item.result,
             bet: item.bet,
             reward: item.reward,
-            choice: item.choice
+            choice: item.choice,
           };
         });
       }),
@@ -169,47 +166,45 @@ export class userService {
   //   }
   //   return this.http.post(environment.apiRegister,body)
   // }
-  
-  changePassword(userId:number, oldPassword:string, newPassword: string){
+
+  changePassword(userId: number, oldPassword: string, newPassword: string) {
     const payload = {
       id: userId,
       oldPassword,
-      newPassword
+      newPassword,
     };
     return this.http.post(this.apiUrl, payload);
   }
 
-  SignUp(tk:any ,mk:any,fullname:any,email:any){
-    const body={
-      "tk":tk,
-      "mk":mk,
-      "fullname":fullname,
-      "email":email
-    }
-    return this.http.post(environment.apiSignUp,body)
+  SignUp(tk: any, mk: any, fullname: any, email: any) {
+    const body = {
+      tk: tk,
+      mk: mk,
+      fullname: fullname,
+      email: email,
+    };
+    return this.http.post(environment.apiSignUp, body);
   }
-  Verify(verifyCode:any){
-   
+  Verify(verifyCode: any) {
     return this.http.get(environment.apiVerify);
   }
-  
+
   forgetpass(email: string) {
     const body = {
-      email: email
+      email: email,
     };
     return this.http.post(this.apiforgetpass, body, {
-      responseType: 'text'
+      responseType: 'text',
     });
   }
 
   resetpass(token: string, newPassword: string) {
-  const params = new HttpParams().set('token', token);
-  const body = { mk: newPassword }; 
+    const params = new HttpParams().set('token', token);
+    const body = { mk: newPassword };
 
-  return this.http.post(this.apiresetpass, body, {
-    params,
-    responseType: 'text'
-  });
-}
-
+    return this.http.post(this.apiresetpass, body, {
+      params,
+      responseType: 'text',
+    });
+  }
 }
