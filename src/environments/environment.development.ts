@@ -38,11 +38,8 @@ export const environment = {
   apiGetDailyRecharge: `http://${SERVER_IP}:8082/Atm/getDailyRecharge`,
   apiSignUp: `http://${SERVER_IP}:8082/api/v1/auth/signup`,
   apiVerify: `http://${SERVER_IP}:8082/api/v1/auth/verify`,
-<<<<<<< HEAD
     apiPayment: `http://${SERVER_IP}:8082/payment`,
-=======
   apiChangePass: `http://${SERVER_IP}:8082/user/changePassword`,
   apiforgetpass: `http://${SERVER_IP}:8082/api/v1/auth/forget-pass`,
   apiresetpass: `http://${SERVER_IP}:8082/api/v1/auth/reset-password`,
->>>>>>> 57d5ed95b54a6d6c61a845b2f6f36b1907a45608
 };
