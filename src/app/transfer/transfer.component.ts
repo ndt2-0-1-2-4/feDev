@@ -8,6 +8,7 @@ import {
 import { userService } from '../service/users.service';
 import { AtmService } from '../service/atm.service';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-transfer',
   imports: [FormsModule],
@@ -22,9 +23,29 @@ export class TransferComponent implements OnInit {
   idPlayer: any;
   nameplayer: any = '';
   moneyReciver: number = 0;
-  fullname: any = '';
+  fullname : any = '';
   money: any;
-  ngOnInit(): void {}
+
+  // fullnamesender: any = '';
+
+  ngOnInit(): void {
+  if (this.userService.getCookies() !== '') {
+    this.userService.getUser().subscribe(
+      (data) => {
+        this.fullname = data.fullname; 
+        console.log('Thông tin người dùng:', data.fullname);
+      },
+      (error) => {
+        console.error('Lỗi khi lấy dữ liệu người dùng:', error);
+        alert('Không thể lấy thông tin người dùng. Vui lòng thử lại.');
+      }
+    );
+  } else {
+    console.warn('Không tìm thấy cookie người dùng.');
+    alert('Vui lòng đăng nhập để lấy thông tin.');
+  }
+
+  }
   @ViewChild('note') note!: ElementRef<HTMLDivElement>;
   @ViewChild('msg') msg!: ElementRef<HTMLDivElement>;
   @ViewChild('id') id!: ElementRef<HTMLInputElement>;
@@ -118,4 +139,5 @@ export class TransferComponent implements OnInit {
       .subscribe();
     // location.reload();
   }
+
 }
