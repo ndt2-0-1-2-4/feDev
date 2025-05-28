@@ -19,11 +19,11 @@ export class TransferComponent implements OnInit {
     private userService: userService,
     private atmService: AtmService
   ) {}
-  idPlayer: any 
+  idPlayer: any;
   nameplayer: any = '';
-  moneyplay: any = '';
+  moneyReciver: number = 0;
   fullname: any = '';
-  money: any 
+  money: any;
   ngOnInit(): void {}
   @ViewChild('note') note!: ElementRef<HTMLDivElement>;
   @ViewChild('msg') msg!: ElementRef<HTMLDivElement>;
@@ -50,7 +50,7 @@ export class TransferComponent implements OnInit {
     }
   }
   onInputChange(event: Event): void {
-    this.money=this.atmService.getBalance()||0
+    this.money = this.atmService.getBalance() || 0;
     const target = event.target as HTMLInputElement;
     this.value = Number(target.value);
     if (this.value > Number(this.money)) {
@@ -66,22 +66,20 @@ export class TransferComponent implements OnInit {
     const stk = target.value;
     this.atmService.searchAtm(stk).subscribe(
       (data: any) => {
-        if(data ===null){
+        if (data === null) {
           this.notifical3 = 'Số tài khoản không tồn tại!';
           return;
-        }
-        else if (this.userService.getCookies() === String(data.idPlayer)) {
+        } else if (this.userService.getCookies() === String(data.idPlayer)) {
           this.notifical3 = 'Số tài khoản không hợp lệ';
           this.submitIsDisabled = true;
         } else {
-          console.log(data)
+          console.log(data);
           this.notifical3 = '';
-          this.idPlayer=data.idPlayer
+          this.idPlayer = data.idPlayer;
           this.userService.getUserById(data.idPlayer).subscribe((rs: any) => {
-            this.money = rs.money;
+            this.moneyReciver = rs.money;
             this.nameplayer = rs.fullname;
           });
-        
         }
       },
       (error) => {
@@ -95,12 +93,28 @@ export class TransferComponent implements OnInit {
       this.showNote();
     }
   }
-  banking(){  
-    this.money=this.atmService.getBalance()
-    this.atmService.updateBalan(this.value*-1,this.userService.getCookies()).subscribe()
-    this.atmService.updateBalan(this.value,this.idPlayer).subscribe()
-    this.atmService.saveHisBalance(this.userService.getCookies(),this.message.nativeElement.value,this.value*-1,this.money-this.value).subscribe()
-    this.atmService.saveHisBalance(this.idPlayer,this.message.nativeElement.value,this.value,this.money+this.value).subscribe()
-    location.reload()
+  banking() {
+    this.money = this.atmService.getBalance();
+    this.atmService
+      .updateBalan(this.value * -1, this.userService.getCookies())
+      .subscribe();
+    this.atmService.updateBalan(this.value, this.idPlayer).subscribe();
+    this.atmService
+      .saveHisBalance(
+        this.userService.getCookies(),
+        this.message.nativeElement.value,
+        this.value * -1,
+        this.money - this.value
+      )
+      .subscribe();
+    this.atmService
+      .saveHisBalance(
+        this.idPlayer,
+        this.message.nativeElement.value,
+        this.value,
+        this.moneyReciver + this.value
+      )
+      .subscribe();
+    location.reload();
   }
 }
