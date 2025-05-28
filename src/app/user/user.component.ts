@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, REQUEST_CONTEXT } from '@angular/core';
 import { userService } from '../service/users.service';
 import { FriendService } from '../service/friend.service';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { isValidPassword } from '../utils/validation.util';
 import { isValidAccount } from '../utils/validation.util';
 import { formatCurrencyVND } from '../utils/format.util';
 import { Router } from '@angular/router';
+import { isValidBankAccountNumber } from '../utils/validation.util';
 @Component({
   selector: 'app-user',
   imports: [CommonModule, FormsModule, NgxPaginationModule],
@@ -37,6 +38,7 @@ export class UserComponent {
   numberFriend: any = 0;
   friends: any[] = [];
   stk: any;
+ loading = false;
   pages: number = 1;
   itemsPerPage: number = 4; // Số mục trên mỗi trang
 
@@ -87,15 +89,37 @@ export class UserComponent {
 
   }
   addCard() {
+    // valid tk
+    if (!isValidBankAccountNumber(this.newStk)) {
+    this.toastr.error('Số tài khoản không hợp lệ: phải gồm đúng 12 chữ số, không chứa chữ hay ký tự đặc biệt', 'Thông báo');
+    return;
+  }
+    this.loading = true; 
+
+
     // Tạo tài khoản ATM
     this.atm.CreateAtm(this.userService.getCookies(), this.newStk).subscribe(
       (res: any) => {
+        if (res?.existed === false) {
+          this.toastr.error(res.message, 'Thông báo'); 
+          this.loading = false; 
+          return;
+        }
+        if (res?.exist === false) {
+          this.toastr.error(res.message, 'Thông báo'); 
+          this.loading = false; 
+          return;
+        }
+
         this.toastr.success('Tạo tài khoản ATM thành công!'); // Hiển thị thông báo thành công
         this.stk = this.newStk; // Cập nhật stk mới
         this.showForm = false; // Đóng form sau khi tạo tài khoản thành công
+        this.loading = false; 
+        location.reload();    // Reload sau khi xử lý thành công
       },
       (err: any) => {
         this.toastr.error('Tạo tài khoản ATM thất bại!'); // Hiển thị thông báo lỗi
+        this.loading = false; // Tắt spinner nếu có lỗi
       }
     );
     location.reload();

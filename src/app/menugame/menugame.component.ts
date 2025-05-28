@@ -25,4 +25,7 @@ export class MenugameComponent {
   Football(){
     this.route.navigate(['/football']);
   }
+  Lottery() {
+    this.route.navigate(['/lottery']);
+  }
 }

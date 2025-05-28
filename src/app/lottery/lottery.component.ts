@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 import { format, parse, isBefore } from 'date-fns';
 import { userService } from '../service/users.service';
 import { AtmService } from '../service/atm.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -23,6 +23,7 @@ export class LotteryComponent {
     private http :HttpClient,
     private userService: userService,
     private atmService: AtmService, 
+    private toastr: ToastrService
   ) { }
 
   apiLottery = environment.apiLottery;
@@ -86,13 +87,12 @@ export class LotteryComponent {
   placeBet() {
     this.money=this.atmService.getBalance()||0
     if (this.money >= this.betAmount) {
-      let amount = -this.betAmount;
       this.money -= this.betAmount;
   
       this.atmService.setBalance(this.money);
   
       // Gọi API cập nhật số dư (trừ tiền)
-      this.atmService.updateBalan(amount, this.userService.getCookies()).subscribe(
+      this.atmService.updateBalan(-this.betAmount, this.userService.getCookies()).subscribe(
         response => {
           // console.log('Đã trừ tiền cược xổ số:', response);
   
@@ -109,8 +109,9 @@ export class LotteryComponent {
           this.http.post(this.apiPlaceBet, betData).subscribe(
             (res: any) => {
               console.log('Đặt cược xổ số thành công:', res);
-              alert(res.message || "Đặt cược thành công!");
-  
+              
+              this.toastr.success('Đặt cược thành công!', 'Thông báo');
+              
               // Reset lại form
               this.betNumber = '';
               this.betAmount = 1000;
@@ -129,6 +130,7 @@ export class LotteryComponent {
     } else {
       alert("Bạn không đủ tiền để đặt cược!");
     }
+    // location.reload(); 
   }
 
   lotteryHistory: any[] = [];
