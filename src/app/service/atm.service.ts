@@ -8,10 +8,9 @@ import { userService } from './users.service';
   providedIn: 'root',
 })
 export class AtmService {
-  private apiUrl = 'http://localhost:8082/Atm/calculate-reward';
-  private apiGetDailyBalance =
-    'http://localhost:8082/Atm/getDailyClosingBalance';
-  private apiGetDailyRecharge = 'http://localhost:8082/Atm/getDailyRecharge';
+  private apiUrl = environment.apiCalculateReward;
+  private apiGetDailyBalance = environment.apiGetDailyBalance;
+  private apiGetDailyRecharge = environment.apiGetDailyRecharge;
 
   constructor(
     private httpClient: HttpClient,
@@ -28,7 +27,7 @@ export class AtmService {
     const body = { balance: number, idPlayer: id };
     return this.httpClient.post(environment.apiupdateBalan, body);
   }
-  getBalance(){
+  getBalance() {
     const goldElement = document.querySelector('.gold');
     if (!goldElement) {
       return;
@@ -38,13 +37,15 @@ export class AtmService {
     const gold = parseInt(cleanedGoldText, 10);
     return gold;
   }
-  setBalance(amount:number){
+  setBalance(amount: number) {
     const goldElement = document.querySelector('.gold');
     if (!goldElement) {
       return;
     }
     const goldText = goldElement.textContent || '0';
-    const cleanedGoldText = goldText.replace(/[\.,]/g, '').replace(/[^\d]/g, ''); // Loại bỏ dấu chấm/phẩy và ký tự không phải số
+    const cleanedGoldText = goldText
+      .replace(/[\.,]/g, '')
+      .replace(/[^\d]/g, ''); // Loại bỏ dấu chấm/phẩy và ký tự không phải số
     const gold = parseInt(cleanedGoldText, 10);
     const newGold = gold + amount;
     goldElement.textContent = newGold.toLocaleString('vi-VN');

@@ -264,8 +264,8 @@ export class ClComponent implements OnInit {
       this.xiuBetDisplay = -1;
     }
 
-    // Đặt cược tối đa (1000)
-    this.tempBetAmount = 1000;
+    // Đặt cược tối đa 
+    this.tempBetAmount = this.atmService.getBalance() || 0;
     if (this.selectedBetType === 'tai') {
       this.taiBetDisplay = this.tempBetAmount;
       this.taiAmount += this.tempBetAmount;
