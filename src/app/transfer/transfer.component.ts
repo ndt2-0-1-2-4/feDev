@@ -76,9 +76,10 @@ export class TransferComponent implements OnInit {
           console.log(data);
           this.notifical3 = '';
           this.idPlayer = data.idPlayer;
+          this.moneyReciver = data.balance;
           this.userService.getUserById(data.idPlayer).subscribe((rs: any) => {
-            this.moneyReciver = rs.money;
             this.nameplayer = rs.fullname;
+            console.log(this.moneyReciver);
           });
         }
       },
@@ -115,6 +116,6 @@ export class TransferComponent implements OnInit {
         this.moneyReciver + this.value
       )
       .subscribe();
-    location.reload();
+    // location.reload();
   }
 }
